@@ -1,0 +1,108 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'inter', sans-serif;
+  }
+  
+  .hero {
+    height: 100vh;
+    background: url('https://www.megainsurance.co.id/po-content/uploads/wisata_pantai.jpg') no-repeat center center/cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    padding: 0 20px;
+  }
+  
+  .hero-text h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+  }
+
+  .title-paket {
+    text-align: center;
+    color: #003366;
+    margin-bottom: 10px;
+    padding-top: 30px;
+  }
+
+  .button-paket {
+    text-align: center;
+    margin: 20px 0;
+  }
+
+  .button-paket button {
+    margin: 0 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease;
+  }
+
+  .button-paket .reguler {
+    background-color: #f5f5f5;
+    color: #000;
+    border: 1px solid #888;
+  }
+
+  .button-paket .deluxe {
+    background-color: #007bff;
+    color: white;
+  }
+
+  .button-paket .premium {
+    background-color: #f4a300;
+    color: white;
+  }
+
+  .card-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    width: 300px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+  }
+
+  .card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+  }
+
+  .card .content {
+    padding: 15px;
+  }
+
+  .price {
+    color: orange;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+  }
+
+  .description {
+    font-size: 14px;
+    color: #555;
+  }
