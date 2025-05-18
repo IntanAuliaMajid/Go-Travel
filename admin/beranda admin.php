@@ -13,9 +13,9 @@
       <nav>
         <ul>
           <li class="active">Dasbor</li>
-          <li>Users</li>
-          <li>Booking</li>
-          <li>Travel packge</li>
+          <li>penggunaUsers</li>
+         pemesananoking</li>
+         paket perjalananackge</li>
           <li>Blog</li>
         </ul>
       </nav>

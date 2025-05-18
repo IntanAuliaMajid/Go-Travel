@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FAQ Page</title>
-    <link rel="stylesheet" href="../CSS/fuadi.css">
+    <link rel="stylesheet" href="./CSS/fuadi.css">
 </head>
 <body>
-    <?php include '../Komponen/navbar.php'; ?>
+    <?php include './Komponen/navbar.php'; ?>
     <div class="header18">
         <h1>Pertanyaan Umum</h1>
     </div>
@@ -66,7 +66,7 @@
         <a href="#" class="contact-button"><h3>Hubungi kami</h3></a>
     </div>
 
-    <?php include '../Komponen/footer.php'; ?>
+    <?php include './Komponen/footer.php'; ?>
     
     <script>
     const accordions = document.querySelectorAll('.accordion-item');

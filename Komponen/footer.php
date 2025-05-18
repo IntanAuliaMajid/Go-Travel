@@ -22,7 +22,7 @@
       <div>
         <h4>Dukungan</h4>
         <ul>
-          <li><a href="#">Pertanyaan Umum</a></li>
+          <li><a href="./FAQ Page.php">Pertanyaan Umum</a></li>
           <li><a href="#">Hubungi kami</a></li>
           <li><a href="#">Privacy Policy</a></li>
         </ul>
