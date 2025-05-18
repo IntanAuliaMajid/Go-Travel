@@ -12,7 +12,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
             <li><a href="paket_wisata.php" class="<?php echo ($current_page == 'paket_wisata.php') ? 'active' : ''; ?>">Paket Wisata</a></li>
             <li><a href="blog.php" class="<?php echo ($current_page == 'blog.php') ? 'active' : ''; ?>">Blog</a></li>
             <li><a href="kontak.php" class="<?php echo ($current_page == 'kontak.php') ? 'active' : ''; ?>">Kontak</a></li>
-            <li><a href="galeri.php" class="<?php echo ($current_page == 'galeri.php') ? 'active' : ''; ?>">Galeri</a></li>
+            <li><a href="./fuadi/interface17.php" class="<?php echo ($current_page == 'interface17.php') ? 'active' : ''; ?>">Galeri</a></li>
+            <li><a href="tour_guide.php" class="<?php echo ($current_page == 'tour_guide.php') ? 'active' : ''; ?>">Tour Guide</a></li>
             <li><a href="pesan_sekarang.php" class="btn <?php echo ($current_page == 'pesan_sekarang.php') ? 'active' : ''; ?>">Pesan Sekarang</a></li>
         </ul>
     </div>

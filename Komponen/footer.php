@@ -38,7 +38,7 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <p>©2025 | Jelajah Malang. Hak cipta dilindungi.</p>
+    <p>©2025 | Go-Travel. Hak cipta dilindungi.</p>
   </div>
 </footer>
 

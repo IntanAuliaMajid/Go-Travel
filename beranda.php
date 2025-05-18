@@ -39,5 +39,6 @@
       <p>Kota sejuk penuh kenangan</p>
     </div>
   </header>
+  <?php include 'Komponen/footer.php'; ?>
 </body>
 </html>

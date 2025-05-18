@@ -22,7 +22,7 @@
     /* Hero Section */
     .hero {
       background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
-                  url('https://source.unsplash.com/1600x900/?indonesia,landscape') no-repeat center center/cover;
+                  url('./Gambar/bromo.jpg') no-repeat center center/cover;
       height: 60vh;
       display: flex;
       flex-direction: column;
@@ -479,18 +479,18 @@
           <option value="air-terjun">Air Terjun</option>
           <option value="danau">Danau</option>
           <option value="budaya">Budaya & Sejarah</option>
+          <option value="hiburan">hiburan</option>
         </select>
       </div>
       <div class="filter-group">
         <div class="filter-label">Lokasi:</div>
         <select class="filter-select">
           <option value="">Semua Lokasi</option>
-          <option value="bali">Bali</option>
-          <option value="jawa">Jawa</option>
-          <option value="sumatra">Sumatra</option>
-          <option value="kalimantan">Kalimantan</option>
-          <option value="sulawesi">Sulawesi</option>
-          <option value="papua">Papua</option>
+          <option value="bali">Lamongan</option>
+          <option value="jawa">Jakarta</option>
+          <option value="sumatra">Bangkalan</option>
+          <option value="kalimantan">Surabaya</option>
+          <option value="sulawesi">Pamekasan</option>
         </select>
       </div>
       <div class="filter-group">
@@ -516,42 +516,39 @@
     </div>
 
     <div class="destinations-grid">
-      <!-- Destination 1: Bromo -->
+      <!-- Destination 1: Pantai Tanjung Kodok -->
       <div class="destination-card">
         <div class="card-image" style="position: relative;">
-          <img src="https://source.unsplash.com/800x600/?bromo" alt="Gunung Bromo">
+          <img src="https://www.nativeindonesia.com/foto/2024/07/pantai-tanjung-kodok-1.jpg" alt="Pantai Tanjung Kodok">
           <span class="card-badge">Populer</span>
         </div>
         <div class="card-content">
-          <h3>Gunung Bromo</h3>
+          <h3>Pantai Tanjung Kodok</h3>
           <div class="card-location">
-            <i class="fas fa-map-marker-alt"></i> Jawa Timur
+            <i class="fas fa-map-marker-alt"></i> Lamongan
           </div>
           <div class="card-rating">
             <div class="stars">★★★★★</div>
             <div class="count">(218 ulasan)</div>
           </div>
           <div class="card-description">
-            Nikmati keindahan sunrise yang menakjubkan dan lanskap kawah aktif di destinasi ikonik Indonesia ini.
+            Nikmati keindahan sunrise yang menakjubkan di destinasi ikonik Indonesia ini.
           </div>
           <div class="card-meta">
-            <div class="card-price">
-              Rp 27.500 <span>/orang (WNI)</span>
-            </div>
             <a href="detail_destinasi.php?id=bromo" class="card-button">Lihat Detail</a>
           </div>
         </div>
       </div>
 
-      <!-- Destination 2: Raja Ampat -->
+      <!-- Destination 2: Pantai Lorena -->
       <div class="destination-card">
         <div class="card-image">
-          <img src="https://source.unsplash.com/800x600/?raja,ampat" alt="Raja Ampat">
+          <img src="https://www.nativeindonesia.com/foto/2024/07/sunset-di-pantai-lorena.jpg" alt="Pantai Lorena">
         </div>
         <div class="card-content">
-          <h3>Raja Ampat</h3>
+          <h3>Pantai Lorena</h3>
           <div class="card-location">
-            <i class="fas fa-map-marker-alt"></i> Papua Barat
+            <i class="fas fa-map-marker-alt"></i> Lamongan
           </div>
           <div class="card-rating">
             <div class="stars">★★★★★</div>
@@ -561,119 +558,204 @@
             Surga bawah laut dengan keanekaragaman hayati terkaya di dunia yang menawarkan pengalaman snorkeling dan diving terbaik.
           </div>
           <div class="card-meta">
-            <div class="card-price">
-              Rp 500.000 <span>/orang</span>
-            </div>
             <a href="detail_destinasi.php?id=raja-ampat" class="card-button">Lihat Detail</a>
           </div>
         </div>
       </div>
 
-      <!-- Destination 3: Borobudur -->
+      <!-- Destination 3: Indonesian Islamic Art Museum -->
       <div class="destination-card">
         <div class="card-image">
-          <img src="https://source.unsplash.com/800x600/?borobudur" alt="Candi Borobudur">
+          <img src="https://salsawisata.com/wp-content/uploads/2022/07/Indonesian-Islamic-Art-Museum.jpg" alt="Indonesian Islamic Art Museum">
         </div>
         <div class="card-content">
-          <h3>Candi Borobudur</h3>
+          <h3>Indonesian Islamic Art Museum</h3>
           <div class="card-location">
-            <i class="fas fa-map-marker-alt"></i> Jawa Tengah
+            <i class="fas fa-map-marker-alt"></i> Lamongan
           </div>
           <div class="card-rating">
             <div class="stars">★★★★☆</div>
             <div class="count">(176 ulasan)</div>
           </div>
           <div class="card-description">
-            Kunjungi candi Budha terbesar di dunia yang dibangun pada abad ke-9 dengan arsitektur dan relief yang mengagumkan.
+            sebuah jendela yang memukau untuk memahami kekayaan seni dan budaya Islam di Indonesia. 
           </div>
           <div class="card-meta">
-            <div class="card-price">
-              Rp 50.000 <span>/orang (WNI)</span>
-            </div>
             <a href="detail_destinasi.php?id=borobudur" class="card-button">Lihat Detail</a>
           </div>
         </div>
       </div>
 
-      <!-- Destination 4: Komodo -->
+      <!-- Destination 4: Wisata Bahari Lamongan -->
       <div class="destination-card">
         <div class="card-image" style="position: relative;">
-          <img src="https://source.unsplash.com/800x600/?komodo,dragon" alt="Taman Nasional Komodo">
-          <span class="card-badge">Premium</span>
+          <img src="https://salsawisata.com/wp-content/uploads/2022/07/Wisata-Bahari-Lamongan.jpg" alt="Wisata Bahari Lamongan">
+          <span class="card-badge">Populer</span>
         </div>
         <div class="card-content">
-          <h3>Taman Nasional Komodo</h3>
+          <h3>Wisata Bahari Lamongan</h3>
           <div class="card-location">
-            <i class="fas fa-map-marker-alt"></i> Nusa Tenggara Timur
+            <i class="fas fa-map-marker-alt"></i> Lamongan
           </div>
           <div class="card-rating">
             <div class="stars">★★★★★</div>
             <div class="count">(145 ulasan)</div>
           </div>
           <div class="card-description">
-            Kunjungi habitat asli kadal terbesar di dunia dan nikmati pemandangan pantai Pink yang menakjubkan.
+            Dengan konsep taman rekreasi keluarga, WBL menyediakan fasilitas lengkap seperti area bermain anak, restoran dengan beragam pilihan kuliner, toko suvenir, dan area parkir yang luas.
           </div>
           <div class="card-meta">
-            <div class="card-price">
-              Rp 150.000 <span>/orang (WNI)</span>
-            </div>
             <a href="detail_destinasi.php?id=komodo" class="card-button">Lihat Detail</a>
           </div>
         </div>
       </div>
 
-      <!-- Destination 5: Danau Toba -->
+      <!-- Destination 5: WBL DAN MZG -->
       <div class="destination-card">
         <div class="card-image">
-          <img src="https://source.unsplash.com/800x600/?toba,lake" alt="Danau Toba">
+          <img src="https://tugujatim.id/wp-content/uploads/2023/10/WhatsApp-Image-2023-10-20-at-16.12.53.jpeg" alt="WBL DAN MZG">
         </div>
         <div class="card-content">
-          <h3>Danau Toba</h3>
+          <h3>WBL DAN MZG</h3>
           <div class="card-location">
-            <i class="fas fa-map-marker-alt"></i> Sumatra Utara
+            <i class="fas fa-map-marker-alt"></i> Lamongan
           </div>
           <div class="card-rating">
             <div class="stars">★★★★☆</div>
             <div class="count">(132 ulasan)</div>
           </div>
           <div class="card-description">
-            Nikmati keindahan danau vulkanik terbesar di dunia dengan Pulau Samosir di tengahnya dan budaya Batak yang kental.
+            Rasakan pengalaman liburan ganda yang tak terlupakan dengan mengunjungi dua destinasi unggulan Lamongan sekaligus: Wisata Bahari Lamongan (WBL) dan Maharani Zoo & Goa (MZG)! 
           </div>
           <div class="card-meta">
-            <div class="card-price">
-              Rp 15.000 <span>/orang</span>
-            </div>
             <a href="detail_destinasi.php?id=danau-toba" class="card-button">Lihat Detail</a>
           </div>
         </div>
       </div>
 
-      <!-- Destination 6: Labuan Bajo -->
+      <!-- Destination 6: Taman Mini Indonesia Indah -->
       <div class="destination-card">
         <div class="card-image">
-          <img src="https://source.unsplash.com/800x600/?labuan,bajo" alt="Labuan Bajo">
+          <img src="https://anekatempatwisata.com/wp-content/uploads/2018/04/Taman-Mini-Indonesia-Indah-610x407.jpg" alt="Taman Mini Indonesia Indah">
         </div>
         <div class="card-content">
-          <h3>Labuan Bajo</h3>
+          <h3>Taman Mini Indonesia Indah</h3>
           <div class="card-location">
-            <i class="fas fa-map-marker-alt"></i> Nusa Tenggara Timur
+            <i class="fas fa-map-marker-alt"></i> Jakarta
           </div>
           <div class="card-rating">
             <div class="stars">★★★★★</div>
             <div class="count">(120 ulasan)</div>
           </div>
           <div class="card-description">
-            Pintu gerbang menuju Taman Nasional Komodo dengan pemandangan sunset terbaik dan tempat diving yang menakjubkan.
+            Selamat datang di Taman Mini Indonesia Indah (TMII), sebuah miniatur megah yang menampilkan kekayaan budaya dan keindahan alam dari 34 provinsi di Indonesia.
           </div>
           <div class="card-meta">
-            <div class="card-price">
-              Rp 25.000 <span>/orang</span>
-            </div>
+            <a href="detail_destinasi.php?id=labuan-bajo" class="card-button">Lihat Detail</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Destination 7: Museum Nasional Indonesia -->
+      <div class="destination-card">
+        <div class="card-image">
+          <img src="https://anekatempatwisata.com/wp-content/uploads/2018/04/Museum-Nasional-Indonesia-610x610.jpg" alt="Museum Nasional Indonesia">
+        </div>
+        <div class="card-content">
+          <h3>Museum Nasional Indonesia</h3>
+          <div class="card-location">
+            <i class="fas fa-map-marker-alt"></i> Jakarta
+          </div>
+          <div class="card-rating">
+            <div class="stars">★★★★★</div>
+            <div class="count">(120 ulasan)</div>
+          </div>
+          <div class="card-description">
+            Selamat datang di Museum Nasional Indonesia, yang juga dikenal sebagai Museum Gajah. Berlokasi di jantung Jakarta Pusat, museum ini adalah yang terbesar dan terlengkap di Indonesia, menyimpan khazanah tak ternilai dari warisan arkeologi, sejarah, etnografi, dan seni bangsa.
+          </div>
+          <div class="card-meta">
+            <a href="detail_destinasi.php?id=labuan-bajo" class="card-button">Lihat Detail</a>
+          </div>
+        </div>
+      </div>
+      <!-- Destination 8: Jakarta Aquarium -->
+      <div class="destination-card">
+        <div class="card-image">
+          <img src="https://anekatempatwisata.com/wp-content/uploads/2018/04/Jakarta-Aquarium-loop.jpg" alt="Jakarta Aquarium">
+        </div>
+        <div class="card-content">
+          <h3>Jakarta Aquarium</h3>
+          <div class="card-location">
+            <i class="fas fa-map-marker-alt"></i> Jakarta
+          </div>
+          <div class="card-rating">
+            <div class="stars">★★★★★</div>
+            <div class="count">(120 ulasan)</div>
+          </div>
+          <div class="card-description">
+            Selamat datang di Jakarta Aquarium & Safari, sebuah destinasi wisata yang memukau di tengah hiruk pikuk ibu kota! Di sini, Anda akan diajak dalam perjalanan yang menakjubkan untuk menjelajahi keindahan bawah laut Indonesia dan berbagai satwa eksotis dari seluruh dunia.
+          </div>
+          <div class="card-meta">
+            <a href="detail_destinasi.php?id=labuan-bajo" class="card-button">Lihat Detail</a>
+          </div>
+        </div>
+      </div>
+      <!-- Destination 9: Monumen Nasional -->
+      <div class="destination-card">
+        <div class="card-image">
+          <img src="https://anekatempatwisata.com/wp-content/uploads/2018/04/Monumen-Nasional-610x406.jpg" alt="Monumen Nasional">
+        </div>
+        <div class="card-content">
+          <h3>Monumen Nasional</h3>
+          <div class="card-location">
+            <i class="fas fa-map-marker-alt"></i> Jakarta
+          </div>
+          <div class="card-rating">
+            <div class="stars">★★★★★</div>
+            <div class="count">(120 ulasan)</div>
+          </div>
+          <div class="card-description">
+            Selamat datang di Taman Mini Indonesia Indah (TMII), sebuah miniatur megah yang menampilkan kekayaan budaya dan keindahan alam dari 34 provinsi di Indonesia.
+          </div>
+          <div class="card-meta">
+            <a href="detail_destinasi.php?id=labuan-bajo" class="card-button">Lihat Detail</a>
+          </div>
+        </div>
+      </div>
+      <!-- Destination 9: Dunia Fantasi, Pantai Ancol, dan Kota Tua Jakarta -->
+      <div class="destination-card">
+        <div class="card-image">
+          <img src="https://anekatempatwisata.com/wp-content/uploads/2018/04/Dunia-Fantasi-klook.png" alt="Dunia Fantasi, Pantai Ancol, dan Kota Tua Jakarta">
+        </div>
+        <div class="card-content">
+          <h3>Dunia Fantasi, Pantai Ancol, dan Kota Tua Jakarta</h3>
+          <div class="card-location">
+            <i class="fas fa-map-marker-alt"></i> Jakarta
+          </div>
+          <div class="card-rating">
+            <div class="stars">★★★★★</div>
+            <div class="count">(120 ulasan)</div>
+          </div>
+          <div class="card-description">
+            Selamat datang di Taman Mini Indonesia Indah (TMII), sebuah miniatur megah yang menampilkan kekayaan budaya dan keindahan alam dari 34 provinsi di Indonesia.
+          </div>
+          <div class="card-meta">
             <a href="detail_destinasi.php?id=labuan-bajo" class="card-button">Lihat Detail</a>
           </div>
         </div>
       </div>
     </div>
+    </div>
+    </div>
+    </div>
+    </div>
+
+    
+
+    
+
+    
+
 
     <!-- Pagination -->
     <div class="pagination">

@@ -12,7 +12,7 @@
 
 <header class="hero">
   <div class="hero-text">
-    <h1>Gunung Bromo</h1>
+    <h1>Pantai Tanjung Kodok</h1>
     <p>Keajaiban Alam di Jawa Timur</p>
   </div>
 </header>
@@ -21,18 +21,21 @@
   <!-- Left Column -->
   <div class="left-column">
     <div class="gallery">
-      <img src="./Gambar/bromo.jpg" alt="Sunrise di Bromo">
-      <img src="./Gambar/bromo.jpg" alt="Kawah Bromo">
-      <img src="./Gambar/bromo.jpg" alt="Kabut di Bromo">
-      <img src="./Gambar/bromo.jpg" alt="Kuda di Bromo">
-      <img src="./Gambar/bromo.jpg" alt="Pemandangan Bromo">
-      <img src="./Gambar/bromo.jpg" alt="Gunung Bromo">
+      <img src="https://1.bp.blogspot.com/-9xf_ASpphxM/TrvDC4Tch-I/AAAAAAAABMc/RExb1UrDcwQ/s1600/tanjung%2Bkodok.JPG" alt="">
+      <img src="https://nativeindonesia.com/wp-content/uploads/2021/08/Pantai-Tanjung-Kodok.jpg" alt="">
+      <img src="https://www.nativeindonesia.com/foto/2024/07/pantai-tanjung-kodok-1.jpg" alt="">
+      <img src="https://www.nativeindonesia.com/foto/2024/07/wisata-pantai-tanjung-kodok.jpg" alt="">
+      <img src="https://cdn.idntimes.com/content-images/community/2022/11/149402858-1534426486747158-1924235549356764180-n-74a5bbce32d431e2700b8e2b2284983e-f213f7f31db44e837aedc4a3b7e6ec0c.jpg" alt="">
+      <img src="https://www.nativeindonesia.com/foto/2024/07/sunset-di-pantai-tanjung-kodok.jpg" alt="">
+      
     </div>
 
     <div class="section">
-      <h3>Tentang Gunung Bromo</h3>
-      <p class="deskripsi">Gunung Bromo adalah salah satu destinasi wisata paling ikonik di Indonesia yang terletak di Jawa Timur. Kawasan ini terkenal dengan pemandangan matahari terbitnya yang spektakuler dan lautan pasir yang luas. Gunung Bromo berada di dalam kawasan Taman Nasional Bromo Tengger Semeru dengan ketinggian 2.329 meter di atas permukaan laut.</p>
-      <p class="deskripsi">Kawah aktif dengan asap belerang yang mengepul menjadi daya tarik tersendiri bagi para wisatawan. Selain itu, wisatawan dapat menikmati keindahan alam sambil menunggang kuda melintasi lautan pasir atau menjelajahi kawah yang aktif. Kawasan ini juga memiliki nilai spiritual bagi masyarakat Tengger yang tinggal di sekitar kaki gunung.</p>
+      <h3>Tentang Pantai Tanjung Kodok</h3>
+      <p class="deskripsi">Selamat datang di Pantai Tanjung Kodok, sebuah permata tersembunyi di pesisir utara Lamongan, Jawa Timur. Pantai ini menawarkan pesona alam yang unik dengan formasi batu karang menyerupai kodok raksasa, yang menjadi ciri khas dan asal namanya.</p>
+      <p class="deskripsi">Pantai Tanjung Kodok memanjakan pengunjung dengan hamparan pasir putih yang lembut dan air laut yang jernih, mengundang Anda untuk bersantai, berjemur, atau bermain air. Deburan ombak yang tenang menciptakan suasana yang damai dan menenangkan, menjauhkan Anda dari hiruk pikuk kehidupan kota.</p>
+      <p class="deskripsi">Keunikan utama pantai ini terletak pada gugusan batu karang yang tersebar di sepanjang garis pantai. Salah satu batu karang yang paling ikonik adalah yang berbentuk seperti kodok sedang beristirahat, menjadi daya tarik utama bagi para wisatawan dan fotografer. Anda dapat menjelajahi area ini saat air surut dan mengabadikan momen yang tak terlupakan.</p>
+      <p class="deskripsi">Selain keindahan formasi batu karangnya, Pantai Tanjung Kodok juga menawarkan pemandangan matahari terbenam yang spektakuler. Langit yang berwarna-warni menjadi latar belakang yang sempurna untuk siluet batu kodok, menciptakan suasana romantis dan magis.</p>
     </div>
 
     <div class="section">
@@ -57,7 +60,7 @@
       <div class="review">
         <div class="name">Dina Aprilia</div>
         <div class="stars">★★★★☆</div>
-        <div class="comment">Tempat bagus tapi jalan menuju ke sana cukup menantang. Pastikan untuk membawa jaket tebal karena suhu bisa mencapai 5°C di pagi hari.</div>
+        <div class="comment">Tempat bagus dan suasana pantai yang masih alami di Lamongan.</div>
       </div>
       <div class="review">
         <div class="name">Suci Rahma</div>
@@ -72,12 +75,10 @@
     <div class="info-box">
       <h4>Informasi Singkat</h4>
       <ul>
-        <li>✔️ Waktu Terbaik: April-Oktober (Musim Kemarau)</li>
+        <li>✔️ Waktu Terbaik: Pagi hari</li>
         <li>✔️ Rekomendasi Kunjungan: 2-3 hari</li>
-        <li>✔️ Ketinggian: 2.329m</li>
-        <li>✔️ Status: Gunung Berapi Aktif</li>
-        <li>✔️ Tiket Masuk: Rp 27.500 - 32.500 (WNI), Rp 220.000 - 320.000 (WNA)</li>
-        <li>✔️ Jam Buka: 24 Jam</li>
+        <li>✔️ Tiket Masuk: Rp 30.000</li>
+        <li>✔️ Jam Buka: Jam 08.00 - 17.00 WIB</li>
       </ul>
     </div>
 
@@ -90,27 +91,29 @@
         loading="lazy"
         referrerpolicy="no-referrer-when-downgrade">
       </iframe>
-      <p style="margin-top: 10px; font-size: 14px;">Taman Nasional Bromo Tengger Semeru, Jawa Timur, Indonesia</p>
+      <p style="margin-top: 10px; font-size: 14px;">Pantai Tanjung Kodok, Jawa Timur, Indonesia</p>
     </div>
 
     <div class="related-box">
       <h4>Wisata Terdekat</h4>
       <ul>
-        <li>Gunung Semeru</li>
-        <li>Air Terjun Madakaripura</li>
-        <li>Bukit Teletubbies</li>
-        <li>Gunung Penanjakan</li>
-        <li>Ranu Kumbolo</li>
+        <li>Wisata Bahari Lamongan</li>
+        <li>Pantai Maldives Kemantren</li>
+        <li>Tanjung Kodok Beach Resort Lamongan</li>
+        <li>Maharani Zoo & Goa</li>
+        <li>Pantai Lorena</li>
       </ul>
     </div>
     
     <div class="info-box" style="margin-top: 20px;">
       <h4>Tips Berkunjung</h4>
       <ul>
-        <li>✔️ Datang sebelum jam 4 pagi untuk melihat sunrise</li>
-        <li>✔️ Bawa jaket tebal karena suhu bisa sangat dingin</li>
-        <li>✔️ Sewa jeep untuk akses yang lebih mudah</li>
-        <li>✔️ Sediakan masker untuk debu dan bau belerang</li>
+        <li>✔️ Datang lebih awal</li>
+        <li>✔️ Kenakan pakaian yang nyaman dan mudah kering</li>
+        <li>✔️ Bawa perlengkapan renang</li>
+        <li>✔️ Siapkan uang tunai atau kartu</li>
+        <li>✔️ Manfaatkan peta dan informasi</li>
+        <li>✔️ Jaga barang bawaan</li>
       </ul>
     </div>
   </div>
