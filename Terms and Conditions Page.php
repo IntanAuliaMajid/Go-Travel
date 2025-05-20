@@ -4,20 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="../CSS/fuadi.css">
+    <link rel="stylesheet" href="./CSS/fuadi.css">
 </head>
 <body>
-    <?php include '../Komponen/navbar.php'; ?>
+    <?php include './Komponen/navbar.php'; ?>
 
     <div class="hero-section">
         <h1>Syarat dan ketentuan</h1>
         <p>ketentuan penggunaan layanan dan kebijakan pemesanan layanan dan kebijakan pemesanan wisata di jawa</p>
     </div>
     <div class="breadcrumb">
-        <span><a href="#">Beranda</a> > Galeri</span>
+        <span><a href="#">Beranda</a> > syarat & ketentuan</span>
     </div>
     <div class="halaman">
-        <p>Dengan mengakses dan menggunakan layanan Jelajah Malang, Anda menyetujui untuk terikat oleh syarat dan ketentuan berikut. Harap baca dengan seksama sebelum melakukan pemesanan.</p>
+        <p>Dengan mengakses dan menggunakan layanan Wisata jawa, Anda menyetujui untuk terikat oleh syarat dan ketentuan berikut. Harap baca dengan seksama sebelum melakukan pemesanan.</p>
     </div>
 
 
@@ -28,7 +28,7 @@
       <div class="ketentuan-item">
         <span class="nomor-ketentuan">1.</span>
         <p>
-          Layanan yang disediakan oleh Jelajah Malang ("Kami") terdiri dari paket perjalanan wisata, pemesanan akomodasi, transportasi, dan jasa terkait lainnya.
+          Layanan yang disediakan oleh Wisata jawa("Kami") terdiri dari paket perjalanan wisata, pemesanan akomodasi, transportasi, dan jasa terkait lainnya.
         </p>
       </div>
 
@@ -212,6 +212,6 @@
       <p>+62 **** ****</p>
     </div>
   </div>
-  <?php include '../Komponen/footer.php'; ?>
+  <?php include './Komponen/footer.php'; ?>
 </body>
 </html>

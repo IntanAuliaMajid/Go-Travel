@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Destinasi Wisata Indonesia</title>
+  <title>Destinasi Wisata Pulau Jawa</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
     * {
@@ -22,7 +22,7 @@
     /* Hero Section */
     .hero {
       background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
-                  url('./Gambar/bromo.jpg') no-repeat center center/cover;
+                  url('https://www.nativeindonesia.com/foto/2024/07/pantai-tanjung-kodok-1.jpg') no-repeat center center/cover;
       height: 60vh;
       display: flex;
       flex-direction: column;
@@ -183,6 +183,7 @@
     .card-image {
       height: 200px;
       overflow: hidden;
+      position: relative;
     }
 
     .card-image img {
@@ -285,6 +286,44 @@
 
     .card-button:hover {
       background-color: #1d5b3a;
+    }
+
+    /* Wishlist Button Styles */
+    .wishlist-button {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background-color: rgba(255, 255, 255, 0.8);
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 2;
+    }
+
+    .wishlist-button i {
+      color: #ff6b6b;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+    }
+
+    .wishlist-button:hover {
+      background-color: white;
+    }
+
+    .wishlist-button:hover i {
+      color: #ff5252;
+      transform: scale(1.1);
+    }
+
+    .wishlist-button.active i {
+      color: #ff6b6b;
+      font-weight: 900;
     }
 
     /* Popular Categories */
@@ -459,8 +498,8 @@
 
   <!-- Hero Section -->
   <section class="hero">
-    <h1>Jelajahi Keindahan Indonesia</h1>
-    <p>Temukan destinasi wisata terbaik di seluruh Indonesia, dari pantai eksotis hingga gunung berapi yang megah</p>
+    <h1>Jelajahi Keindahan Pulau Jawa</h1>
+    <p>Temukan destinasi wisata terbaik di Pulau Jawa, dari pantai eksotis hingga gunung berapi yang megah</p>
     <div class="search-container">
       <input type="text" placeholder="Cari destinasi wisata...">
       <button><i class="fas fa-search"></i> Cari</button>
@@ -497,9 +536,9 @@
         <div class="filter-label">Harga:</div>
         <select class="filter-select">
           <option value="">Semua Harga</option>
-          <option value="budget">Budget (< Rp 100rb)</option>
-          <option value="medium">Medium (Rp 100rb - 500rb)</option>
-          <option value="premium">Premium (> Rp 500rb)</option>
+          <option value="budget">(< Rp 100rb)</option>
+          <option value="medium">(Rp 100rb - 500rb)</option>
+          <option value="premium">(> Rp 500rb)</option>
         </select>
       </div>
       <div class="filter-group">
@@ -512,14 +551,17 @@
   <section class="container">
     <div class="section-heading">
       <h2>Destinasi Populer</h2>
-      <p>Temukan destinasi wisata terpopuler yang wajib dikunjungi di Indonesia</p>
+      <p>Temukan destinasi wisata terpopuler yang wajib dikunjungi di Pulau Jawa</p>
     </div>
 
     <div class="destinations-grid">
       <!-- Destination 1: Pantai Tanjung Kodok -->
       <div class="destination-card">
-        <div class="card-image" style="position: relative;">
+        <div class="card-image">
           <img src="https://www.nativeindonesia.com/foto/2024/07/pantai-tanjung-kodok-1.jpg" alt="Pantai Tanjung Kodok">
+          <button class="wishlist-button">
+            <i class="far fa-heart"></i>
+          </button>
           <span class="card-badge">Populer</span>
         </div>
         <div class="card-content">
@@ -544,6 +586,9 @@
       <div class="destination-card">
         <div class="card-image">
           <img src="https://www.nativeindonesia.com/foto/2024/07/sunset-di-pantai-lorena.jpg" alt="Pantai Lorena">
+          <button class="wishlist-button">
+            <i class="far fa-heart"></i>
+          </button>
         </div>
         <div class="card-content">
           <h3>Pantai Lorena</h3>
@@ -567,6 +612,9 @@
       <div class="destination-card">
         <div class="card-image">
           <img src="https://salsawisata.com/wp-content/uploads/2022/07/Indonesian-Islamic-Art-Museum.jpg" alt="Indonesian Islamic Art Museum">
+          <button class="wishlist-button">
+            <i class="far fa-heart"></i>
+          </button>
         </div>
         <div class="card-content">
           <h3>Indonesian Islamic Art Museum</h3>
@@ -588,8 +636,11 @@
 
       <!-- Destination 4: Wisata Bahari Lamongan -->
       <div class="destination-card">
-        <div class="card-image" style="position: relative;">
+        <div class="card-image">
           <img src="https://salsawisata.com/wp-content/uploads/2022/07/Wisata-Bahari-Lamongan.jpg" alt="Wisata Bahari Lamongan">
+          <button class="wishlist-button">
+            <i class="far fa-heart"></i>
+          </button>
           <span class="card-badge">Populer</span>
         </div>
         <div class="card-content">
@@ -614,6 +665,9 @@
       <div class="destination-card">
         <div class="card-image">
           <img src="https://tugujatim.id/wp-content/uploads/2023/10/WhatsApp-Image-2023-10-20-at-16.12.53.jpeg" alt="WBL DAN MZG">
+          <button class="wishlist-button">
+            <i class="far fa-heart"></i>
+          </button>
         </div>
         <div class="card-content">
           <h3>WBL DAN MZG</h3>
@@ -637,6 +691,9 @@
       <div class="destination-card">
         <div class="card-image">
           <img src="https://anekatempatwisata.com/wp-content/uploads/2018/04/Taman-Mini-Indonesia-Indah-610x407.jpg" alt="Taman Mini Indonesia Indah">
+          <button class="wishlist-button">
+            <i class="far fa-heart"></i>
+          </button>
         </div>
         <div class="card-content">
           <h3>Taman Mini Indonesia Indah</h3>
@@ -660,6 +717,9 @@
       <div class="destination-card">
         <div class="card-image">
           <img src="https://anekatempatwisata.com/wp-content/uploads/2018/04/Museum-Nasional-Indonesia-610x610.jpg" alt="Museum Nasional Indonesia">
+          <button class="wishlist-button">
+            <i class="far fa-heart"></i>
+          </button>
         </div>
         <div class="card-content">
           <h3>Museum Nasional Indonesia</h3>
@@ -678,10 +738,14 @@
           </div>
         </div>
       </div>
+      
       <!-- Destination 8: Jakarta Aquarium -->
       <div class="destination-card">
         <div class="card-image">
           <img src="https://anekatempatwisata.com/wp-content/uploads/2018/04/Jakarta-Aquarium-loop.jpg" alt="Jakarta Aquarium">
+          <button class="wishlist-button">
+            <i class="far fa-heart"></i>
+          </button>
         </div>
         <div class="card-content">
           <h3>Jakarta Aquarium</h3>
@@ -700,10 +764,14 @@
           </div>
         </div>
       </div>
+      
       <!-- Destination 9: Monumen Nasional -->
       <div class="destination-card">
         <div class="card-image">
           <img src="https://anekatempatwisata.com/wp-content/uploads/2018/04/Monumen-Nasional-610x406.jpg" alt="Monumen Nasional">
+          <button class="wishlist-button">
+            <i class="far fa-heart"></i>
+          </button>
         </div>
         <div class="card-content">
           <h3>Monumen Nasional</h3>
@@ -722,10 +790,14 @@
           </div>
         </div>
       </div>
-      <!-- Destination 9: Dunia Fantasi, Pantai Ancol, dan Kota Tua Jakarta -->
+      
+      <!-- Destination 10: Dunia Fantasi, Pantai Ancol, dan Kota Tua Jakarta -->
       <div class="destination-card">
         <div class="card-image">
           <img src="https://anekatempatwisata.com/wp-content/uploads/2018/04/Dunia-Fantasi-klook.png" alt="Dunia Fantasi, Pantai Ancol, dan Kota Tua Jakarta">
+          <button class="wishlist-button">
+            <i class="far fa-heart"></i>
+          </button>
         </div>
         <div class="card-content">
           <h3>Dunia Fantasi, Pantai Ancol, dan Kota Tua Jakarta</h3>
@@ -745,17 +817,6 @@
         </div>
       </div>
     </div>
-    </div>
-    </div>
-    </div>
-    </div>
-
-    
-
-    
-
-    
-
 
     <!-- Pagination -->
     <div class="pagination">
@@ -833,5 +894,26 @@
   </section>
 
   <?php include 'Komponen/footer.php'; ?>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const wishlistButtons = document.querySelectorAll('.wishlist-button');
+      
+      wishlistButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const icon = this.querySelector('i');
+          this.classList.toggle('active');
+          
+          if (this.classList.contains('active')) {
+            icon.classList.remove('far');
+            icon.classList.add('fas');
+          } else {
+            icon.classList.remove('fas');
+            icon.classList.add('far');
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>

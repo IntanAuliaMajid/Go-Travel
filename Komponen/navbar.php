@@ -6,19 +6,26 @@ $current_page = basename($_SERVER['PHP_SELF']);
         <div class="logo">
             <img src="./GAMBAR/logo.png" alt="Logo">
         </div>
+
         <ul class="nav-links">
-            <li><a href="beranda.php" class="<?php echo ($current_page == 'beranda.php')  ? 'active' : ''; ?>">Beranda</a></li>
+            <li><a href="beranda.php" class="<?php echo ($current_page == 'beranda.php') ? 'active' : ''; ?>">Beranda</a></li>
             <li><a href="wisata.php" class="<?php echo (($current_page == 'wisata.php') || ($current_page == 'detail_destinasi.php')) ? 'active' : ''; ?>">Wisata</a></li>
             <li><a href="paket_wisata.php" class="<?php echo ($current_page == 'paket_wisata.php') ? 'active' : ''; ?>">Paket Wisata</a></li>
-            <li><a href="blog.php" class="<?php echo ($current_page == 'blog.php') ? 'active' : ''; ?>">Blog</a></li>
+            <li><a href="blog_page.php" class="<?php echo ($current_page == 'blog_page.php') ? 'active' : ''; ?>">Blog</a></li>
             <li><a href="kontak.php" class="<?php echo ($current_page == 'kontak.php') ? 'active' : ''; ?>">Kontak</a></li>
-            <li><a href="./fuadi/interface17.php" class="<?php echo ($current_page == 'interface17.php') ? 'active' : ''; ?>">Galeri</a></li>
+            <li><a href="Gallery Page.php" class="<?php echo ($current_page == 'Gallery Page.php') ? 'active' : ''; ?>">Galeri</a></li>
             <li><a href="tour_guide.php" class="<?php echo ($current_page == 'tour_guide.php') ? 'active' : ''; ?>">Tour Guide</a></li>
-            <li><a href="pesan_sekarang.php" class="btn <?php echo ($current_page == 'pesan_sekarang.php') ? 'active' : ''; ?>">Pesan Sekarang</a></li>
         </ul>
+
+        <div class="auth-buttons">
+            <a href="daftar.php" class="btn-outline <?php echo ($current_page == 'register.php') ? 'active' : ''; ?>">Daftar</a>
+            <a href="login.php" class="btn-solid <?php echo ($current_page == 'login.php') ? 'active' : ''; ?>">Masuk</a>
+        </div>
     </div>
 </nav>
+
 <script src="./JS/beranda.js"></script>
+
 <style>
 * {
     margin: 0;
@@ -74,7 +81,6 @@ $current_page = basename($_SERVER['PHP_SELF']);
     font-size: 14px;
     transition: color 0.3s;
     padding: 6px 10px;
-    /* border-radius: 4px; */
 }
 
 .nav-links a:hover {
@@ -87,17 +93,59 @@ $current_page = basename($_SERVER['PHP_SELF']);
     border-bottom: 2px solid #1e40af;
 }
 
-.nav-links .btn {
+/* Tombol Daftar & Masuk */
+.auth-buttons {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.btn-outline {
+    padding: 8px 16px;
+    border: 2px solid #1e40af;
+    color: #1e40af;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-outline:hover {
+    background-color: #1e40af;
+    color: white;
+}
+
+.btn-solid {
+    padding: 8px 16px;
     background-color: #1e40af;
     color: white !important;
-    padding: 8px 16px;
     border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
     font-size: 14px;
     transition: background-color 0.3s;
 }
 
-.nav-links .btn:hover {
+.btn-solid:hover {
     background-color: #1e3a8a;
 }
-</style>
 
+/* Responsive (opsional) */
+@media (max-width: 768px) {
+    .navbar .container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav-links {
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-top: 10px;
+    }
+
+    .auth-buttons {
+        margin-top: 10px;
+    }
+}
+</style>

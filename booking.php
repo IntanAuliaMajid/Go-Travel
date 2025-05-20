@@ -468,6 +468,11 @@
                     <div class="step-number">3</div>
                     <div class="step-label">Pembayaran</div>
                 </div>
+                <div class="progress-line"></div>
+                <div class="progress-step completed">
+                    <div class="step-number">4</div>
+                    <div class="step-label">Konfirmasi</div>
+                </div>
             </div>
             
             <h2>Detail Pemesanan</h2>
@@ -634,78 +639,55 @@
                 <!-- Featured highlights -->
                 <div style="margin-bottom: 1.5rem;">
                     <div class="featured-item">
-                        <i class="fas fa-calendar-alt"></i>
-                        <span>3 Hari 2 Malam</span>
-                    </div>
-                    <div class="featured-item">
                         <i class="fas fa-map-marked-alt"></i>
-                        <span>5+ Destinasi Wisata</span>
+                        <span>Wahana yang seru</span>
                     </div>
                     <div class="featured-item">
                         <i class="fas fa-utensils"></i>
-                        <span>Termasuk Makan 3x Sehari</span>
+                        <span>Terdapat berbagai kuliner</span>
                     </div>
                     <!-- Tambahan info kendaraan -->
                     <div class="featured-item">
                         <i class="fas fa-car"></i>
-                        <span>Transportasi Sedan Pribadi</span>
+                        <span>Transportasi</span>
                     </div>
-                </div>
-                
-                <div class="package-includes">
-                    <strong>Termasuk dalam Paket:</strong>
-                    <ul>
-                        <li>Transportasi selama tour</li>
-                        <li>Makan 3x sehari</li>
-                        <li>Tour guide profesional</li>
-                        <li>Tiket masuk objek wisata</li>
-                    </ul>
                 </div>
             </div>
 
             <div class="price-details">
                 <div class="price-row">
                     <span>Harga paket (per orang)</span>
-                    <span>Rp 3.500.000</span>
+                    <span>Rp 180.000</span>
                 </div>
                 <div class="price-row">
                     <span>Jumlah peserta (2 dewasa)</span>
-                    <span>Rp 7.000.000</span>
+                    <span>Rp 320.000</span>
                 </div>
                 <div class="price-row">
-                    <span>Biaya Penginapan</span>
-                    <span>Rp 7.000.000</span>
+                    <span>Biaya Penginapan (The Dream Villa)</span>
+                    <span>Rp 1.000.000</span>
                 </div>
                 <div class="price-row">
-                    <span>Biaya Tour Guide</span>
-                    <span>Rp 7.000.000</span>
+                    <span>Biaya Tour Guide (Pak Wayan)</span>
+                    <span>Rp 500.000</span>
                 </div>
                 <!-- Tambahan biaya kendaraan -->
                 <div class="price-row">
                     <span>Biaya Kendaraan (Sedan)</span>
-                    <span>Rp 1.500.000</span>
+                    <span>Rp 1.000.000</span>
                 </div>
                 <div class="price-row">
                     <span>Pajak & biaya layanan (10%)</span>
-                    <span>Rp 700.000</span>
+                    <span>Rp 282.000</span>
                 </div>
                 <div class="price-row price-total">
                     <span>Total Pembayaran</span>
-                    <span>Rp 9.200.000</span>
-                </div>
-            </div>
-
-            <div class="payment-methods">
-                <h3><i class="fas fa-credit-card"></i> Metode Pembayaran</h3>
-                <div class="payment-options">
-                    <div class="payment-option active">Transfer Bank</div>
-                    <div class="payment-option">E-Wallet</div>
-                    <div class="payment-option">Kartu Kredit</div>
+                    <span>Rp 3.102.000</span>
                 </div>
             </div>
 
             <button class="booking-button">
-                <i class="fas fa-lock"></i> Lanjutkan Pembayaran
+                <i class="fas fa-lock"></i> <a href="payment_page.php" style="text-decoration:none; color:#FFFF; margin-left:10px;">Lanjutkan Pembayaran</a>
             </button>
         </div>
     </div>

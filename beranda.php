@@ -11,32 +11,9 @@
   <?php include 'Komponen/navbar.php'; ?>
   <header class="hero">
     <div class="hero-text">
-      <h1>Temukan Keindahan malang</h1>
-      <p>Kota sejuk penuh kenangan</p>
-    </div>
-  </header>
-  <header class="hero">
-    <div class="hero-text">
-      <h1>Temukan Keindahan malang</h1>
-      <p>Kota sejuk penuh kenangan</p>
-    </div>
-  </header>
-  <header class="hero">
-    <div class="hero-text">
-      <h1>Temukan Keindahan malang</h1>
-      <p>Kota sejuk penuh kenangan</p>
-    </div>
-  </header>
-  <header class="hero">
-    <div class="hero-text">
-      <h1>Temukan Keindahan malang</h1>
-      <p>Kota sejuk penuh kenangan</p>
-    </div>
-  </header>
-  <header class="hero">
-    <div class="hero-text">
-      <h1>Temukan Keindahan malang</h1>
-      <p>Kota sejuk penuh kenangan</p>
+      <p>Welcome</p>
+      <h1>Go-Travel</h1>
+      <p>Temukan keindahan di Pulau Jawa</p>
     </div>
   </header>
   <?php include 'Komponen/footer.php'; ?>

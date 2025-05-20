@@ -63,7 +63,7 @@
     <div class="contack">
         <h1>Masih ada pertanyaan?</h1>
         <p>team customer service siap membantu anda</p>
-        <a href="#" class="contact-button"><h3>Hubungi kami</h3></a>
+        <a href="kontak.php" class="contact-button"><h3>Hubungi kami</h3></a>
     </div>
 
     <?php include './Komponen/footer.php'; ?>
