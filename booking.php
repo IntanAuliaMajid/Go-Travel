@@ -638,10 +638,6 @@
                         <span>3 Hari 2 Malam</span>
                     </div>
                     <div class="featured-item">
-                        <i class="fas fa-map-marked-alt"></i>
-                        <span>5+ Destinasi Wisata</span>
-                    </div>
-                    <div class="featured-item">
                         <i class="fas fa-utensils"></i>
                         <span>Termasuk Makan 3x Sehari</span>
                     </div>

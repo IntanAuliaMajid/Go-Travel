@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Blog Detail Page</title>
-  <link rel="stylesheet" href="../CSS/fuadi.css">
+  <link rel="stylesheet" href="./CSS/fuadi.css">
 </head>
 <body>
 
-  <?php include '../Komponen/navbar.php'; ?>
+  <?php include './Komponen/navbar.php'; ?>
 
   <section class="gambar">
     <img src="https://media-cdn.tripadvisor.com/media/photo-c/1280x250/09/b5/92/85/20151209-115105-01-largejpg.jpg" alt="Gambar Wisata" />
@@ -27,7 +27,7 @@
     </div>
   </main>
 
-  <?php include '../Komponen/footer.php'; ?>
+  <?php include './Komponen/footer.php'; ?>
 
 </body>
 </html>
