@@ -281,38 +281,38 @@
             <div class="logo">
                 <img src="/api/placeholder/140/35" alt="Wonderfull World Logo">
             </div>
-            <h1>Create an Account</h1>
+            <h1>Buat Akun</h1>
             <form>
                 <div class="input-row">
                     <div class="input-group">
-                        <label for="firstName">First Name</label>
-                        <input type="text" id="firstName" class="input-field" placeholder="Enter your first name" required>
+                        <label for="firstName">Nama Awal</label>
+                        <input type="text" id="firstName" class="input-field" placeholder="Enter Masukan nama awal kamu disini.." required>
                     </div>
                     <div class="input-group">
-                        <label for="lastName">Last Name</label>
-                        <input type="text" id="lastName" class="input-field" placeholder="Enter your last name" required>
+                        <label for="lastName">Nama Akhir</label>
+                        <input type="text" id="lastName" class="input-field" placeholder="Masukan nama akhir disini.." required>
                     </div>
                 </div>
                 <div class="input-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" class="input-field" placeholder="Enter your email" required>
+                    <label for="email">Alamat Email</label>
+                    <input type="email" id="email" class="input-field" placeholder="Masukan alamat email kamu disini.." required>
                 </div>
                 <div class="input-group">
                     <label for="password">Password</label>
                     <input type="password" id="password" class="input-field" placeholder="Create a password" required>
                 </div>
                 <div class="input-group">
-                    <label for="confirmPassword">Confirm Password</label>
+                    <label for="confirmPassword">Konfirmasi Password</label>
                     <input type="password" id="confirmPassword" class="input-field" placeholder="Confirm your password" required>
                 </div>
                 <div class="checkbox-group">
                     <input type="checkbox" id="terms" required>
                     <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
                 </div>
-                <button type="submit" class="signup-btn">Sign Up</button>
+                <button type="submit" class="signup-btn">Daftar</button>
             </form>
             <div class="login-link">
-                Already have an account? <a href="login.php">Log in</a>
+                Sudah punya akun ? <a href="login.php">Masuk</a>
             </div>
             <div class="social-signup">
                 <p>Or sign up with</p>
@@ -337,7 +337,6 @@
         </div>
         <div class="right-side">
             <h2>GO-Travel</h2>
-            <p>Bergabunglah dengan komunitas pelancong kami dari seluruh dunia.</p>
             
             <div class="features">
                 <div class="feature-item">

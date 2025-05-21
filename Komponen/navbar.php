@@ -10,11 +10,11 @@ $current_page = basename($_SERVER['PHP_SELF']);
         <ul class="nav-links">
             <li><a href="beranda.php" class="<?php echo ($current_page == 'beranda.php') ? 'active' : ''; ?>">Beranda</a></li>
             <li><a href="wisata.php" class="<?php echo (($current_page == 'wisata.php') || ($current_page == 'detail_destinasi.php')) ? 'active' : ''; ?>">Wisata</a></li>
-            <li><a href="paket_wisata.php" class="<?php echo ($current_page == 'paket_wisata.php') ? 'active' : ''; ?>">Paket Wisata</a></li>
-            <li><a href="blog_page.php" class="<?php echo ($current_page == 'blog_page.php') ? 'active' : ''; ?>">Blog</a></li>
+            <li><a href="paket_wisata.php" class="<?php echo (($current_page == 'paket_wisata.php') || ($current_page == 'detail_paket_wisata.php') || ($current_page == 'booking.php')) ? 'active' : ''; ?>">Paket Wisata</a></li>
+            <li><a href="blog_page.php" class="<?php echo (($current_page == 'blog_page.php') || ($current_page == 'blog_detail.php')) ? 'active' : ''; ?>">Blog</a></li>
             <li><a href="kontak.php" class="<?php echo ($current_page == 'kontak.php') ? 'active' : ''; ?>">Kontak</a></li>
             <li><a href="Gallery Page.php" class="<?php echo ($current_page == 'Gallery Page.php') ? 'active' : ''; ?>">Galeri</a></li>
-            <li><a href="tour_guide.php" class="<?php echo ($current_page == 'tour_guide.php') ? 'active' : ''; ?>">Tour Guide</a></li>
+            <li><a href="tour_guide.php" class="<?php echo ($current_page == 'tour_guide.php')  ? 'active' : ''; ?>">Tour Guide</a></li>
         </ul>
 
         <div class="auth-buttons">
