@@ -11,7 +11,7 @@
     .blog-hero {
       background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
                   url('https://plus.unsplash.com/premium_photo-1684581214880-2043e5bc8b8b?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YmxvZyUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D') no-repeat center center/cover;
-      min-height: 60vh;
+      min-height: 90vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -258,7 +258,7 @@
     <!-- Sidebar -->
     <aside class="sidebar" aria-labelledby="recent-posts-heading">
       <div class="recent-posts">
-        <h3 id="recent-posts-heading">Artikel Terpopuler</h3>
+        <h3 id="recent-posts-heading">Artikel Terpopuler</h3><br>
         <!-- Recent posts list here -->
         <ul>
           <li><a href="#">5 Destinasi Wisata Kuliner di Jawa Timur</a></li>

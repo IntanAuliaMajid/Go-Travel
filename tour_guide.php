@@ -23,7 +23,7 @@
     .hero {
       background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
                   url('https://campuspedia.id/news/wp-content/uploads/2020/10/tour-guide.jpg') no-repeat center center/cover;
-      height: 50vh;
+      height: 90vh;
       display: flex;
       flex-direction: column;
       justify-content: center;

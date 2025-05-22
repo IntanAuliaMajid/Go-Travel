@@ -23,7 +23,7 @@
     .hero {
       background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
                   url('https://akasiamas.com/cfind/source/thumb/images/images/content/cover_w970_h499_kontak.jpg') no-repeat center center/cover;
-      height: 50vh;
+      height: 80vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -628,36 +628,6 @@
           <div class="faq-answer">
             <p>Tentu saja! Kami menyediakan layanan custom paket wisata sesuai dengan preferensi, budget, dan jadwal Anda. Tim travel consultant kami akan membantu merancang itinerary yang sempurna.</p>
           </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Social Media Section -->
-  <section class="social-section">
-    <div class="container">
-      <div class="social-container">
-        <h2>Ikuti Media Sosial Kami</h2>
-        <p>Dapatkan update terbaru tentang destinasi wisata, tips perjalanan, dan penawaran spesial</p>
-        <div class="social-links">
-          <a href="#" class="social-link" title="Facebook">
-            <i class="fab fa-facebook-f"></i>
-          </a>
-          <a href="#" class="social-link" title="Instagram">
-            <i class="fab fa-instagram"></i>
-          </a>
-          <a href="#" class="social-link" title="Twitter">
-            <i class="fab fa-twitter"></i>
-          </a>
-          <a href="#" class="social-link" title="YouTube">
-            <i class="fab fa-youtube"></i>
-          </a>
-          <a href="#" class="social-link" title="TikTok">
-            <i class="fab fa-tiktok"></i>
-          </a>
-          <a href="#" class="social-link" title="WhatsApp">
-            <i class="fab fa-whatsapp"></i>
-          </a>
         </div>
       </div>
     </div>

@@ -12,10 +12,9 @@
       <h2>ADMIN PANEL</h2>
       <nav>
         <ul>
-          <li class="active">Dasbor</li>
-          <li>penggunaUsers</li>
-         <li></li>
-         paket perjalananackge</li>
+          <li class="active">beranda</li>
+          <li>pengguna</li>
+         <li>paket perjalana</li>
           <li>Blog</li>
         </ul>
       </nav>

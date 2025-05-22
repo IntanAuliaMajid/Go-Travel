@@ -23,7 +23,7 @@
     .hero {
       background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
                   url('https://4.bp.blogspot.com/-_Np9OVi0EEU/VU3XHqemogI/AAAAAAAAA9g/QcUM52-qKws/s1600/1.jpg') no-repeat center center/cover;
-      height: 50vh;
+      height: 80vh;
       display: flex;
       flex-direction: column;
       justify-content: center;

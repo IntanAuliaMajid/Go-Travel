@@ -23,7 +23,7 @@
     .hero {
       background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
                   url('https://www.nativeindonesia.com/foto/2024/07/pantai-tanjung-kodok-1.jpg') no-repeat center center/cover;
-      height: 60vh;
+      height: 90vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -830,7 +830,7 @@
   </section>
 
   <!-- Popular Categories -->
-  <section class="categories-section">
+
     <div class="container">
       <div class="section-heading">
         <h2>Kategori Populer</h2>
@@ -879,19 +879,7 @@
         </div>
       </div>
     </div>
-  </section>
-
-  <!-- Newsletter -->
-  <section class="newsletter-section">
-    <div class="newsletter-container">
-      <h2>Dapatkan Informasi Terbaru</h2>
-      <p>Berlangganan newsletter kami untuk mendapatkan informasi dan penawaran spesial tentang destinasi wisata terbaru di Indonesia</p>
-      <form class="newsletter-form">
-        <input type="email" placeholder="Masukkan email Anda">
-        <button type="submit">Berlangganan</button>
-      </form>
-    </div>
-  </section>
+  
 
   <?php include 'Komponen/footer.php'; ?>
 
