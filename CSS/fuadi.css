@@ -1,48 +1,10 @@
-/* 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
 
-body {
-  font-family: 'Arial', sans-serif;
-  color: #333;
-  background-color: #fff;
-  line-height: 1.6;
-} */
 
 header {
   background-color: #fff;
   border-bottom: 1px solid #ddd;
 }
 
-/* .nav-container {
-  display: flex;
-  justify-content: flex-end;
-  padding: 16px 40px;
-  background-color: #fff;
-  border-bottom: 1px solid #ddd;
-}
-
-.navbar {
-  display: flex;
-  gap: 24px;
-  list-style: none;
-}
-
-.navbar li a {
-  text-decoration: none;
-  color: #000;
-  font-weight: normal;
-  font-size: 14px;
-  transition: color 0.2s ease;
-}
-
-.navbar li a.active {
-  color: #0066ff;
-  font-weight: bold;
-} */
 
 .btn-pesan {
   background-color: #0066ff;
@@ -106,7 +68,7 @@ header {
   margin-bottom: 20px;
 }
 
-footer {
+/* footer {
   background-color: #f2f2f2;
   padding: 40px 20px 20px 20px;
   font-size: 13px;
@@ -180,7 +142,7 @@ footer {
   margin-top: 30px;
   padding-top: 10px;
   border-top: 1px solid #ccc;
-}
+} */
 
 .table {
   height: 20px;
@@ -413,4 +375,31 @@ h1 {
 }
 .pertanyaan-contac{
     color: #0066ff;
+}
+
+/* interface ke 20 */
+
+.content-wrapper {
+  max-width: 800px;
+  margin: 2rem auto;
+  background: white;
+  padding: 2rem;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.privacy-content ol {
+  padding-left: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.section-heading {
+  border-top: 2px solid #ccc;
+  padding-top: 1rem;
+  margin-top: 2rem;
+   color: #00b386;
+}
+
+
+strong {
+  font-weight: bold;
 }

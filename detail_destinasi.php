@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Detail Wisata - Gunung Bromo</title>
+  <title>Detail Wisata - Pantai Tanjung Kodok</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./CSS/detail_destinasi.css" />  
 </head>
@@ -41,12 +41,12 @@
     <div class="section">
       <h3>Apa yang bisa dilakukan</h3>
       <div class="activities">
-        <div class="activity"><i class="fas fa-sun"></i> <span>Berburu Sunrise di Penanjakan</span></div>
-        <div class="activity"><i class="fas fa-hiking"></i> <span>Mendaki Gunung Bromo</span></div>
-        <div class="activity"><i class="fas fa-camera"></i> <span>Fotografi Lanskap</span></div>
-        <div class="activity"><i class="fas fa-horse"></i> <span>Menunggang Kuda di Lautan Pasir</span></div>
-        <div class="activity"><i class="fas fa-mountain"></i> <span>Melihat Kawah Aktif</span></div>
-        <div class="activity"><i class="fas fa-history"></i> <span>Mengunjungi Pura Luhur Poten</span></div>
+        <div class="activity"><i class="fas fa-sun"></i> <span>Menikmati Pemandangan Batu Karang Unik</span></div>
+        <div class="activity"><i class="fas fa-hiking"></i> <span>Menikmati Sunset dan Sunrise</span></div>
+        <div class="activity"><i class="fas fa-camera"></i> <span>Mengunjungi Menara Rukyat</span></div>
+        <div class="activity"><i class="fas fa-horse"></i> <span>Bermain Pasir dan Aktivitas Anak-anak</span></div>
+        <div class="activity"><i class="fas fa-mountain"></i> <span>Menikmati Angkringan/Musik di Malam Hari (Weekend)</span></div>
+        <div class="activity"><i class="fas fa-history"></i> <span>Naik Perahu atau Kano (musiman)</span></div>
       </div>
     </div>
 
@@ -84,14 +84,13 @@
 
     <div class="location-box">
       <h4>Lokasi</h4>
-      <iframe
-        class="map"
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3955.663042383319!2d112.9535033!3d-7.9424934!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7882f3df30c62f%3A0x8a64ad31d8be1575!2sGunung%20Bromo!5e0!3m2!1sen!2sid!4v1615462118306!5m2!1sen!2sid"
-        allowfullscreen=""
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade">
-      </iframe>
-      <p style="margin-top: 10px; font-size: 14px;">Pantai Tanjung Kodok, Jawa Timur, Indonesia</p>
+      <img 
+        class="map" 
+        src="./Gambar/tanjungkodok.png" 
+        alt="Peta Lokasi Pantai Tanjung Kodok" 
+        width="100%" 
+        height="auto">
+      <p style="margin-top: 10px; font-size: 14px;">Pantai Tanjung Kodok, Labuhan, Brondong, Lamongan, Jawa Timur, Indonesia</p>
     </div>
 
     <div class="related-box">

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Filter Paket Wisata</title>
+  <title>Paket Wisata</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
     * {
@@ -349,7 +349,7 @@
       <div class="filter-group">
         <div class="filter-label">Kategori:</div>
         <select id="kategori" class="filter-select">
-          <option value="">Semua Kategori</option>
+          <option value="all">Semua Kategori</option>
           <option value="pantai">Pantai</option>
           <option value="gunung">Gunung</option>
           <option value="air-terjun">Air Terjun</option>
@@ -457,7 +457,7 @@
         </div>
       </div>
 
-      <div class="paket-card lamongan hiburan" data-harga="2500000">
+      <div class="paket-card lamongan hiburan" data-harga="500000">
         <div class="card-image">
           <img src="https://tugujatim.id/wp-content/uploads/2023/10/WhatsApp-Image-2023-10-20-at-16.12.53.jpeg" alt="WBL DAN MZG">
         </div>
@@ -467,7 +467,7 @@
             <i class="fas fa-map-marker-alt"></i> Lamongan
           </div>
           <div class="card-meta">
-            <div class="card-price">Rp 2.500.000</div>
+            <div class="card-price">Rp 500.000</div>
           </div>
           <button class="detail-button" onclick="viewDetail('wbl-dan-mzg')">
             <i class="fas fa-eye"></i>
@@ -496,7 +496,7 @@
         </div>
       </div>
 
-      <div class="paket-card jakarta budaya" data-harga="1400000">
+      <div class="paket-card jakarta budaya" data-harga="200000">
         <div class="card-image">
           <img src="https://anekatempatwisata.com/wp-content/uploads/2018/04/Museum-Nasional-Indonesia-610x610.jpg" alt="Museum Nasional Indonesia">
         </div>
@@ -506,7 +506,7 @@
             <i class="fas fa-map-marker-alt"></i> Jakarta
           </div>
           <div class="card-meta">
-            <div class="card-price">Rp 1.400.000</div>
+            <div class="card-price">Rp 200.000</div>
           </div>
           <button class="detail-button" onclick="viewDetail('museum-nasional')">
             <i class="fas fa-eye"></i>
@@ -534,7 +534,7 @@
         </div>
       </div>
 
-      <div class="paket-card jakarta budaya" data-harga="1400000">
+      <div class="paket-card jakarta budaya" data-harga="100000">
         <div class="card-image">
           <img src="https://anekatempatwisata.com/wp-content/uploads/2018/04/Monumen-Nasional-610x406.jpg" alt="Monumen Nasional">
         </div>
@@ -544,7 +544,7 @@
             <i class="fas fa-map-marker-alt"></i> Jakarta
           </div>
           <div class="card-meta">
-            <div class="card-price">Rp 1.400.000</div>
+            <div class="card-price">Rp 100.000</div>
           </div>
           <button class="detail-button" onclick="viewDetail('monumen-nasional')">
             <i class="fas fa-eye"></i>
@@ -553,17 +553,17 @@
         </div>
       </div>
 
-      <div class="paket-card jakarta pantai" data-harga="1800000">
+      <div class="paket-card jakarta pantai" data-harga="180000">
         <div class="card-image">
-          <img src="https://anekatempatwisata.com/wp-content/uploads/2018/04/Dunia-Fantasi-klook.png" alt="Dunia Fantasi, Pantai Ancol, dan Kota Tua Jakarta">
+          <img src="https://anekatempatwisata.com/wp-content/uploads/2018/04/Dunia-Fantasi-klook.png" alt="ancol taman impian">
         </div>
         <div class="card-content">
-          <h3>Dunia Fantasi, Pantai Ancol, dan Kota Tua Jakarta</h3>
+          <h3>Ancol Taman Impian</h3>
           <div class="card-location">
             <i class="fas fa-map-marker-alt"></i> Jakarta
           </div>
           <div class="card-meta">
-            <div class="card-price">Rp 1.800.000</div>
+            <div class="card-price">Rp 180.000</div>
           </div>
           <button class="detail-button" onclick="viewDetail('dufan-ancol-kotatua')">
             <i class="fas fa-eye"></i>
@@ -573,7 +573,7 @@
       </div>
 
       <!-- Bangkalan Packages -->
-      <div class="paket-card bangkalan pantai" data-harga="1800000">
+      <div class="paket-card bangkalan pantai" data-harga="30000">
         <div class="card-image">
           <img src="https://www.nativeindonesia.com/foto/2024/03/pantai-pasir-putih-tlongoh.jpg" alt="Pantai Pasir Putih Tlangoh">
         </div>
@@ -583,7 +583,7 @@
             <i class="fas fa-map-marker-alt"></i> Bangkalan
           </div>
           <div class="card-meta">
-            <div class="card-price">Rp 1.800.000</div>
+            <div class="card-price">Rp 30.000</div>
           </div>
           <button class="detail-button" onclick="viewDetail('pantai-tlangoh')">
             <i class="fas fa-eye"></i>
@@ -592,7 +592,7 @@
         </div>
       </div>
 
-      <div class="paket-card bangkalan budaya" data-harga="1800000">
+      <div class="paket-card bangkalan budaya" data-harga="20000">
         <div class="card-image">
           <img src="https://dimadura.id/wp-content/uploads/2025/04/Mercusuar-Sembilangan_Wisata-Sejarah-di-Bangkalan_-1.jpg" alt="Mercusuar Sembilangan">
         </div>
@@ -602,7 +602,7 @@
             <i class="fas fa-map-marker-alt"></i> Bangkalan
           </div>
           <div class="card-meta">
-            <div class="card-price">Rp 1.800.000</div>
+            <div class="card-price">Rp 20.000</div>
           </div>
           <button class="detail-button" onclick="viewDetail('mercusuar-sembilangan')">
             <i class="fas fa-eye"></i>
@@ -611,7 +611,7 @@
         </div>
       </div>
 
-      <div class="paket-card bangkalan hiburan" data-harga="1800000">
+      <div class="paket-card bangkalan hiburan" data-harga="35000">
         <div class="card-image">
           <img src="https://labuhanmangrove.files.wordpress.com/2019/09/whatsapp-image-2019-09-11-at-10.58.31-1.jpeg" alt="Labuhan Mangrove Educational Park">
         </div>
@@ -621,7 +621,7 @@
             <i class="fas fa-map-marker-alt"></i> Bangkalan
           </div>
           <div class="card-meta">
-            <div class="card-price">Rp 1.800.000</div>
+            <div class="card-price">Rp 35.000</div>
           </div>
           <button class="detail-button" onclick="viewDetail('labuhan-mangrove')">
             <i class="fas fa-eye"></i>
@@ -630,7 +630,7 @@
         </div>
       </div>
 
-      <div class="paket-card bangkalan pantai" data-harga="1800000">
+      <div class="paket-card bangkalan pantai" data-harga="80.000">
         <div class="card-image">
           <img src="https://dimadura.id/wp-content/uploads/2025/04/Pantai-Rongkang-Bangkalan-Madura-IG-geonerations-700x400.jpg" alt="Pantai Rongkang">
         </div>
@@ -640,7 +640,7 @@
             <i class="fas fa-map-marker-alt"></i> Bangkalan
           </div>
           <div class="card-meta">
-            <div class="card-price">Rp 1.800.000</div>
+            <div class="card-price">Rp 80.000</div>
           </div>
           <button class="detail-button" onclick="viewDetail('pantai-rongkang')">
             <i class="fas fa-eye"></i>
@@ -651,15 +651,15 @@
 
       <div class="paket-card bangkalan pantai" data-harga="1800000">
         <div class="card-image">
-          <img src="https://superapp.id/blog/wp-content/uploads/2024/06/iqbal-alfaa-QAQBN3lkBfM-unsplash-scaled-e1718268961766-1440x720.jpg" alt="Pantai Sembilan, Pantai Pasir Putih Tlangoh, dan Labuhan Mangrove Educational Park">
+          <img src="https://hosnews.id/wp-content/uploads/2022/10/Wisata-Cafe-Kapal-Rindu-Bangkalan-1024x535.png?v=1665633171" alt="Pantai Sembilan, Pantai Pasir Putih Tlangoh, dan Labuhan Mangrove Educational Park">
         </div>
         <div class="card-content">
-          <h3>Pantai Sembilan, Pantai Pasir Putih Tlangoh, dan Labuhan Mangrove Educational Park</h3>
+          <h3>Wisata Kapal Rindu</h3>
           <div class="card-location">
             <i class="fas fa-map-marker-alt"></i> Bangkalan
           </div>
           <div class="card-meta">
-            <div class="card-price">Rp 1.800.000</div>
+            <div class="card-price">Rp 1.000.000</div>
           </div>
           <button class="detail-button" onclick="viewDetail('bangkalan-combo')">
             <i class="fas fa-eye"></i>
@@ -670,7 +670,7 @@
 
       <div class="paket-card surabaya budaya" data-harga="1800000">
         <div class="card-image">
-          <img src="https://res.klook.com/image/upload/fl_lossy.progressive,q_85/c_fill,w_1000/v1626756055/blog/mh867iuqf0eegifllqlc.webp" alt="Pantai Sembilan, Pantai Pasir Putih Tlangoh, dan Labuhan Mangrove Educational Park">
+          <img src="https://res.klook.com/image/upload/fl_lossy.progressive,q_85/c_fill,w_1000/v1626756055/blog/mh867iuqf0eegifllqlc.webp" alt="Museum 10 November">
         </div>
         <div class="card-content">
           <h3>Museum 10 November</h3>
@@ -689,7 +689,7 @@
 
       <div class="paket-card pamekasan budaya" data-harga="1800000">
         <div class="card-image">
-          <img src="https://blog.bookingtogo.com/wp-content/uploads/2022/06/Sunrise-di-Puncak-Ratu-Pamekasan-696x690.jpg" alt="Pantai Sembilan, Pantai Pasir Putih Tlangoh, dan Labuhan Mangrove Educational Park">
+          <img src="https://blog.bookingtogo.com/wp-content/uploads/2022/06/Sunrise-di-Puncak-Ratu-Pamekasan-696x690.jpg" alt="Puncak Ratu Pamekasan">
         </div>
         <div class="card-content">
           <h3>Puncak Ratu Pamekasan</h3>

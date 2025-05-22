@@ -22,7 +22,7 @@
     /* Hero Section */
     .hero {
       background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
-                  url('./Gambar/guides-hero.jpg') no-repeat center center/cover;
+                  url('https://campuspedia.id/news/wp-content/uploads/2020/10/tour-guide.jpg') no-repeat center center/cover;
       height: 50vh;
       display: flex;
       flex-direction: column;
@@ -34,7 +34,8 @@
     }
 
     .hero h1 {
-      font-size: 3.5rem;
+      margin-top: 40px;
+      font-size: 3rem;
       margin-bottom: 1rem;
       text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
     }
@@ -355,7 +356,7 @@
     .become-guide-section {
       padding: 5rem 0;
       background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
-                  url('./Gambar/become-guide.jpg') no-repeat center center/cover;
+                  url('/api/placeholder/1200/600') no-repeat center center/cover;
       color: white;
       text-align: center;
     }
@@ -447,11 +448,10 @@
   </style>
 </head>
 <body>
-  <?php include 'Komponen/navbar.php'; ?>
-
+  <?php include './Komponen/navbar.php'; ?>
   <!-- Hero Section -->
   <section class="hero">
-    <h1>Tour Guide Indonesia</h1>
+    <h1>Tour Guide Go-Travel</h1>
     <p>Jelajahi Indonesia dengan tour guide berpengalaman dan berlisensi untuk pengalaman yang lebih bermakna</p>
   </section>
 
@@ -462,12 +462,11 @@
         <div class="filter-label">Lokasi:</div>
         <select class="filter-select">
           <option value="">Semua Lokasi</option>
-          <option value="bali">Bali</option>
-          <option value="jawa">Jawa</option>
-          <option value="sumatra">Sumatra</option>
-          <option value="kalimantan">Kalimantan</option>
-          <option value="sulawesi">Sulawesi</option>
-          <option value="papua">Papua</option>
+          <option value="lamongan">Lamongan</option>
+          <option value="jakarta">Jakarta</option>
+          <option value="bangkalan">Bangkalan</option>
+          <option value="pamekasan">Pamekasan</option>
+          <option value="surabaya">Surabaya</option>
         </select>
       </div>
       <div class="filter-group">
@@ -507,13 +506,13 @@
       <!-- Guide 1 -->
       <div class="guide-card">
         <div class="guide-image">
-          <img src="https://image.popbela.com/post/20240625/318eec2bd6a926500cbb4bb06242a631.jpg?tr=w-1920,f-webp,q-75&width=1920&format=webp&quality=75" alt="Putu Aditya">
+          <img src="https://blog.cakap.com/wp-content/uploads/2022/10/H1-ukuran-foto-melamar-kerja-1.jpg" alt="Putu Aditya">
           <span class="guide-badge certified-badge">Tersertifikasi</span>
         </div>
         <div class="guide-content">
           <h3>Putu Aditya</h3>
           <div class="guide-location">
-            <i class="fas fa-map-marker-alt"></i> Bali
+            <i class="fas fa-map-marker-alt"></i> Lamongan
           </div>
           <div class="guide-languages">
             <span class="language-tag">Indonesia</span>
@@ -525,13 +524,13 @@
             <div class="count">(124 ulasan)</div>
           </div>
           <div class="guide-description">
-            Pemandu wisata berpengalaman di Bali selama 8 tahun. Ahli dalam sejarah, budaya, dan tradisi Bali. Spesialis tur spiritual dan heritage.
+            Pemandu wisata berpengalaman di Lamongan selama 8 tahun. Ahli dalam wisata religi makam Sunan Drajat dan destinasi kuliner khas Lamongan.
           </div>
           <div class="guide-meta">
             <div class="guide-price">
               Rp 500.000 <span>/hari</span>
             </div>
-            <a href="detail_guide.php?id=putu-aditya" class="guide-button">Profil Lengkap</a>
+            <a href="detail_tour_guide.php" class="guide-button">Profil Lengkap</a>
           </div>
         </div>
       </div>
@@ -539,13 +538,13 @@
       <!-- Guide 2 -->
       <div class="guide-card">
         <div class="guide-image">
-          <img src="https://image.popbela.com/post/20240625/318eec2bd6a926500cbb4bb06242a631.jpg?tr=w-1920,f-webp,q-75&width=1920&format=webp&quality=75" alt="Ratna Dewi">
+          <img src="https://cnc-magazine.oramiland.com/parenting/images/foto-formal.width-800.format-webp.webp" alt="Ratna Dewi">
           <span class="guide-badge">Populer</span>
         </div>
         <div class="guide-content">
           <h3>Ratna Dewi</h3>
           <div class="guide-location">
-            <i class="fas fa-map-marker-alt"></i> Yogyakarta
+            <i class="fas fa-map-marker-alt"></i> Jakarta
           </div>
           <div class="guide-languages">
             <span class="language-tag">Indonesia</span>
@@ -556,13 +555,13 @@
             <div class="count">(98 ulasan)</div>
           </div>
           <div class="guide-description">
-            Spesialis wisata budaya di Yogyakarta. Memiliki pengetahuan mendalam tentang sejarah candi, keraton, dan kesenian tradisional Jawa.
+            Spesialis wisata kota Jakarta. Memiliki pengetahuan mendalam tentang sejarah metropolitan, museum, dan seni budaya Jakarta.
           </div>
           <div class="guide-meta">
             <div class="guide-price">
               Rp 450.000 <span>/hari</span>
             </div>
-            <a href="detail_guide.php?id=ratna-dewi" class="guide-button">Profil Lengkap</a>
+            <a href="detail_tour_guide.php" class="guide-button">Profil Lengkap</a>
           </div>
         </div>
       </div>
@@ -570,13 +569,13 @@
       <!-- Guide 3 -->
       <div class="guide-card">
         <div class="guide-image">
-          <img src="https://image.popbela.com/post/20240625/318eec2bd6a926500cbb4bb06242a631.jpg?tr=w-1920,f-webp,q-75&width=1920&format=webp&quality=75" alt="Budi Santoso">
+          <img src="https://blog.cakap.com/wp-content/uploads/2022/10/H1-ukuran-foto-melamar-kerja-1.jpg" alt="Budi Santoso">
           <span class="guide-badge certified-badge">Tersertifikasi</span>
         </div>
         <div class="guide-content">
           <h3>Budi Santoso</h3>
           <div class="guide-location">
-            <i class="fas fa-map-marker-alt"></i> Jawa Timur
+            <i class="fas fa-map-marker-alt"></i> Bangkalan
           </div>
           <div class="guide-languages">
             <span class="language-tag">Indonesia</span>
@@ -588,13 +587,13 @@
             <div class="count">(87 ulasan)</div>
           </div>
           <div class="guide-description">
-            Ahli pendakian dan tur gunung Bromo & Ijen. Berpengalaman 10 tahun sebagai pemandu wisata alam dan petualangan.
+            Ahli wisata sejarah dan budaya Madura di Bangkalan. Berpengalaman 10 tahun memandu wisata religi, batik, dan kesenian tradisional Madura.
           </div>
           <div class="guide-meta">
             <div class="guide-price">
               Rp 550.000 <span>/hari</span>
             </div>
-            <a href="detail_guide.php?id=budi-santoso" class="guide-button">Profil Lengkap</a>
+            <a href="detail_tour_guide.php" class="guide-button">Profil Lengkap</a>
           </div>
         </div>
       </div>
@@ -602,12 +601,12 @@
       <!-- Guide 4 -->
       <div class="guide-card">
         <div class="guide-image">
-          <img src="https://image.popbela.com/post/20240625/318eec2bd6a926500cbb4bb06242a631.jpg?tr=w-1920,f-webp,q-75&width=1920&format=webp&quality=75" alt="Siti Nuraini">
+          <img src="https://glints.com/id/lowongan/wp-content/uploads/2022/04/cara-mengambil-foto-profesional-2.jpg" alt="Siti Nuraini">
         </div>
         <div class="guide-content">
           <h3>Siti Nuraini</h3>
           <div class="guide-location">
-            <i class="fas fa-map-marker-alt"></i> Jakarta
+            <i class="fas fa-map-marker-alt"></i> Pamekasan
           </div>
           <div class="guide-languages">
             <span class="language-tag">Indonesia</span>
@@ -619,13 +618,13 @@
             <div class="count">(76 ulasan)</div>
           </div>
           <div class="guide-description">
-            Spesialis wisata kota dan sejarah di Jakarta. Ahli dalam tur kuliner dan mengenalkan beragam makanan lokal yang otentik.
+            Spesialis wisata kuliner dan agro di Pamekasan. Ahli dalam tur wisata perkebunan tembakau dan makanan khas Madura yang otentik.
           </div>
           <div class="guide-meta">
             <div class="guide-price">
               Rp 400.000 <span>/hari</span>
             </div>
-            <a href="detail_guide.php?id=siti-nuraini" class="guide-button">Profil Lengkap</a>
+            <a href="detail_tour_guide.php" class="guide-button">Profil Lengkap</a>
           </div>
         </div>
       </div>
@@ -633,13 +632,13 @@
       <!-- Guide 5 -->
       <div class="guide-card">
         <div class="guide-image">
-          <img src="https://image.popbela.com/post/20240625/318eec2bd6a926500cbb4bb06242a631.jpg?tr=w-1920,f-webp,q-75&width=1920&format=webp&quality=75" alt="Rahmat Hidayat">
+          <img src="https://png.pngtree.com/thumb_back/fh260/background/20210908/pngtree-business-daytime-mens-office-professional-wear-photography-map-with-map-image_830379.jpg" alt="Rahmat Hidayat">
           <span class="guide-badge">Baru</span>
         </div>
         <div class="guide-content">
           <h3>Rahmat Hidayat</h3>
           <div class="guide-location">
-            <i class="fas fa-map-marker-alt"></i> Lombok
+            <i class="fas fa-map-marker-alt"></i> Surabaya
           </div>
           <div class="guide-languages">
             <span class="language-tag">Indonesia</span>
@@ -651,13 +650,13 @@
             <div class="count">(42 ulasan)</div>
           </div>
           <div class="guide-description">
-            Tour guide lokal Lombok spesialis trekking Gunung Rinjani dan wisata pantai. Berpengalaman mengorganisir tur multi-hari.
+            Tour guide lokal Surabaya spesialis wisata heritage dan kuliner. Berpengalaman mengorganisir tur sejarah kota pahlawan dan wisata kampung heritage.
           </div>
           <div class="guide-meta">
             <div class="guide-price">
               Rp 500.000 <span>/hari</span>
             </div>
-            <a href="detail_guide.php?id=rahmat-hidayat" class="guide-button">Profil Lengkap</a>
+            <a href="detail_tour_guide.php" class="guide-button">Profil Lengkap</a>
           </div>
         </div>
       </div>
@@ -665,13 +664,13 @@
       <!-- Guide 6 -->
       <div class="guide-card">
         <div class="guide-image">
-          <img src="https://image.popbela.com/post/20240625/318eec2bd6a926500cbb4bb06242a631.jpg?tr=w-1920,f-webp,q-75&width=1920&format=webp&quality=75" alt="Maya Indriani">
+          <img src="https://shanibacreative.com/wp-content/uploads/2023/06/foto-untuk-melamar-kerja.jpg" alt="Maya Indriani">
           <span class="guide-badge certified-badge">Tersertifikasi</span>
         </div>
         <div class="guide-content">
           <h3>Maya Indriani</h3>
           <div class="guide-location">
-            <i class="fas fa-map-marker-alt"></i> Raja Ampat, Papua
+            <i class="fas fa-map-marker-alt"></i> Jakarta
           </div>
           <div class="guide-languages">
             <span class="language-tag">Indonesia</span>
@@ -682,13 +681,13 @@
             <div class="count">(68 ulasan)</div>
           </div>
           <div class="guide-description">
-            Pemandu wisata spesialis diving dan snorkeling di Raja Ampat. Ahli dalam konservasi laut dan ekologi terumbu karang.
+            Pemandu wisata spesialis museum dan galeri seni di Jakarta. Ahli dalam wisata edukasi dan sejarah perkembangan ibu kota Indonesia.
           </div>
           <div class="guide-meta">
             <div class="guide-price">
               Rp 650.000 <span>/hari</span>
             </div>
-            <a href="detail_guide.php?id=maya-indriani" class="guide-button">Profil Lengkap</a>
+            <a href="detail_tour_guide.php" class="guide-button">Profil Lengkap</a>
           </div>
         </div>
       </div>
@@ -716,45 +715,45 @@
       <div class="testimonials-container">
         <div class="testimonial-card">
           <div class="testimonial-text">
-            "Perjalanan kami di Bali menjadi sangat spesial berkat Pak Putu. Dia sangat berpengetahuan dan membawa kami ke tempat-tempat yang tidak banyak dikunjungi wisatawan. Pengalaman yang luar biasa!"
+            "Perjalanan kami di Lamongan menjadi sangat spesial berkat Pak Putu. Dia sangat berpengetahuan tentang sejarah makam Sunan Drajat dan membawa kami ke tempat-tempat kuliner yang tidak banyak dikunjungi wisatawan. Pengalaman yang luar biasa!"
           </div>
           <div class="testimonial-author">
             <div class="testimonial-avatar">
-              <img src="https://image.popbela.com/post/20240625/318eec2bd6a926500cbb4bb06242a631.jpg?tr=w-1920,f-webp,q-75&width=1920&format=webp&quality=75" alt="Sarah">
+              <img src="https://cloud.jpnn.com/photo/sultra/news/normal/2022/03/20/mimpi-buruk-bule-cantik-asal-australia-bronte-gossling-berli-vul8.jpg" alt="Sarah">
             </div>
             <div class="testimonial-info">
               <h4>Sarah Johnson</h4>
-              <p>Australia, wisata ke Bali</p>
+              <p>Australia, wisata ke Lamongan</p>
             </div>
           </div>
         </div>
 
         <div class="testimonial-card">
           <div class="testimonial-text">
-            "Bu Ratna sangat membantu selama perjalanan kami di Yogyakarta. Pengetahuannya tentang sejarah dan budaya lokal membuat pengalaman kami jauh lebih bermakna. Sangat direkomendasikan!"
+            "Bu Ratna sangat membantu selama perjalanan kami di Jakarta. Pengetahuannya tentang sejarah kota dan budaya metropolitan membuat pengalaman kami jauh lebih bermakna. Sangat direkomendasikan!"
           </div>
           <div class="testimonial-author">
             <div class="testimonial-avatar">
-              <img src="https://image.popbela.com/post/20240625/318eec2bd6a926500cbb4bb06242a631.jpg?tr=w-1920,f-webp,q-75&width=1920&format=webp&quality=75" alt="David">
+              <img src="https://awsimages.detik.net.id/community/media/visual/2024/02/05/queen-of-tears-2_169.jpeg?w=500&q=90" alt="David">
             </div>
             <div class="testimonial-info">
               <h4>David Kim</h4>
-              <p>Korea Selatan, wisata ke Yogyakarta</p>
+              <p>Korea Selatan, wisata ke Jakarta</p>
             </div>
           </div>
         </div>
 
         <div class="testimonial-card">
           <div class="testimonial-text">
-            "Pendakian Gunung Bromo dengan Pak Budi adalah pengalaman terbaik kami di Indonesia. Dia sangat profesional, sabar, dan memastikan keamanan kami sepanjang perjalanan."
+            "Wisata budaya Madura di Bangkalan dengan Pak Budi adalah pengalaman terbaik kami di Indonesia. Dia sangat profesional, sabar, dan memperkenalkan budaya lokal dengan sangat menarik."
           </div>
           <div class="testimonial-author">
             <div class="testimonial-avatar">
-              <img src="https://image.popbela.com/post/20240625/318eec2bd6a926500cbb4bb06242a631.jpg?tr=w-1920,f-webp,q-75&width=1920&format=webp&quality=75" alt="Emma">
+              <img src="https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1545208898/1912_Khamid_aa0g0y.jpg" alt="Emma">
             </div>
             <div class="testimonial-info">
               <h4>Emma Wilson</h4>
-              <p>Inggris, wisata ke Jawa Timur</p>
+              <p>Inggris, wisata ke Bangkalan</p>
             </div>
           </div>
         </div>
@@ -762,15 +761,6 @@
     </div>
   </section>
 
-  <!-- Become a Guide -->
-  <section class="become-guide-section">
-    <div class="become-guide-content">
-      <h2>Bergabunglah Menjadi Tour Guide</h2>
-      <p>Jadilah bagian dari jaringan tour guide profesional kami. Dapatkan lebih banyak klien dan kembangkan karir Anda sebagai pemandu wisata di Indonesia.</p>
-      <a href="daftar_guide.php" class="big-button">Daftar Sekarang</a>
-    </div>
-  </section>
-
-  <?php include 'Komponen/footer.php'; ?>
+<?php include './Komponen/footer.php'; ?>
 </body>
 </html>

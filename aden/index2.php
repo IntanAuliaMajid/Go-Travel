@@ -16,9 +16,9 @@
             <div class="sidebar-menu">
                 <a href="#" class="menu-item">Dashboard</a>
                 <a href="#" class="menu-item">Users</a>
-                <a href="#" class="menu-item active">Booking</a>
+                <a href="#" class="menu-item">Booking</a>
                 <a href="#" class="menu-item">Travel package</a>
-                <a href="#" class="menu-item">Blog</a>
+                <a href="#" class="menu-item active">Blog</a>
             </div>
         </div>
 
