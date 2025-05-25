@@ -52,16 +52,6 @@
                     </table>
                 </div>
             </div>
-
-            <!-- Footer -->
-            <div class="footer">
-                <div class="copyright">
-                    Copyright 2014-2021 <a href="#">AdminLTE.io</a>. All rights reserved.
-                </div>
-                <div class="footer-right">
-                    Anything you want
-                </div>
-            </div>
         </div>
     </div>
 </body>

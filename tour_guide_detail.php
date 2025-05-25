@@ -652,36 +652,6 @@
         <section class="tours-section">
           <h2 class="section-title">Paket Tur yang Ditawarkan</h2>
           <!-- Tour 1 -->
-          <div class="tour-card">
-            <h3>Spiritual Ubud Journey</h3>
-            <p>Rasakan pengalaman spiritual di jantung Bali. Kunjungi candi-candi kuno, ikuti upacara tradisional, dan temukan kedamaian di tengah persawahan yang indah.</p>
-            
-            <div class="tour-details">
-              <div class="tour-detail">
-                <i class="far fa-clock"></i>
-                <span>Durasi: 8 jam (Full Day)</span>
-              </div>
-              <div class="tour-detail">
-                <i class="fas fa-users"></i>
-                <span>Ukuran grup: 1-6 orang</span>
-              </div>
-              <div class="tour-detail">
-                <i class="fas fa-route"></i>
-                <span>Termasuk: Pura Tirta Empul, Pura Gunung Kawi, Tegallalang Rice Terrace</span>
-              </div>
-              <div class="tour-detail">
-                <i class="fas fa-utensils"></i>
-                <span>Makan siang tradisional Bali disediakan</span>
-              </div>
-            </div>
-            
-            <div class="tour-actions">
-              <div class="tour-price">
-                Rp 750.000 <span>/orang</span>
-              </div>
-              <a href="booking.php?tour=spiritual-ubud" class="book-button">Pesan Sekarang</a>
-            </div>
-          </div>
           
           <!-- Tour 2 -->
           <div class="tour-card">

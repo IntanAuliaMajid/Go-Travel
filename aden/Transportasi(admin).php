@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transportasi Booking</title>
+    <title>Admin Panel - Transportasi</title>
     <style>
         * {
             margin: 0;
@@ -277,7 +277,9 @@
     </style>
 </head>
 <body>
-    <?php include '../Komponen/navbar.php'; ?>
+    
+  <?php include './Komponen/navbar.php'; ?>
+
     <div class="container">
        
         <!-- Main Content -->
@@ -302,6 +304,8 @@
                         <option>5 orang</option>
                         <option>6 orang</option>
                         <option>7 orang</option>
+                        <option>10 - 15 orang </option>
+                        <option>20 - 30 0rang</option>
                     </select>
                 </div>
                 <div style="text-align: right;">

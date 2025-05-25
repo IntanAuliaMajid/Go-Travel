@@ -509,23 +509,18 @@
         <div class="payment-form">
             <!-- Progress indicator -->
             <div class="booking-progress">
-                <div class="progress-step completed">
+                <div class="progress-step active">
                     <div class="step-number">1</div>
-                    <div class="step-label">Pilih Paket</div>
-                </div>
-                <div class="progress-line"></div>
-                <div class="progress-step completed">
-                    <div class="step-number">2</div>
-                    <div class="step-label">Data Diri</div>
+                    <div class="step-label">Pilihan Paket & Data Diri</div>
                 </div>
                 <div class="progress-line"></div>
                 <div class="progress-step active">
-                    <div class="step-number">3</div>
+                    <div class="step-number">2</div>
                     <div class="step-label">Pembayaran</div>
                 </div>
                 <div class="progress-line"></div>
-                <div class="progress-step completed">
-                    <div class="step-number">4</div>
+                <div class="progress-step">
+                    <div class="step-number">3</div>
                     <div class="step-label">Konfirmasi</div>
                 </div>
             </div>
@@ -635,17 +630,19 @@
             
             <!-- Action buttons -->
             <div class="action-buttons">
-                <a href="#" class="btn btn-secondary">
+                <a href="pemesanan.php" class="btn btn-secondary">
                     <i class="fas fa-arrow-left"></i> Kembali
                 </a>
-                <button class="btn btn-primary" onclick="processPayment()">
-                    <i class="fas fa-lock"></i> <a href="booking_confirmation.php" style="text-decoration:none; color:#FFFF">Bayar Sekarang</a>
-                </button>
+                <a href="pembayaran_konfirmasi.php" style="text-decoration:none; color:#FFFF">
+                    <button class="btn btn-primary" onclick="processPayment()">
+                        <i class="fas fa-lock"></i> Bayar Sekarang
+                    </button>
+                </a>
             </div>
         </div>
         
         <div class="order-summary">
-            <h2 class="section-title">Ringkasan Pesanan</h2>
+            <h2 class="section-title">Ringkasan Pembayaran</h2>
             
             <!-- Package mini card -->
             <div class="package-mini">

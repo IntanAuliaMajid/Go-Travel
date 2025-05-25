@@ -499,7 +499,7 @@
   <!-- Hero Section -->
   <section class="hero">
     <h1>Jelajahi Keindahan Pulau Jawa</h1>
-    <p>Temukan destinasi wisata terbaik di Pulau Jawa, dari pantai eksotis hingga gunung berapi yang megah</p>
+    <p>Temukan destinasi wisata terbaik di Pulau Jawa, dari pantai eksotis hingga tempat hiburan yang menyenangkan</p>
     <div class="search-container">
       <input type="text" placeholder="Cari destinasi wisata...">
       <button><i class="fas fa-search"></i> Cari</button>
@@ -562,7 +562,6 @@
           <button class="wishlist-button">
             <i class="far fa-heart"></i>
           </button>
-          <span class="card-badge">Populer</span>
         </div>
         <div class="card-content">
           <h3>Pantai Tanjung Kodok</h3>
@@ -577,7 +576,7 @@
             Nikmati keindahan sunrise yang menakjubkan di destinasi ikonik Indonesia ini.
           </div>
           <div class="card-meta">
-            <a href="detail_destinasi.php?id=bromo" class="card-button">Lihat Detail</a>
+            <a href="wisata_detail.php" class="card-button">Lihat Detail</a>
           </div>
         </div>
       </div>
@@ -641,7 +640,6 @@
           <button class="wishlist-button">
             <i class="far fa-heart"></i>
           </button>
-          <span class="card-badge">Populer</span>
         </div>
         <div class="card-content">
           <h3>Wisata Bahari Lamongan</h3>
@@ -846,19 +844,12 @@
           <div class="category-count">48 Destinasi</div>
         </div>
 
-        <div class="category-card">
-          <div class="category-icon">
-            <i class="fas fa-mountain"></i>
-          </div>
-          <div class="category-name">Gunung</div>
-          <div class="category-count">36 Destinasi</div>
-        </div>
 
         <div class="category-card">
           <div class="category-icon">
-            <i class="fas fa-water"></i>
+            <i class="fa fa-theater-masks"></i>
           </div>
-          <div class="category-name">Air Terjun</div>
+          <div class="category-name">Hiburan</div>
           <div class="category-count">29 Destinasi</div>
         </div>
 
@@ -868,16 +859,7 @@
           </div>
           <div class="category-name">Budaya & Sejarah</div>
           <div class="category-count">42 Destinasi</div>
-        </div>
-
-        <div class="category-card">
-          <div class="category-icon">
-            <i class="fas fa-campground"></i>
-          </div>
-          <div class="category-name">Wisata Alam</div>
-          <div class="category-count">53 Destinasi</div>
-        </div>
-      </div>
+        </div>>
     </div>
   
 

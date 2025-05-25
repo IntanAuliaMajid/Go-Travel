@@ -74,8 +74,6 @@
       <label for="gambar">Gambar (opsional)</label>
       <input type="file" id="gambar" name="gambar">
 
-      <label for="status">Status</label>
-
       <button type="submit">Simpan Artikel</button>
     </form>
   </main>

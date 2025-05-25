@@ -10,22 +10,17 @@
         <ul>
           <li><a href="tentang_kami.php">Tentang Kami</a></li>
           <li><a href="paket_wisata.php">Paket Wisata</a></li>
-          <li><a href="blog_page.php">Blog</a></li>
+          <li><a href="blog.php">Blog</a></li>
         </ul>
       </div>
-      <div>
-        <h4>Perusahaan</h4>
-        <ul>
-          <li><a href="#">Cara Pemesanan</a></li>
-        </ul>
-      </div>
+
       <div>
         <h4>Dukungan</h4>
         <ul>
-          <li><a href="./FAQ Page.php">Pertanyaan Umum</a></li>
+          <li><a href="./pertanyaan.php">Pertanyaan Umum</a></li>
           <li><a href="./kontak.php">Hubungi kami</a></li>
-          <li><a href="Privacy Policy Page.php">Privacy Policy</a></li>
-          <li><a href="Terms and Conditions Page.php">Kebijakan & Syarat layanan</a></li>
+          <li><a href="privacy_policy.php">Privacy Policy</a></li>
+          <li><a href="kebijakan & syarat layanan.php">Kebijakan & Syarat layanan</a></li>
         </ul>
       </div>
       <div>

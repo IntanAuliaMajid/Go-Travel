@@ -605,23 +605,18 @@
         <div class="confirmation-card">
             <!-- Progress indicator -->
             <div class="booking-progress">
-                <div class="progress-step completed">
+                <div class="progress-step active">
                     <div class="step-number">1</div>
-                    <div class="step-label">Pilih Paket</div>
+                    <div class="step-label">Pilihan Paket & Data Diri</div>
                 </div>
                 <div class="progress-line"></div>
-                <div class="progress-step completed">
+                <div class="progress-step active">
                     <div class="step-number">2</div>
-                    <div class="step-label">Data Diri</div>
-                </div>
-                <div class="progress-line"></div>
-                <div class="progress-step completed">
-                    <div class="step-number">3</div>
                     <div class="step-label">Pembayaran</div>
                 </div>
                 <div class="progress-line"></div>
-                <div class="progress-step completed">
-                    <div class="step-number">4</div>
+                <div class="progress-step active">
+                    <div class="step-number">3</div>
                     <div class="step-label">Konfirmasi</div>
                 </div>
             </div>

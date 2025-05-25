@@ -1,70 +1,89 @@
-<!-- /komponen/sidebar.php -->
+<?php
+$current_page = basename($_SERVER['PHP_SELF']);
+?>
 <style>
   .sidebar {
-    width: 220px;
+    width: 240px;
     height: 100vh;
-    background-color: #222;
-    color: white;
+    background: linear-gradient(180deg, #2c3e50, #34495e);
+    color: #ecf0f1;
     padding: 20px;
     box-sizing: border-box;
     position: fixed;
     top: 0;
     left: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 
   .sidebar h2 {
-    margin-top: 0;
-    margin-bottom: 20px;
-    font-weight: normal;
-    font-size: 24px;
+    margin: 0 0 30px 0;
+    font-size: 22px;
+    font-weight: 600;
+    text-align: center;
+    color: #ecf0f1;
   }
 
   .sidebar nav ul {
     list-style: none;
-    padding-left: 0;
+    padding: 0;
+    margin: 0;
   }
 
   .sidebar nav ul li {
-    margin-bottom: 15px;
+    margin-bottom: 12px;
   }
 
   .sidebar nav ul li a {
-    color: white;
+    color: #ecf0f1;
     text-decoration: none;
-    font-size: 16px;
+    font-size: 15px;
     display: block;
-    padding: 8px 12px;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
+    padding: 10px 15px;
+    border-radius: 6px;
+    transition: background 0.3s ease, padding-left 0.3s;
   }
 
   .sidebar nav ul li a:hover {
-    background-color: #444;
+    background: rgba(236, 240, 241, 0.1);
+    padding-left: 20px;
+  }
+
+  .sidebar nav ul li a.active {
+    background-color: #16a085;
+    color: #fff;
+    font-weight: bold;
   }
 
   .sidebar footer {
-    position: absolute;
-    bottom: 20px;
     font-size: 12px;
-    color: #aaa;
-    width: 180px;
+    color: #bdc3c7;
+    text-align: center;
+    margin-top: auto;
+    padding-top: 30px;
   }
 </style>
 
 <div class="sidebar">
-  <h2>Admin Panel</h2>
-  <nav>
-    <ul>
-      <li><a href="../newadmin/dashboard.php">Dashboard</a></li>
-      <li><a href="../newadmin/pengguna.php">Pengguna</a></li>
-      <li><a href="../newadmin/blog.php">Blog</a></li>
-      <li><a href="../newadmin/paket_wisata.php">Paket Wisata</a></li>
-      <li><a href="../newadmin/pertanyaan.php">Pertanyaan</a></li>
-      <li><a href="../newadmin/pemandu_wisata.php">Pemandu Wisata</a></li>
-      <li><a href="../newadmin/galeri.php">Galeri</a></li>
-      <li><a href="/admin/logout.php">Keluar</a></li>
-    </ul>
-  </nav>
+  <div>
+    <h2>Admin Panel</h2>
+    <nav>
+      <ul>
+        <li><a href="../newadmin/dashboard.php" class="<?= ($current_page == 'dashboard.php') ? 'active' : '' ?>">Dashboard</a></li>
+        <li><a href="../newadmin/pengguna.php" class="<?= ($current_page == 'pengguna.php') ? 'active' : '' ?>">Pengguna</a></li>
+        <li><a href="../newadmin/blog.php" class="<?= ($current_page == 'blog.php') ? 'active' : '' ?>">Blog</a></li>
+        <li><a href="../newadmin/paket_wisata.php" class="<?= ($current_page == 'paket_wisata.php') ? 'active' : '' ?>">Paket Wisata</a></li>
+        <li><a href="../newadmin/pertanyaan.php" class="<?= ($current_page == 'pertanyaan.php') ? 'active' : '' ?>">Pertanyaan</a></li>
+        <li><a href="../newadmin/pemandu_wisata.php" class="<?= ($current_page == 'pemandu_wisata.php') ? 'active' : '' ?>">Pemandu Wisata</a></li>
+        <li><a href="../newadmin/kendaraan.php" class="<?= ($current_page == 'kendaraan.php') ? 'active' : '' ?>">Kendaraan</a></li>
+        <li><a href="../newadmin/galeri.php" class="<?= ($current_page == 'galeri.php') ? 'active' : '' ?>">Galeri</a></li>
+        <li><a href="../newadmin/penginapan.php" class="<?= ($current_page == 'penginapan.php') ? 'active' : '' ?>">Penginapan</a></li>
+        <li><a href="../newadmin/kontak_admin.php">kontak</a></li>
+        <li><a href="/admin/logout.php" >Keluar</a></li>
+      </ul>
+    </nav>
+  </div>
   <footer>&copy; <?= date('Y') ?> Admin Panel</footer>
 </div>

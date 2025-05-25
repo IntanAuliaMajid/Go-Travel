@@ -528,9 +528,9 @@
           </div>
           <div class="guide-meta">
             <div class="guide-price">
-              Rp 500.000 <span>/hari</span>
+              Rp 100.000 <span>/hari</span>
             </div>
-            <a href="detail_tour_guide.php" class="guide-button">Profil Lengkap</a>
+            <a href="tour_guide_detail.php" class="guide-button">Profil Lengkap</a>
           </div>
         </div>
       </div>
@@ -561,7 +561,7 @@
             <div class="guide-price">
               Rp 450.000 <span>/hari</span>
             </div>
-            <a href="detail_tour_guide.php" class="guide-button">Profil Lengkap</a>
+            <a href="tour_guide_detail.php" class="guide-button">Profil Lengkap</a>
           </div>
         </div>
       </div>
@@ -593,7 +593,7 @@
             <div class="guide-price">
               Rp 550.000 <span>/hari</span>
             </div>
-            <a href="detail_tour_guide.php" class="guide-button">Profil Lengkap</a>
+            <a href="tour_guide_detail.php" class="guide-button">Profil Lengkap</a>
           </div>
         </div>
       </div>
@@ -624,7 +624,7 @@
             <div class="guide-price">
               Rp 400.000 <span>/hari</span>
             </div>
-            <a href="detail_tour_guide.php" class="guide-button">Profil Lengkap</a>
+            <a href="tour_guide_detail.php" class="guide-button">Profil Lengkap</a>
           </div>
         </div>
       </div>
@@ -656,7 +656,7 @@
             <div class="guide-price">
               Rp 500.000 <span>/hari</span>
             </div>
-            <a href="detail_tour_guide.php" class="guide-button">Profil Lengkap</a>
+            <a href="tour_guide_detail.php" class="guide-button">Profil Lengkap</a>
           </div>
         </div>
       </div>
@@ -687,7 +687,7 @@
             <div class="guide-price">
               Rp 650.000 <span>/hari</span>
             </div>
-            <a href="detail_tour_guide.php" class="guide-button">Profil Lengkap</a>
+            <a href="tour_guide_detail.php" class="guide-button">Profil Lengkap</a>
           </div>
         </div>
       </div>

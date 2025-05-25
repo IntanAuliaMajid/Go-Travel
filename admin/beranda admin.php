@@ -14,7 +14,7 @@
         <ul>
           <li class="active">beranda</li>
           <li>pengguna</li>
-         <li>paket perjalana</li>
+          <li>paket perjalanan</li>
           <li>Blog</li>
         </ul>
       </nav>

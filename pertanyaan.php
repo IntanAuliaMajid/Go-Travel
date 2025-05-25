@@ -8,8 +8,11 @@
 </head>
 <body>
     <?php include './Komponen/navbar.php'; ?>
-    <div class="header18">
+    <div class="section-header">
         <h1>Pertanyaan Umum</h1>
+    </div>
+    <div class="header18">
+        
     </div>
     <main>
         <div class="accordion-item">
