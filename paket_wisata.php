@@ -366,7 +366,6 @@
         <select id="kategori" class="filter-select">
           <option value="all">Semua Kategori</option>
           <option value="pantai">Pantai</option>
-          <option value="gunung">Gunung</option>
           <option value="budaya">Budaya & Sejarah</option>
           <option value="hiburan">Wisata Hiburan</option>
         </select>

@@ -512,13 +512,10 @@
       <div class="filter-group">
         <div class="filter-label">Kategori:</div>
         <select class="filter-select">
-          <option value="">Semua Kategori</option>
+          <option value="all">Semua Kategori</option>
           <option value="pantai">Pantai</option>
-          <option value="gunung">Gunung</option>
-          <option value="air-terjun">Air Terjun</option>
-          <option value="danau">Danau</option>
           <option value="budaya">Budaya & Sejarah</option>
-          <option value="hiburan">hiburan</option>
+          <option value="hiburan">Wisata Hiburan</option>
         </select>
       </div>
       <div class="filter-group">
@@ -530,15 +527,6 @@
           <option value="sumatra">Bangkalan</option>
           <option value="kalimantan">Surabaya</option>
           <option value="sulawesi">Pamekasan</option>
-        </select>
-      </div>
-      <div class="filter-group">
-        <div class="filter-label">Harga:</div>
-        <select class="filter-select">
-          <option value="">Semua Harga</option>
-          <option value="budget">(< Rp 100rb)</option>
-          <option value="medium">(Rp 100rb - 500rb)</option>
-          <option value="premium">(> Rp 500rb)</option>
         </select>
       </div>
       <div class="filter-group">

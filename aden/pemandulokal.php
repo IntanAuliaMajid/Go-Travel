@@ -419,7 +419,7 @@
     </style>
 </head>
 <body>
-     <?php include './Komponen/navbar.php'; ?>
+     <?php include '../Komponen/navbar.php'; ?>
     <div class="container">
         <div class="header">
             <h1>Pemandu Wisata Lokal</h1>
@@ -711,6 +711,6 @@
         });
     </script>
     
-  <?php include 'Komponen/footer.php'; ?>
+  <?php include '../Komponen/footer.php'; ?>
 </body>
 </html>

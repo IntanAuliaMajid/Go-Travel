@@ -214,3 +214,49 @@
     font-size: 16px;
     color: #555;
   }
+
+/* field ulasan */
+.review-form {
+  max-width: 400px;
+  margin-top: 20px;
+}
+
+.review-form .form-group {
+  margin-bottom: 15px;
+}
+
+.review-form label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #2d4830;
+}
+
+.review-form input,
+.review-form select,
+.review-form textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.review-form textarea {
+  resize: vertical;
+}
+
+.submit-btn {
+  background-color: #2d4830;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.submit-btn:hover {
+  background-color: #3d5c3f;
+}

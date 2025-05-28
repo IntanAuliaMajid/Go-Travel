@@ -26,8 +26,7 @@
       <img src="https://www.nativeindonesia.com/foto/2024/07/pantai-tanjung-kodok-1.jpg" alt="">
       <img src="https://www.nativeindonesia.com/foto/2024/07/wisata-pantai-tanjung-kodok.jpg" alt="">
       <img src="https://cdn.idntimes.com/content-images/community/2022/11/149402858-1534426486747158-1924235549356764180-n-74a5bbce32d431e2700b8e2b2284983e-f213f7f31db44e837aedc4a3b7e6ec0c.jpg" alt="">
-      <img src="https://www.nativeindonesia.com/foto/2024/07/sunset-di-pantai-tanjung-kodok.jpg" alt="">
-      
+      <img src="https://www.nativeindonesia.com/foto/2024/07/sunset-di-pantai-tanjung-kodok.jpg" alt=""> 
     </div>
 
     <div class="section">
@@ -68,7 +67,37 @@
         <div class="comment">Sangat recommended untuk liburan keluarga dan pecinta alam. Saya sangat terkesan dengan keramahan penduduk lokal dan keindahan alam yang tiada duanya.</div>
       </div>
     </div>
-  </div>
+
+  <!-- field ulasan -->
+   <div class="section">
+  <h3>Kirim Ulasan Anda</h3>
+  <form action="#" method="post" class="review-form">
+    <div class="form-group">
+      <label for="nama">Nama:</label>
+      <input type="text" id="nama" name="nama" required>
+    </div>
+
+    <div class="form-group">
+      <label for="rating">Rating:</label>
+      <select id="rating" name="rating" required>
+        <option value="">Pilih Rating</option>
+        <option value="5">★★★★★ - Luar Biasa</option>
+        <option value="4">★★★★☆ - Bagus</option>
+        <option value="3">★★★☆☆ - Cukup</option>
+        <option value="2">★★☆☆☆ - Kurang</option>
+        <option value="1">★☆☆☆☆ - Buruk</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="komentar">Komentar:</label>
+      <textarea id="komentar" name="komentar" rows="4"></textarea>
+    </div>
+
+    <a href="#"><button type="submit" class="submit-btn">Kirim Ulasan</button></a>
+  </form>
+</div>
+</div>
 
   <!-- Right Column -->
   <div class="right-column">
