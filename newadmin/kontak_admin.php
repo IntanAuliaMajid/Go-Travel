@@ -103,6 +103,28 @@
               <button class="delete" onclick="hapusBaris(this)">Hapus</button>
             </td>
           </tr>
+          <tr>
+            <td>2</td>
+            <td>Rizky Maulana</td>
+            <td>Rizky.guide@admin.com</td>
+            <td>085********</td>
+            <td>Pemandu Wisata</td>
+            <td>
+              <button class="edit">Edit</button>
+              <button class="delete" onclick="hapusBaris(this)">Hapus</button>
+            </td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Sarah Nabila</td>
+            <td>Sarah.guide@admin.com</td>
+            <td>085********</td>
+            <td>Pemandu Wisata</td>
+            <td>
+              <button class="edit">Edit</button>
+              <button class="delete" onclick="hapusBaris(this)">Hapus</button>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>

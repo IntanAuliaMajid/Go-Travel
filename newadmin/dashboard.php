@@ -352,25 +352,6 @@
       </div>
     </div>
 
-    <!-- Quick Actions -->
-    <div class="quick-actions">
-      <h2><i class="fas fa-bolt"></i> Aksi Cepat</h2>
-      <div class="action-buttons">
-        <a href="#" class="action-btn">
-          <i class="fas fa-plus-circle"></i> Tambah Paket Wisata
-        </a>
-        <a href="#" class="action-btn blue">
-          <i class="fas fa-eye"></i> Lihat Pemesanan
-        </a>
-        <a href="#" class="action-btn green">
-          <i class="fas fa-chart-line"></i> Laporan Penjualan
-        </a>
-        <a href="#" class="action-btn" style="background: linear-gradient(135deg, #9b59b6, #8e44ad);">
-          <i class="fas fa-cog"></i> Pengaturan Sistem
-        </a>
-      </div>
-    </div>
-
     <!-- Recent Activity -->
     <div class="recent-activity">
       <h2><i class="fas fa-clock"></i> Aktivitas Terbaru</h2>
@@ -380,8 +361,8 @@
           <i class="fas fa-shopping-cart"></i>
         </div>
         <div class="activity-text">
-          <h4>Pemesanan Baru - Paket Bali 3D2N</h4>
-          <p>Andi Wijaya memesan paket wisata Bali untuk 4 orang</p>
+          <h4>Pemesanan Baru - Paket Wisata Bahari Lamongan</h4>
+          <p>Andi Wijaya memesan paket Wisata Bahari Lamongan</p>
         </div>
         <div class="activity-time">
           <span class="status-badge pending">Menunggu</span><br>
@@ -395,7 +376,7 @@
         </div>
         <div class="activity-text">
           <h4>Pembayaran Dikonfirmasi</h4>
-          <p>Pembayaran untuk paket Yogyakarta 2D1N telah dikonfirmasi</p>
+          <p>Pembayaran untuk paket Wisata Bahari Lamongan telah dikonfirmasi</p>
         </div>
         <div class="activity-time">
           <span class="status-badge confirmed">Lunas</span><br>
@@ -409,24 +390,10 @@
         </div>
         <div class="activity-text">
           <h4>Paket Wisata Baru Ditambahkan</h4>
-          <p>Paket "Raja Ampat 5D4N" telah ditambahkan ke katalog</p>
+          <p>Paket "Pantai Rongkang" telah ditambahkan ke katalog</p>
         </div>
         <div class="activity-time">
           <small>1 jam lalu</small>
-        </div>
-      </div>
-      
-      <div class="activity-item">
-        <div class="activity-icon purple">
-          <i class="fas fa-times-circle"></i>
-        </div>
-        <div class="activity-text">
-          <h4>Pembatalan Pemesanan</h4>
-          <p>Sari Indah membatalkan pemesanan paket Lombok 4D3N</p>
-        </div>
-        <div class="activity-time">
-          <span class="status-badge cancelled">Dibatalkan</span><br>
-          <small>2 jam lalu</small>
         </div>
       </div>
       

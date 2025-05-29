@@ -276,9 +276,9 @@
             <?php
             // Contoh data dummy, ganti dengan data dari database
             $paket = [
-              ["nama" => "Paket Bali Eksotis", "destinasi" => "Bali", "harga" => "2.500.000", "durasi" => "3 Hari 2 Malam"],
-              ["nama" => "Paket Lombok Adventure", "destinasi" => "Lombok", "harga" => "3.000.000", "durasi" => "4 Hari 3 Malam"],
-              ["nama" => "Paket Yogyakarta Heritage", "destinasi" => "Yogyakarta", "harga" => "1.800.000", "durasi" => "2 Hari 1 Malam"]
+              ["nama" => "Wisata Bahari Lamongan", "destinasi" => "Lamongan", "harga" => "1.750.000", "durasi" => "3 Hari 2 Malam"],
+              ["nama" => "Indonesian Islamic Art Museum", "destinasi" => "Jakarta", "harga" => "3.450.000", "durasi" => "4 Hari 3 Malam"],
+              ["nama" => "Taman Mini Indonesia Indah", "destinasi" => "Jakarta", "harga" => "1.350.000", "durasi" => "2 Hari 1 Malam"]
             ];
             $no = 1;
             foreach ($paket as $p) {

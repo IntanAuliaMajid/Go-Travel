@@ -448,7 +448,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                   <option value="<?= htmlspecialchars($p) ?>"><?= htmlspecialchars($p) ?></option>
                 <?php endforeach; ?>
               </select>
-              <div class="info-text">Harga akan diambil dari database</div>
             </div>
 
             <div class="form-group">
@@ -462,7 +461,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                   <option value="<?= htmlspecialchars($k) ?>"><?= htmlspecialchars($k) ?></option>
                 <?php endforeach; ?>
               </select>
-              <div class="info-text">Harga akan diambil dari database</div>
             </div>
 
             <div class="form-group">
@@ -476,7 +474,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                   <option value="<?= htmlspecialchars($guide) ?>"><?= htmlspecialchars($guide) ?></option>
                 <?php endforeach; ?>
               </select>
-              <div class="info-text">Harga akan diambil dari database</div>
             </div>
           </div>
         </div>

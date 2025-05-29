@@ -21,8 +21,7 @@
     .container {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 0 1rem;
-    }
+      padding: 0 1rem;      }
 
     /* Header Section */
     .order-header {
@@ -240,6 +239,60 @@
         font-size: 2rem;
       }
     }
+
+    .booking-progress {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2.5rem;
+        }
+        .progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            flex: 1;
+        }
+        .step-number {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background-color: #1a9988;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        .progress-step.completed .step-number {
+            background-color: #158677;
+        }
+        .progress-step:not(.active):not(.completed) .step-number {
+            background-color: #e0f7f5;
+            color: #1a9988;
+        }
+        .step-label {
+            font-size: 0.9rem;
+            color: #1a9988;
+            font-weight: 600;
+        }
+        .progress-step:not(.active):not(.completed) .step-label {
+            color: #777;
+            font-weight: 500;
+        }
+        .progress-line {
+            height: 3px;
+            background-color: #1a9988;
+            flex-grow: 1;
+            margin: 0 8px;
+            transform: translateY(-16px);
+        }
+        .progress-step:not(.active):not(.completed) + .progress-step .progress-line,
+        .progress-step:not(.completed) .progress-line {
+            background-color: #e0f7f5;
+        }
   </style>
 </head>
 <body>
@@ -258,6 +311,22 @@
 
       <!-- Form Pemesanan -->
       <div class="order-form">
+        <div class="booking-progress">
+                <div class="progress-step active">
+                    <div class="step-number">1</div>
+                    <div class="step-label">Pilihan Paket & Data Diri</div>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step">
+                    <div class="step-number">2</div>
+                    <div class="step-label">Pembayaran</div>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step">
+                    <div class="step-number">3</div>
+                    <div class="step-label">Konfirmasi</div>
+                </div>
+            </div>
         <h2>Data Pemesan</h2>
         
         <form action="pembayaran.php" method="POST">
@@ -366,16 +435,12 @@
       <span>Rp 1.350.000</span>
     </div>
     <div class="price-row">
-      <span>Diskon Paket</span>
-      <span>- Rp 500.000</span>
-    </div>
-    <div class="price-row">
       <span>Biaya Admin</span>
       <span>Rp 10.000</span>
     </div>
     <div class="price-row price-total">
-      <span>Total Perkiraan</span>
-      <span>Rp 860.000</span>
+      <span>Total Pemesanan</span>
+      <span>Rp 1.360.000</span>
     </div>
   </div>
   
@@ -388,46 +453,6 @@
     <p><strong>Itinerary:</strong> Dunia Fantasi, SeaWorld, Pantai, EcoPark</p>
   </div>
   
-  <div class="payment-methods">
-    <h4>Metode Pembayaran</h4>
-    
-    <label class="payment-option">
-      <input type="radio" name="payment" value="bca" checked>
-      Transfer Bank
-      <img src="http://1.bp.blogspot.com/-THibJz4NpO0/UNhEbur9-fI/AAAAAAAAEQM/b5J4fwEPD-c/s1600/Logo+Bank+BCA.JPG" alt="BCA">
-    </label>
-    
-    <label class="payment-option">
-      <input type="radio" name="payment" value="mandiri">
-      Transfer Bank
-      <img src="https://freepngdesign.com/content/uploads/images/p-2813-2-bank-mandiri-logo-png-transparent-logo-699390155888.png" alt="Mandiri">
-    </label>
-    
-    <label class="payment-option">
-      <input type="radio" name="payment" value="bri">
-      Transfer Bank
-      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiI-LYwxppMGg1RwIURouPa5KZxSxiAIQStRSQXcz0aGNJiB5twYeb_VbsN2ZW9hAu_cVG6-Y47EeMr0g9AQqG6YpxNujH4VmRX4ZN2bCsWUiG17huO2DE1PJyWy-rel0wq3_FKRzsbqCWluyqPrSIejEKmPOjIYWqQ10H7jygYHzZTzB-F4jATGcxHXQ/s1920/BRI.jpg" alt="BRI">
-    </label>
-    
-    <label class="payment-option">
-      <input type="radio" name="payment" value="gopay">
-      E-Wallet
-      <img src="https://1000logos.net/wp-content/uploads/2021/05/GoPay-Logo.png" alt="GoPay">
-    </label>
-    
-    <label class="payment-option">
-      <input type="radio" name="payment" value="ovo">
-      E-Wallet
-      <img src="https://1.bp.blogspot.com/-Iq0Ztu117_8/XzNYaM4ABdI/AAAAAAAAHA0/MabT7B02ErIzty8g26JvnC6cPeBZtATNgCLcBGAsYHQ/s1000/logo-ovo.png" alt="OVO">
-    </label>
-  </div>
-  
-  <div style="margin-top: 1.5rem; font-size: 0.9rem; color: #666;">
-    <p><i class="fas fa-info-circle"></i> Pembayaran harus dilakukan dalam 24 jam setelah pemesanan</p>
-    <p><i class="fas fa-info-circle"></i> Konfirmasi pembayaran akan dikirim via email</p>
-    <p><i class="fas fa-info-circle"></i> Free cancelation 7 hari sebelum keberangkatan</p>
-  </div>
-</div>
   </main>
 
   <?php include 'Komponen/footer.php'; ?>

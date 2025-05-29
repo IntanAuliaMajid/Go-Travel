@@ -6,19 +6,6 @@
   <title>Destinasi Wisata</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f7f9fc;
-      color: #333;
-      line-height: 1.6;
-    }
-
     /* Hero Section */
     .hero {
       background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
@@ -173,6 +160,9 @@
       overflow: hidden;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
       transition: transform 0.3s, box-shadow 0.3s;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
     .destination-card:hover {
@@ -211,6 +201,10 @@
 
     .card-content {
       padding: 1.5rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
     .card-content h3 {
@@ -254,6 +248,7 @@
     }
 
     .card-meta {
+       margin-top: auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -847,7 +842,7 @@
           </div>
           <div class="category-name">Budaya & Sejarah</div>
           <div class="category-count">42 Destinasi</div>
-        </div>>
+        </div>
     </div>
   
 

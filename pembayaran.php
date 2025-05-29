@@ -310,7 +310,7 @@
             color: #333;
         }
         .total-amount {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             font-weight: bold;
             color: #1a9988;
             margin-top: 1rem;
@@ -399,7 +399,7 @@
             padding: 1.2rem;
             border: none;
             border-radius: 50px;
-            font-size: 1.1rem;
+            font-size: 0.8rem;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -490,6 +490,13 @@
                 flex-direction: column;
             }
         }
+
+        .price-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.8rem;
+        font-size: 0.8rem;
+        }
     </style>
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -554,10 +561,6 @@
                         <button class="copy-btn" onclick="copyToClipboard('1570000012345674')">
                             <i class="fas fa-copy"></i> Salin
                         </button>
-                    </div>
-                    <div style="margin-top: 1rem;">
-                        <strong>Nominal Transfer: Rp 3.102.123</strong><br>
-                        <small style="color: #666;">*Tambahkan 3 digit unik (123) untuk verifikasi otomatis</small>
                     </div>
                 </div>
             </div>
@@ -627,18 +630,6 @@
                     </div>
                 </div>
             </div>
-            
-            <!-- Action buttons -->
-            <div class="action-buttons">
-                <a href="pemesanan.php" class="btn btn-secondary">
-                    <i class="fas fa-arrow-left"></i> Kembali
-                </a>
-                <a href="pembayaran_konfirmasi.php" style="text-decoration:none; color:#FFFF">
-                    <button class="btn btn-primary" onclick="processPayment()">
-                        <i class="fas fa-lock"></i> Bayar Sekarang
-                    </button>
-                </a>
-            </div>
         </div>
         
         <div class="order-summary">
@@ -656,40 +647,65 @@
             </div>
             
             <!-- Booking summary -->
-            <div class="booking-summary">
-                <div class="summary-item">
-                    <span class="summary-label">Paket Wisata</span>
-                    <span class="summary-value">Rp 320.000</span>
-                </div>
-                <div class="summary-item">
-                    <span class="summary-label">Penginapan</span>
-                    <span class="summary-value">Rp 1.000.000</span>
-                </div>
-                <div class="summary-item">
-                    <span class="summary-label">Tour Guide</span>
-                    <span class="summary-value">Rp 500.000</span>
-                </div>
-                <div class="summary-item">
-                    <span class="summary-label">Transportasi (Sedan)</span>
-                    <span class="summary-value">Rp 1.000.000</span>
-                </div>
-                <div class="summary-item">
-                    <span class="summary-label">Pajak & Biaya Layanan</span>
-                    <span class="summary-value">Rp 282.000</span>
-                </div>
-                <div class="summary-item">
-                    <span class="summary-label">Biaya Admin</span>
-                    <span class="summary-value">Rp 0</span>
-                </div>
+            <div class="price-detail">
+    <h4 style="margin-bottom: 1rem; color: #2c7a51;">Detail Harga:</h4>
+    
+    <div class="price-row">
+      <span><i class="fas fa-hotel"></i> Hotel Santika Premiere (1 malam)</span>
+      <span>Rp 450.000</span>
+    </div>
+    <div class="price-row">
+      <span><i class="fas fa-utensils"></i> Makan (3x) di D'Cost Seafood</span>
+      <span>Rp 150.000</span>
+    </div>
+    <div class="price-row">
+      <span><i class="fas fa-car"></i> Transportasi Avanza (12 jam)</span>
+      <span>Rp 150.000</span>
+    </div>
+    <div class="price-row">
+      <span><i class="fas fa-user"></i> Tour Guide (Bpk. Andi)</span>
+      <span>Rp 100.000</span>
+    </div>
+    <div class="price-row">
+      <span><i class="fas fa-ticket-alt"></i> Tiket Masuk Ancol</span>
+      <span>Rp 100.000</span>
+    </div>
+    <div class="price-row">
+      <span><i class="fas fa-ticket-alt"></i> Tiket Dunia Fantasi</span>
+      <span>Rp 250.000</span>
+    </div>
+    <div class="price-row">
+      <span><i class="fas fa-ticket-alt"></i> Tiket SeaWorld</span>
+      <span>Rp 150.000</span>
+    </div>
+    
+            <div class="price-row" style="margin-top: 1rem;">
+            <span>Subtotal</span>
+            <span>Rp 1.350.000</span>
             </div>
+            <div class="price-row">
+            <span>Biaya Admin</span>
+            <span>Rp 10.000</span>
+            </div>
+        </div>
             
             <div class="total-amount">
                 <div style="display: flex; justify-content: space-between;">
                     <span>Total Pembayaran</span>
-                    <span>Rp 3.102.000</span>
+                    <span>Rp 1.360.000</span>
                 </div>
             </div>
             
+                        <div class="action-buttons">
+                <a href="pemesanan.php" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Kembali
+                </a>
+                <a href="pembayaran_konfirmasi.php" style="text-decoration:none; color:#FFFF">
+                    <button class="btn btn-primary" onclick="processPayment()">
+                        <i class="fas fa-lock"></i> Bayar Sekarang
+                    </button>
+                </a>
+            </div>
         </div>
     </div>
     <?php include 'Komponen/footer.php'; ?>

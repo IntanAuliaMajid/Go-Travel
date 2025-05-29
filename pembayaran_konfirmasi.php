@@ -488,8 +488,10 @@
             color: #666;
         }
         .contact-value {
-            font-weight: 600;
+            /* font-weight: 600; */
             color: #333;
+            padding-top: 0.2rem;
+            font-size: 0.8rem;
         }
         
         .itinerary-preview {
@@ -534,7 +536,7 @@
         }
         .activity-description {
             color: #666;
-            font-size: 0.95rem;
+            font-size: 0.8rem;
         }
         
         .qr-container {
@@ -649,10 +651,6 @@
                     <div class="detail-label">Jadwal Perjalanan</div>
                     <div class="detail-value">25 - 27 Mei 2025</div>
                 </div>
-                <div class="detail-row">
-                    <div class="detail-label">Jumlah Peserta</div>
-                    <div class="detail-value">2 Orang Dewasa</div>
-                </div>
             </div>
             
             <div class="voucher-box">
@@ -692,7 +690,6 @@
                         <div class="package-info">
                             <h3>Ancol Taman Impian</h3>
                             <p><i class="fas fa-calendar-alt"></i> 3 Hari 2 Malam (25 - 27 Mei 2025)</p>
-                            <p><i class="fas fa-users"></i> 2 Orang Dewasa</p>
                             <p><i class="fas fa-map-marker-alt"></i> Jakarta Utara, Indonesia</p>
                         </div>
                     </div>
@@ -710,7 +707,7 @@
                                 <i class="fas fa-utensils"></i>
                             </div>
                             <div class="feature-text">
-                                Termasuk Sarapan
+                                Paket Makan
                             </div>
                         </div>
                         <div class="feature-item">
@@ -718,7 +715,7 @@
                                 <i class="fas fa-ticket-alt"></i>
                             </div>
                             <div class="feature-text">
-                                Semua Tiket Masuk
+                                Tiket Masuk
                             </div>
                         </div>
                         <div class="feature-item">
@@ -726,7 +723,7 @@
                                 <i class="fas fa-car"></i>
                             </div>
                             <div class="feature-text">
-                                Transportasi Sedan
+                                Transportasi
                             </div>
                         </div>
                         <div class="feature-item">
@@ -734,15 +731,7 @@
                                 <i class="fas fa-user-tie"></i>
                             </div>
                             <div class="feature-text">
-                                Tour Guide Berpengalaman
-                            </div>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon">
-                                <i class="fas fa-camera"></i>
-                            </div>
-                            <div class="feature-text">
-                                Foto Dokumentasi
+                                Pemandu Wisata
                             </div>
                         </div>
                     </div>
@@ -757,24 +746,24 @@
                         <div class="day-date">25 Mei 2025</div>
                     </div>
                     <div class="activity-item">
-                        <div class="activity-time">08:00</div>
+                        <div class="activity-time">07:00</div>
                         <div class="activity-content">
                             <div class="activity-title">Check-in Hotel</div>
-                            <div class="activity-description">Penjemputan di lokasi dan check-in di Grand Ancol Hotel</div>
+                            <div class="activity-description">Tiba di hotel, proses check-in dan penyerahan kunci kamar. Sarapan pagi di restoran hotel.</div>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-time">09:50</div>
+                        <div class="activity-content">
+                            <div class="activity-title">Perjalanan ke Ancol</div>
+                            <div class="activity-description">Berangkat menuju Ancol Taman Impian dengan transportasi yang telah disediakan.</div>
                         </div>
                     </div>
                     <div class="activity-item">
                         <div class="activity-time">10:00</div>
                         <div class="activity-content">
-                            <div class="activity-title">Kunjungan Seaworld</div>
-                            <div class="activity-description">Menikmati keindahan dunia bawah laut di Seaworld Ancol</div>
-                        </div>
-                    </div>
-                    <div class="activity-item">
-                        <div class="activity-time">13:00</div>
-                        <div class="activity-content">
-                            <div class="activity-title">Makan Siang</div>
-                            <div class="activity-description">Makan siang di Restoran Pantai Ancol</div>
+                            <div class="activity-title">Dunia Fantasi (Dufan)</div>
+                            <div class="activity-description">Menjelajahi berbagai wahana seru di Dunia Fantasi seperti Halilintar, Niagara Gulungan, dan Istana Boneka.</div>
                         </div>
                     </div>
                     <div style="text-align: center; margin-top: 1rem;">
@@ -813,32 +802,7 @@
                     </div>
                 </div>
                 
-                <div class="traveler-card">
-                    <div class="traveler-header">
-                        <div class="traveler-icon">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <div class="traveler-title">Traveler 2</div>
-                    </div>
-                    <div class="traveler-info">
-                        <div class="traveler-info-item">
-                            <div class="info-label">Nama Lengkap</div>
-                            <div class="info-value">Sinta Dewi</div>
-                        </div>
-                        <div class="traveler-info-item">
-                            <div class="info-label">No. Identitas</div>
-                            <div class="info-value">3271046801950003</div>
-                        </div>
-                        <div class="traveler-info-item">
-                            <div class="info-label">Email</div>
-                            <div class="info-value">-</div>
-                        </div>
-                        <div class="traveler-info-item">
-                            <div class="info-label">No. Telepon</div>
-                            <div class="info-value">+62823-4567-8901</div>
-                        </div>
-                    </div>
-                </div>
+         
             </div>
             
             <h2 class="section-title">Detail Pembayaran</h2>
@@ -851,37 +815,33 @@
                         </div>
                         <div>
                             <div class="payment-name">Bank Transfer - BCA</div>
-                            <div style="color: #666;">Dibayar pada 19 Mei 2025, 14:25 WIB</div>
+                            <div style="color: #666; font-size: 0.7rem;">Dibayar pada 19 Mei 2025, 14:25 WIB</div>
                         </div>
                     </div>
                     <div class="payment-details">
                         <div class="payment-item">
-                            <div class="payment-label">Paket Wisata (2 Orang)</div>
-                            <div class="payment-value">Rp 320.000</div>
+                            <div class="payment-label">Tiket Wisata</div>
+                            <div class="payment-value">Rp 500.000</div>
                         </div>
                         <div class="payment-item">
                             <div class="payment-label">Penginapan</div>
                             <div class="payment-value">Rp 1.000.000</div>
                         </div>
                         <div class="payment-item">
-                            <div class="payment-label">Tour Guide</div>
-                            <div class="payment-value">Rp 500.000</div>
+                            <div class="payment-label">Pemandu Wisata</div>
+                            <div class="payment-value">Rp 100.000</div>
                         </div>
                         <div class="payment-item">
-                            <div class="payment-label">Transportasi (Sedan)</div>
-                            <div class="payment-value">Rp 1.000.000</div>
-                        </div>
-                        <div class="payment-item">
-                            <div class="payment-label">Pajak & Biaya Layanan</div>
-                            <div class="payment-value">Rp 282.000</div>
+                            <div class="payment-label">Transportasi</div>
+                            <div class="payment-value">Rp 150.000</div>
                         </div>
                         <div class="payment-item">
                             <div class="payment-label">Biaya Admin</div>
-                            <div class="payment-value">Rp 0</div>
+                            <div class="payment-value">Rp 10.000</div>
                         </div>
                         <div class="payment-total">
                             <div class="payment-label">Total Pembayaran</div>
-                            <div class="payment-value">Rp 3.102.000</div>
+                            <div class="payment-value">Rp 1.360.000</div>
                         </div>
                     </div>
                 </div>
@@ -911,21 +871,6 @@
                         <div class="contact-label">WhatsApp</div>
                         <div class="contact-value">+62 812-9999-8888</div>
                     </div>
-                </div>
-            </div>
-            
-            <h2 class="section-title">Kebijakan Pembatalan</h2>
-            
-            <div class="info-alert" style="background-color: #fff3e0; border-left-color: #ff9800;">
-                <div class="info-alert-header">
-                    <i class="fas fa-exclamation-circle" style="color: #ff9800;"></i>
-                    <h3 style="color: #ff9800;">Syarat & Ketentuan</h3>
-                </div>
-                <div class="info-alert-content">
-                    <p>• Pembatalan 7 hari atau lebih sebelum keberangkatan: pengembalian dana 80%</p>
-                    <p>• Pembatalan 3-6 hari sebelum keberangkatan: pengembalian dana 50%</p>
-                    <p>• Pembatalan kurang dari 3 hari sebelum keberangkatan: tidak ada pengembalian dana</p>
-                    <p>• Perubahan tanggal dapat dilakukan minimal 7 hari sebelum keberangkatan dengan biaya administrasi Rp 150.000 per orang</p>
                 </div>
             </div>
             

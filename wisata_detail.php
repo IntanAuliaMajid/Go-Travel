@@ -104,7 +104,7 @@
     <div class="info-box">
       <h4>Informasi Singkat</h4>
       <ul>
-        <li>✔️ Waktu Terbaik: Pagi hari</li>
+        <li style="margin-top:10px;">✔️ Waktu Terbaik: Pagi hari</li>
         <li>✔️ Rekomendasi Kunjungan: 2-3 hari</li>
         <li>✔️ Tiket Masuk: Rp 30.000</li>
         <li>✔️ Jam Buka: Jam 08.00 - 17.00 WIB</li>
@@ -136,7 +136,7 @@
     <div class="info-box" style="margin-top: 20px;">
       <h4>Tips Berkunjung</h4>
       <ul>
-        <li>✔️ Datang lebih awal</li>
+        <li style="margin-top:10px;">✔️ Datang lebih awal</li>
         <li>✔️ Kenakan pakaian yang nyaman dan mudah kering</li>
         <li>✔️ Bawa perlengkapan renang</li>
         <li>✔️ Siapkan uang tunai atau kartu</li>

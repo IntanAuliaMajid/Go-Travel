@@ -6,24 +6,11 @@
   <title>Wishlist Destinasi Wisata</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f7f9fc;
-      color: #333;
-      line-height: 1.6;
-    }
-
     /* Header */
     .wishlist-header {
       background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
-                  url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
-      height: 40vh;
+                  url('https://www.ruparupa.com/blog/wp-content/uploads/2022/03/Jakarta_Batavia_%C2%A9-CEphoto-Uwe-Aranas.jpg') no-repeat center center/cover;
+      height: 60vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -31,6 +18,7 @@
       text-align: center;
       color: #fff;
       padding: 2rem;
+      margin-top: 20px;
     }
 
     .wishlist-header h1 {
@@ -44,34 +32,6 @@
       font-size: 1.2rem;
       max-width: 800px;
       margin-bottom: 2rem;
-    }
-
-    /* Breadcrumb */
-    .breadcrumb {
-      padding: 1rem;
-      background-color: #fff;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-
-    .breadcrumb-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-    }
-
-    .breadcrumb a {
-      color: #2c7a51;
-      text-decoration: none;
-    }
-
-    .breadcrumb a:hover {
-      text-decoration: underline;
-    }
-
-    .breadcrumb-separator {
-      margin: 0 0.5rem;
-      color: #666;
     }
 
     /* Container */
@@ -154,6 +114,9 @@
     }
 
     .destination-card {
+      display: flex;
+  flex-direction: column;
+  justify-content: space-between;
       background-color: #fff;
       border-radius: 10px;
       overflow: hidden;
@@ -229,6 +192,10 @@
 
     .card-content {
       padding: 1.5rem;
+      flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
     }
 
     .card-content h3 {
@@ -277,6 +244,7 @@
       align-items: center;
       padding-top: 1rem;
       border-top: 1px solid #eee;
+      margin-top: auto;
     }
 
     .card-price {
@@ -358,14 +326,6 @@
     <p>Lihat dan kelola daftar destinasi impian Anda</p>
   </section>
 
-  <!-- Breadcrumb -->
-  <div class="breadcrumb">
-    <div class="breadcrumb-container">
-      <a href="index.php">Beranda</a>
-      <span class="breadcrumb-separator">/</span>
-      <span>Wishlist</span>
-    </div>
-  </div>
 
   <!-- Wishlist Content -->
   <section class="container">
