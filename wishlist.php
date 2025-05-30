@@ -348,33 +348,6 @@
 
     <!-- Jika wishlist berisi -->
     <div class="destinations-grid">
-      <!-- Destination 1: Pantai Tanjung Kodok -->
-      <div class="destination-card">
-        <div class="card-image">
-          <img src="https://www.nativeindonesia.com/foto/2024/07/pantai-tanjung-kodok-1.jpg" alt="Pantai Tanjung Kodok">
-          <button class="remove-wishlist" title="Hapus dari wishlist">
-            <i class="fas fa-heart"></i>
-          </button>
-          <span class="card-badge">Populer</span>
-        </div>
-        <div class="card-content">
-          <h3>Pantai Tanjung Kodok</h3>
-          <div class="card-location">
-            <i class="fas fa-map-marker-alt"></i> Lamongan
-          </div>
-          <div class="card-rating">
-            <div class="stars">★★★★★</div>
-            <div class="count">(218 ulasan)</div>
-          </div>
-          <div class="card-description">
-            Nikmati keindahan sunrise yang menakjubkan di destinasi ikonik Indonesia ini.
-          </div>
-          <div class="card-meta">
-            <div class="card-price">Rp50.000 <span>/orang</span></div>
-            <a href="detail_destinasi.php?id=bromo" class="card-button">Lihat Detail</a>
-          </div>
-        </div>
-      </div>
 
       <!-- Destination 2: Pantai Lorena -->
       <div class="destination-card">
@@ -397,7 +370,7 @@
             Surga bawah laut dengan keanekaragaman hayati terkaya di dunia yang menawarkan pengalaman snorkeling dan diving terbaik.
           </div>
           <div class="card-meta">
-            <div class="card-price">Rp75.000 <span>/orang</span></div>
+            <div class="card-price">Rp1.350.000 <span>/orang</span></div>
             <a href="detail_destinasi.php?id=raja-ampat" class="card-button">Lihat Detail</a>
           </div>
         </div>
@@ -425,7 +398,7 @@
             Dengan konsep taman rekreasi keluarga, WBL menyediakan fasilitas lengkap seperti area bermain anak, restoran dengan beragam pilihan kuliner, toko suvenir, dan area parkir yang luas.
           </div>
           <div class="card-meta">
-            <div class="card-price">Rp100.000 <span>/orang</span></div>
+            <div class="card-price">Rp1.750.000 <span>/orang</span></div>
             <a href="detail_destinasi.php?id=komodo" class="card-button">Lihat Detail</a>
           </div>
         </div>
@@ -452,7 +425,7 @@
             Selamat datang di Taman Mini Indonesia Indah (TMII), sebuah miniatur megah yang menampilkan kekayaan budaya dan keindahan alam dari 34 provinsi di Indonesia.
           </div>
           <div class="card-meta">
-            <div class="card-price">Rp25.000 <span>/orang</span></div>
+            <div class="card-price">Rp1.350.000 <span>/orang</span></div>
             <a href="detail_destinasi.php?id=labuan-bajo" class="card-button">Lihat Detail</a>
           </div>
         </div>
@@ -479,7 +452,7 @@
             Selamat datang di Museum Nasional Indonesia, yang juga dikenal sebagai Museum Gajah. Berlokasi di jantung Jakarta Pusat, museum ini adalah yang terbesar dan terlengkap di Indonesia, menyimpan khazanah tak ternilai dari warisan arkeologi, sejarah, etnografi, dan seni bangsa.
           </div>
           <div class="card-meta">
-            <div class="card-price">Rp10.000 <span>/orang</span></div>
+            <div class="card-price">Rp1.800.000 <span>/orang</span></div>
             <a href="detail_destinasi.php?id=labuan-bajo" class="card-button">Lihat Detail</a>
           </div>
         </div>

@@ -403,7 +403,7 @@
         </div>
         <div class="activity-text">
           <h4>Review Baru</h4>
-          <p>Budi Santoso memberikan rating 5 bintang untuk paket Bandung</p>
+          <p>Budi Santoso memberikan rating 5 bintang untuk paket Taman Mini Indonesia</p>
         </div>
         <div class="activity-time">
           <small>3 jam lalu</small>

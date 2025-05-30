@@ -60,10 +60,9 @@
     .container {
       margin-top: 100px;
       max-width: 1200px;
-      padding: 0 1rem;
+      padding: 0 20px;
       display: grid;
       grid-template-columns: 300px 1fr;
-      gap: 2rem;
     }
 
     @media (max-width: 992px) {
@@ -158,6 +157,7 @@
 
     /* Main Content */
     .profile-content {
+      margin-left: 20px;
       background-color: #fff;
       border-radius: 10px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -453,7 +453,7 @@
 
       <ul class="profile-menu">
         <li><a href="#" class="active" data-tab="profile"><i class="fas fa-user"></i> Profil Saya</a></li>
-        <li><a href="#" data-tab="bookings"><i class="fas fa-calendar-alt"></i> Riwayat Booking</a></li>
+        <li><a href="#" data-tab="bookings"><i class="fas fa-calendar-alt"></i> Riwayat Pemesanan</a></li>
         <li><a href="wishlist_page.php" data-tab="wishlist"><i class="fas fa-heart"></i> Wishlist</a></li>
         <li><a href="#" data-tab="reviews"><i class="fas fa-star"></i> Ulasan Saya</a></li>
         <li><a href="#" data-tab="settings"><i class="fas fa-cog"></i> Pengaturan</a></li>
@@ -509,18 +509,6 @@
       <div id="bookings" class="tab-content">
         <h3 class="section-title">Riwayat Booking</h3>
         
-        <div class="booking-item">
-          <img src="https://www.nativeindonesia.com/foto/2024/07/pantai-tanjung-kodok-1.jpg" alt="Pantai Tanjung Kodok" class="booking-image">
-          <div class="booking-details">
-            <h4>Pantai Tanjung Kodok</h4>
-            <div class="booking-meta">
-              <span><i class="fas fa-calendar-alt"></i> 15 Juli 2024</span>
-              <span><i class="fas fa-users"></i> 2 Dewasa</span>
-              <span><i class="fas fa-tag"></i> Rp100.000</span>
-            </div>
-            <span class="booking-status status-confirmed">Terkonfirmasi</span>
-          </div>
-        </div>
         
         <div class="booking-item">
           <img src="https://salsawisata.com/wp-content/uploads/2022/07/Wisata-Bahari-Lamongan.jpg" alt="Wisata Bahari Lamongan" class="booking-image">
@@ -529,22 +517,9 @@
             <div class="booking-meta">
               <span><i class="fas fa-calendar-alt"></i> 22 Juni 2024</span>
               <span><i class="fas fa-users"></i> 4 Dewasa, 2 Anak</span>
-              <span><i class="fas fa-tag"></i> Rp350.000</span>
+              <span><i class="fas fa-tag"></i> Rp1.750.000</span>
             </div>
             <span class="booking-status status-completed">Selesai</span>
-          </div>
-        </div>
-        
-        <div class="booking-item">
-          <img src="https://anekatempatwisata.com/wp-content/uploads/2018/04/Taman-Mini-Indonesia-Indah-610x407.jpg" alt="TMII" class="booking-image">
-          <div class="booking-details">
-            <h4>Taman Mini Indonesia Indah</h4>
-            <div class="booking-meta">
-              <span><i class="fas fa-calendar-alt"></i> 5 Mei 2024</span>
-              <span><i class="fas fa-users"></i> 3 Dewasa</span>
-              <span><i class="fas fa-tag"></i> Rp75.000</span>
-            </div>
-            <span class="booking-status status-cancelled">Dibatalkan</span>
           </div>
         </div>
       </div>

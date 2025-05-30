@@ -213,7 +213,7 @@
         $title = $isEdit ? 'Edit Penginapan' : 'Tambah Penginapan Baru';
         $icon = $isEdit ? 'fa-edit' : 'fa-plus-circle';
       ?>
-      <h1><i class="fas <?php echo $icon; ?>" style="color: #9b59b6; margin-right: 10px;"></i><?php echo $title; ?></h1>
+      <h1></i><?php echo $title; ?></h1>
       <p><?php echo $isEdit ? 'Edit data penginapan yang sudah ada' : 'Tambahkan penginapan baru ke dalam sistem'; ?></p>
     </div>
 
@@ -264,15 +264,7 @@
           <input type="number" id="accRooms" min="1" required
                  value="<?php echo $isEdit ? '45' : ''; ?>">
         </div>
-        
-        <div class="form-group">
-          <label for="accStatus">Status</label>
-          <select id="accStatus" required>
-            <option value="available" <?php echo $isEdit ? 'selected' : ''; ?>>Tersedia</option>
-            <option value="full">Penuh</option>
-            <option value="maintenance">Renovasi/Perbaikan</option>
-          </select>
-        </div>
+
         
         <div class="form-group">
           <label for="accFacilities">Fasilitas</label>
@@ -306,7 +298,7 @@
         </div>
         
         <div class="form-actions">
-          <a href="daftar_penginapan.php" class="btn btn-secondary">Kembali</a>
+          <a href="penginapan.php" class="btn btn-secondary">Kembali</a>
           <button type="submit" class="btn btn-primary"><?php echo $isEdit ? 'Update Penginapan' : 'Simpan Penginapan'; ?></button>
         </div>
       </form>

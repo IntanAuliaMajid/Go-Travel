@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard Admin - Manajemen Kendaraan</title>
+  <title>Admin</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
     * {
@@ -455,7 +455,7 @@
   <main>
     <!-- Dashboard Header -->
     <div class="dashboard-header">
-      <h1><i class="fas fa-car" style="color: #3498db; margin-right: 10px;"></i>Manajemen Kendaraan</h1>
+      <h1><i class="fas fa-car" style="color: #3498db; margin-right: 10px;"></i>Kendaraan</h1>
       <p>Kelola armada kendaraan dengan mudah. Tambah, edit, atau hapus kendaraan sesuai kebutuhan.</p>
     </div>
 
@@ -467,7 +467,6 @@
         </div>
         <h3>42</h3>
         <p>Total Kendaraan</p>
-        <small style="color: #27ae60;">↑ 3 kendaraan baru bulan ini</small>
       </div>
       
       <div class="stat-card green">
@@ -476,7 +475,6 @@
         </div>
         <h3>35</h3>
         <p>Kendaraan Tersedia</p>
-        <small style="color: #e74c3c;">↓ 2% dari bulan lalu</small>
       </div>
       
       <div class="stat-card orange">
@@ -485,19 +483,15 @@
         </div>
         <h3>4</h3>
         <p>Dalam Perbaikan</p>
-        <small style="color: #27ae60;">↓ 1 dari bulan lalu</small>
       </div>
     </div>
 
     <!-- Quick Actions -->
     <div class="quick-actions">
-      <h2><i class="fas fa-bolt"></i> Aksi Cepat</h2>
+      <h2>Aksi Cepat</h2>
       <div class="action-buttons">
-        <button id="addVehicleBtn" class="action-btn">
+        <a class="action-btn" href="tambah_kendaraan.php">
           <i class="fas fa-plus-circle"></i> Tambah Kendaraan
-        </button>
-        <a href="#" class="action-btn orange">
-          <i class="fas fa-calendar-alt"></i> Jadwal Perawatan
         </a>
       </div>
     </div>
@@ -534,9 +528,8 @@
             <td><span class="status-badge available">Tersedia</span></td>
             <td>
               <div class="action-icons">
-                <a href="#" class="edit-btn" data-id="1"><i class="fas fa-edit"></i></a>
+                <a href="edit_kendaraan.php" class="edit-btn" data-id="1"><i class="fas fa-edit"></i></a>
                 <a href="#"><i class="fas fa-trash-alt"></i></a>
-                <a href="#"><i class="fas fa-info-circle"></i></a>
               </div>
             </td>
           </tr>
@@ -549,9 +542,8 @@
             <td><span class="status-badge booked">Dipesan</span></td>
             <td>
               <div class="action-icons">
-                <a href="#" class="edit-btn" data-id="2"><i class="fas fa-edit"></i></a>
+                <a href="edit_kendaraan.php" class="edit-btn" data-id="2"><i class="fas fa-edit"></i></a>
                 <a href="#"><i class="fas fa-trash-alt"></i></a>
-                <a href="#"><i class="fas fa-info-circle"></i></a>
               </div>
             </td>
           </tr>
@@ -564,9 +556,8 @@
             <td><span class="status-badge available">Tersedia</span></td>
             <td>
               <div class="action-icons">
-                <a href="#" class="edit-btn" data-id="3"><i class="fas fa-edit"></i></a>
+                <a href="edit_kendaraan.php" class="edit-btn" data-id="3"><i class="fas fa-edit"></i></a>
                 <a href="#"><i class="fas fa-trash-alt"></i></a>
-                <a href="#"><i class="fas fa-info-circle"></i></a>
               </div>
             </td>
           </tr>
@@ -579,9 +570,8 @@
             <td><span class="status-badge booked">Dipesan</span></td>
             <td>
               <div class="action-icons">
-                <a href="#" class="edit-btn" data-id="4"><i class="fas fa-edit"></i></a>
+                <a href="edit_kendaraan.php" class="edit-btn" data-id="4"><i class="fas fa-edit"></i></a>
                 <a href="#"><i class="fas fa-trash-alt"></i></a>
-                <a href="#"><i class="fas fa-info-circle"></i></a>
               </div>
             </td>
           </tr>
@@ -594,127 +584,14 @@
             <td><span class="status-badge maintenance">Perbaikan</span></td>
             <td>
               <div class="action-icons">
-                <a href="#" class="edit-btn" data-id="5"><i class="fas fa-edit"></i></a>
+                <a href="edit_kendaraan.php" class="edit-btn" data-id="5"><i class="fas fa-edit"></i></a>
                 <a href="#"><i class="fas fa-trash-alt"></i></a>
-                <a href="#"><i class="fas fa-info-circle"></i></a>
               </div>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-    
-    <!-- Add Vehicle Modal -->
-    <div id="vehicleModal" class="modal">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3 id="modalTitle">Tambah Kendaraan Baru</h3>
-          <button class="close-modal">&times;</button>
-        </div>
-        <div class="modal-body">
-          <form id="vehicleForm">
-            <div class="form-group">
-              <label for="vehicleName">Nama Kendaraan</label>
-              <input type="text" id="vehicleName" placeholder="Contoh: Toyota Avanza" required>
-            </div>
-            <div class="form-group">
-              <label for="vehicleType">Jenis Kendaraan</label>
-              <select id="vehicleType" required>
-                <option value="">Pilih Jenis</option>
-                <option value="sedan">Sedan</option>
-                <option value="suv">SUV</option>
-                <option value="mpv">MPV</option>
-                <option value="minibus">Minibus</option>
-                <option value="bus">Bus</option>
-                <option value="motor">Motor</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="vehicleCapacity">Kapasitas (Orang)</label>
-              <input type="number" id="vehicleCapacity" min="1" max="50" required>
-            </div>
-            <div class="form-group">
-              <label for="vehiclePrice">Harga Sewa per Hari (Rp)</label>
-              <input type="number" id="vehiclePrice" min="100000" required>
-            </div>
-            <div class="form-group">
-              <label for="vehicleStatus">Status</label>
-              <select id="vehicleStatus" required>
-                <option value="available">Tersedia</option>
-                <option value="booked">Dipesan</option>
-                <option value="maintenance">Perbaikan</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="vehicleNotes">Catatan</label>
-              <textarea id="vehicleNotes" placeholder="Tambahkan catatan tentang kendaraan..."></textarea>
-            </div>
-          </form>
-        </div>
-        <div class="form-actions">
-          <button class="btn btn-secondary close-modal">Batal</button>
-          <button class="btn btn-primary" id="saveVehicle">Simpan</button>
-        </div>
-      </div>
-    </div>
   </main>
-
-  <script>
-    // Modal functionality
-    const modal = document.getElementById('vehicleModal');
-    const addBtn = document.getElementById('addVehicleBtn');
-    const closeBtns = document.querySelectorAll('.close-modal');
-    const saveBtn = document.getElementById('saveVehicle');
-    const modalTitle = document.getElementById('modalTitle');
-    const editBtns = document.querySelectorAll('.edit-btn');
-    
-    // Open modal for adding vehicle
-    addBtn.addEventListener('click', () => {
-      modalTitle.textContent = 'Tambah Kendaraan Baru';
-      document.getElementById('vehicleForm').reset();
-      modal.style.display = 'flex';
-    });
-    
-    // Open modal for editing vehicle
-    editBtns.forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        const vehicleId = btn.getAttribute('data-id');
-        modalTitle.textContent = 'Edit Kendaraan';
-        
-        // In a real app, you would fetch vehicle data based on ID
-        // For demo, we'll set some sample values
-        document.getElementById('vehicleName').value = 'Toyota Hiace Premio';
-        document.getElementById('vehicleType').value = 'minibus';
-        document.getElementById('vehicleCapacity').value = 14;
-        document.getElementById('vehiclePrice').value = 1200000;
-        document.getElementById('vehicleStatus').value = 'available';
-        document.getElementById('vehicleNotes').value = 'Kendaraan dalam kondisi baik, servis terakhir 3 bulan lalu';
-        
-        modal.style.display = 'flex';
-      });
-    });
-    
-    // Close modal
-    closeBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        modal.style.display = 'none';
-      });
-    });
-    
-    // Save vehicle data
-    saveBtn.addEventListener('click', () => {
-      // In a real app, you would save to database
-      alert('Data kendaraan berhasil disimpan!');
-      modal.style.display = 'none';
-    });
-    
-    // Close modal when clicking outside
-    window.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        modal.style.display = 'none';
-      }
-    });
-  </script>
 </body>
 </html>

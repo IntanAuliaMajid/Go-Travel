@@ -337,11 +337,6 @@
         
         <div class="form-row">
           <div class="form-group">
-            <label for="accRating"><i class="fas fa-star"></i> Rating (0-5)</label>
-            <input type="number" id="accRating" min="0" max="5" step="0.1" value="4.7">
-          </div>
-          
-          <div class="form-group">
             <label for="accRooms"><i class="fas fa-door-open"></i> Jumlah Kamar</label>
             <input type="number" id="accRooms" min="1" value="58" required>
           </div>
@@ -390,7 +385,7 @@
         </div>
         
         <div class="form-actions">
-          <a href="daftar_penginapan.php" class="btn btn-secondary">
+          <a href="penginapan.php" class="btn btn-secondary">
             <i class="fas fa-arrow-left"></i> Kembali
           </a>
           <button type="button" class="btn btn-danger" onclick="confirmDelete()">

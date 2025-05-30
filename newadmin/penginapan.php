@@ -355,7 +355,7 @@
   <main>
     <!-- Dashboard Header -->
     <div class="dashboard-header">
-      <h1><i class="fas fa-hotel" style="color: #9b59b6; margin-right: 10px;"></i>Manajemen Penginapan</h1>
+      <h1><i class="fas fa-hotel" style="color: #9b59b6; margin-right: 10px;"></i>Penginapan</h1>
       <p>Kelola akomodasi wisata dengan mudah. Tambah, edit, atau hapus penginapan sesuai kebutuhan.</p>
     </div>
 
@@ -367,7 +367,6 @@
         </div>
         <h3>38</h3>
         <p>Total Penginapan</p>
-        <small style="color: #27ae60;">↑ 5 penginapan baru bulan ini</small>
       </div>
       
       <div class="stat-card green">
@@ -376,34 +375,16 @@
         </div>
         <h3>287</h3>
         <p>Kamar Tersedia</p>
-        <small style="color: #e74c3c;">↓ 4% dari bulan lalu</small>
       </div>
-      
-      <div class="stat-card orange">
-        <div class="stat-icon">
-          <i class="fas fa-star"></i>
-        </div>
-        <h3>4.5</h3>
-        <p>Rating Rata-rata</p>
-        <small style="color: #27ae60;">↑ 0.2 dari bulan lalu</small>
-      </div>
+    
     </div>
 
     <!-- Quick Actions -->
     <div class="quick-actions">
-      <h2><i class="fas fa-bolt"></i> Aksi Cepat</h2>
+      <h2> Tambah Penginapan</h2>
       <div class="action-buttons">
         <a href="tambah_penginapan.php" class="action-btn">
-          <i class="fas fa-plus-circle"></i> Tambah Penginapan
-        </a>
-        <a href="kelola_reservasi.php" class="action-btn green">
-          <i class="fas fa-calendar-check"></i> Kelola Reservasi
-        </a>
-        <a href="review_pelanggan.php" class="action-btn orange">
-          <i class="fas fa-star"></i> Review Pelanggan
-        </a>
-        <a href="laporan_pendapatan.php" class="action-btn" style="background: linear-gradient(135deg, #3498db, #2980b9);">
-          <i class="fas fa-chart-bar"></i> Laporan Pendapatan
+          <i class="fas fa-plus-circle"></i> Tambah
         </a>
       </div>
     </div>
@@ -426,7 +407,6 @@
             <th>Lokasi</th>
             <th>Tipe</th>
             <th>Harga/Malam</th>
-            <th>Rating</th>
             <th>Status</th>
             <th>Aksi</th>
           </tr>
@@ -438,22 +418,11 @@
             <td>Bali, Ubud</td>
             <td>Resort</td>
             <td>Rp 1.500.000</td>
-            <td>
-              <div class="rating-stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-                <span>(4.5)</span>
-              </div>
-            </td>
             <td><span class="status-badge available">Tersedia</span></td>
             <td>
               <div class="action-icons">
                 <a href="edit_penginapan.php?id=1" title="Edit"><i class="fas fa-edit"></i></a>
                 <a href="hapus_penginapan.php?id=1" title="Hapus" onclick="return confirm('Yakin ingin menghapus penginapan ini?')"><i class="fas fa-trash-alt"></i></a>
-                <a href="detail_penginapan.php?id=1" title="Lihat Detail"><i class="fas fa-eye"></i></a>
               </div>
             </td>
           </tr>
@@ -463,22 +432,11 @@
             <td>Lombok, Pantai Kuta</td>
             <td>Hotel Bintang 4</td>
             <td>Rp 850.000</td>
-            <td>
-              <div class="rating-stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="far fa-star"></i>
-                <span>(4.0)</span>
-              </div>
-            </td>
             <td><span class="status-badge full">Penuh</span></td>
             <td>
               <div class="action-icons">
                 <a href="edit_penginapan.php?id=2" title="Edit"><i class="fas fa-edit"></i></a>
                 <a href="hapus_penginapan.php?id=2" title="Hapus" onclick="return confirm('Yakin ingin menghapus penginapan ini?')"><i class="fas fa-trash-alt"></i></a>
-                <a href="detail_penginapan.php?id=2" title="Lihat Detail"><i class="fas fa-eye"></i></a>
               </div>
             </td>
           </tr>
@@ -488,22 +446,11 @@
             <td>Jawa Barat, Puncak</td>
             <td>Villa</td>
             <td>Rp 2.200.000</td>
-            <td>
-              <div class="rating-stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <span>(4.9)</span>
-              </div>
-            </td>
             <td><span class="status-badge available">Tersedia</span></td>
             <td>
               <div class="action-icons">
                 <a href="edit_penginapan.php?id=3" title="Edit"><i class="fas fa-edit"></i></a>
                 <a href="hapus_penginapan.php?id=3" title="Hapus" onclick="return confirm('Yakin ingin menghapus penginapan ini?')"><i class="fas fa-trash-alt"></i></a>
-                <a href="detail_penginapan.php?id=3" title="Lihat Detail"><i class="fas fa-eye"></i></a>
               </div>
             </td>
           </tr>
@@ -513,22 +460,11 @@
             <td>Jakarta Pusat</td>
             <td>Hotel Bintang 3</td>
             <td>Rp 650.000</td>
-            <td>
-              <div class="rating-stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="far fa-star"></i>
-                <i class="far fa-star"></i>
-                <span>(3.2)</span>
-              </div>
-            </td>
             <td><span class="status-badge maintenance">Renovasi</span></td>
             <td>
               <div class="action-icons">
                 <a href="edit_penginapan.php?id=4" title="Edit"><i class="fas fa-edit"></i></a>
                 <a href="hapus_penginapan.php?id=4" title="Hapus" onclick="return confirm('Yakin ingin menghapus penginapan ini?')"><i class="fas fa-trash-alt"></i></a>
-                <a href="detail_penginapan.php?id=4" title="Lihat Detail"><i class="fas fa-eye"></i></a>
               </div>
             </td>
           </tr>
@@ -538,22 +474,11 @@
             <td>Bali, Canggu</td>
             <td>Bungalow</td>
             <td>Rp 1.100.000</td>
-            <td>
-              <div class="rating-stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-                <span>(4.6)</span>
-              </div>
-            </td>
             <td><span class="status-badge available">Tersedia</span></td>
             <td>
               <div class="action-icons">
                 <a href="edit_penginapan.php?id=5" title="Edit"><i class="fas fa-edit"></i></a>
                 <a href="hapus_penginapan.php?id=5" title="Hapus" onclick="return confirm('Yakin ingin menghapus penginapan ini?')"><i class="fas fa-trash-alt"></i></a>
-                <a href="detail_penginapan.php?id=5" title="Lihat Detail"><i class="fas fa-eye"></i></a>
               </div>
             </td>
           </tr>
