@@ -4,9 +4,9 @@ $current_page = basename($_SERVER['PHP_SELF']);
 // Data dummy untuk simulasi login
 $is_logged_in = true; // Set false untuk tampilan belum login
 $user_data = [
-    'name' => 'Sarah Johnson',
-    'email' => 'sarah.johnson@example.com',
-    'avatar' => 'https://randomuser.me/api/portraits/women/65.jpg', // atau gunakan './GAMBAR/user-avatar.jpg'
+    'name' => 'Intan Aulia Majid',
+    'email' => 'intanauliamajid@example.com',
+    'avatar' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8EFdqWXeeEQTETKt5_G2XHVLhWH6CtI9ohw&s', // atau gunakan './GAMBAR/user-avatar.jpg'
     'role' => 'member' // bisa 'admin', 'member', dll
 ];
 ?>

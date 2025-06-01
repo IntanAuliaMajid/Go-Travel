@@ -7,7 +7,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
   height: 100vh;
   background: linear-gradient(180deg, #1a2a3a, #2c3e50);
   color: #ecf0f1;
-  padding: 25px 15px;
+  padding: 0;
   box-sizing: border-box;
   position: fixed;
   top: 0;
@@ -15,20 +15,49 @@ $current_page = basename($_SERVER['PHP_SELF']);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
   z-index: 1000;
 }
 
+.sidebar-header {
+  padding: 25px 15px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0; /* Mencegah header menyusut */
+}
+
 .sidebar h2 {
-  margin: 0 0 35px 0;
+  margin: 0;
   font-size: 24px;
   font-weight: 700;
   text-align: center;
   color: #fff;
-  padding-bottom: 15px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+.sidebar-content {
+  flex: 1;
+  overflow-y: auto; /* Membuat area ini bisa di-scroll */
+  overflow-x: hidden;
+  padding: 15px;
+}
+
+/* Custom scrollbar untuk webkit browsers */
+.sidebar-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.sidebar-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+.sidebar-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
 }
 
 .sidebar nav ul {
@@ -52,6 +81,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
   background: rgba(255, 255, 255, 0.05);
   border-left: 3px solid transparent;
   box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  white-space: nowrap; /* Mencegah teks terpotong */
 }
 
 .sidebar nav ul li a:hover {
@@ -72,22 +102,62 @@ $current_page = basename($_SERVER['PHP_SELF']);
   transform: scale(0.98);
 }
 
+.sidebar-footer {
+  padding: 20px 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0; /* Mencegah footer menyusut */
+}
+
 .sidebar footer {
   font-size: 12px;
   color: #95a5a6;
   text-align: center;
-  padding: 20px 5px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  margin-top: 20px;
+  margin: 0;
+}
+
+/* Responsive untuk layar kecil */
+@media (max-height: 600px) {
+  .sidebar h2 {
+    font-size: 20px;
+  }
+  
+  .sidebar-header {
+    padding: 15px;
+  }
+  
+  .sidebar nav ul li a {
+    padding: 10px 15px;
+    font-size: 14px;
+  }
+  
+  .sidebar-footer {
+    padding: 15px;
+  }
+}
+
+/* Toggle button untuk mobile (opsional) */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+  
+  .sidebar.active {
+    transform: translateX(0);
+  }
 }
 </style>
 
 <div class="sidebar">
-  <div>
+  <div class="sidebar-header">
     <h2>Admin Panel</h2>
+  </div>
+  
+  <div class="sidebar-content">
     <nav>
       <ul>
         <li><a href="../newadmin/dashboard.php" class="<?= ($current_page == 'dashboard.php') ? 'active' : '' ?>">Dashboard</a></li>
+        <li><a href="../newadmin/pemesanan.php" class="<?= ($current_page == 'pemesanan.php') ? 'active' : '' ?>">Pemesanan</a></li>
         <li><a href="../newadmin/pengguna.php" class="<?= ($current_page == 'pengguna.php') ? 'active' : '' ?>">Pengguna</a></li>
         <li><a href="../newadmin/blog.php" class="<?= ($current_page == 'blog.php') || ($current_page == 'tambah_blog.php') ? 'active' : '' ?>">Blog</a></li>
         <li><a href="../newadmin/paket_wisata.php" class="<?= ($current_page == 'paket_wisata.php') || ($current_page == 'tambah_paket.php') ? 'active' : '' ?>">Paket Wisata</a></li>
@@ -101,5 +171,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
       </ul>
     </nav>
   </div>
-  <footer>&copy; <?= date('Y') ?> Admin Panel</footer>
+  
+  <div class="sidebar-footer">
+    <footer>&copy; <?= date('Y') ?> Admin Panel</footer>
+  </div>
 </div>
