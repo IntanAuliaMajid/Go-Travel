@@ -1,155 +1,208 @@
 <?php 
 include 'Komponen/navbar.php'; 
-$query = "SELECT * FROM destinasi WHERE id = $_POST['id_wisata']";
+include './backend/koneksi.php';
+
+$id_wisata = $_GET['id'];
+
+$query = "SELECT * FROM wisata WHERE id_wisata = $id_wisata";
+$queryGambar = "SELECT * FROM gambar WHERE wisata_id = $id_wisata";
+// Eksekusi query untuk mendapatkan data wisata
+$resultGambar = mysqli_query($conn, $queryGambar);
+$result = mysqli_query($conn, $query);
+$destinasi = mysqli_fetch_assoc($result);
+
+$aktivitas = $destinasi['todo'];
+// Pecah berdasarkan koma
+$list = explode(",", $aktivitas);
+
+$ulasan = "SELECT pengunjung.id_pengunjung,pengunjung.nama_depan,pengunjung.nama_belakang,ulasan.rating,ulasan.komentar FROM ulasan JOIN pengunjung ON ulasan.id_pengunjung = pengunjung.id_pengunjung WHERE ulasan.id_wisata = $id_wisata";
+$resultUlasan = mysqli_query($conn, $ulasan);
+
+
 ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Detail Wisata - Pantai Tanjung Kodok</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./CSS/detail_destinasi.css" />  
+  <title>Detail Wisata - <?= $destinasi['nama_wisata'] ?></title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="./CSS/detail_destinasi.css" />  
 </head>
 <body>
 
-
 <header class="hero">
-  <div class="hero-text">
-    <h1>Pantai Tanjung Kodok</h1>
-    <p>Keajaiban Alam di Jawa Timur</p>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1><?= $destinasi['nama_wisata'] ?></h1>
+    <p class="hero-subtitle">Keajaiban Alam di Jawa Timur</p>
   </div>
 </header>
 
-<div class="container">
-  <!-- Left Column -->
-  <div class="left-column">
-    <div class="gallery">
-      <img src="https://1.bp.blogspot.com/-9xf_ASpphxM/TrvDC4Tch-I/AAAAAAAABMc/RExb1UrDcwQ/s1600/tanjung%2Bkodok.JPG" alt="">
-      <img src="https://nativeindonesia.com/wp-content/uploads/2021/08/Pantai-Tanjung-Kodok.jpg" alt="">
-      <img src="https://www.nativeindonesia.com/foto/2024/07/pantai-tanjung-kodok-1.jpg" alt="">
-      <img src="https://www.nativeindonesia.com/foto/2024/07/wisata-pantai-tanjung-kodok.jpg" alt="">
-      <img src="https://cdn.idntimes.com/content-images/community/2022/11/149402858-1534426486747158-1924235549356764180-n-74a5bbce32d431e2700b8e2b2284983e-f213f7f31db44e837aedc4a3b7e6ec0c.jpg" alt="">
-      <img src="https://www.nativeindonesia.com/foto/2024/07/sunset-di-pantai-tanjung-kodok.jpg" alt=""> 
-    </div>
-
-    <div class="section">
-      <h3>Tentang Pantai Tanjung Kodok</h3>
-      <p class="deskripsi">Selamat datang di Pantai Tanjung Kodok, sebuah permata tersembunyi di pesisir utara Lamongan, Jawa Timur. Pantai ini menawarkan pesona alam yang unik dengan formasi batu karang menyerupai kodok raksasa, yang menjadi ciri khas dan asal namanya.</p>
-      <p class="deskripsi">Pantai Tanjung Kodok memanjakan pengunjung dengan hamparan pasir putih yang lembut dan air laut yang jernih, mengundang Anda untuk bersantai, berjemur, atau bermain air. Deburan ombak yang tenang menciptakan suasana yang damai dan menenangkan, menjauhkan Anda dari hiruk pikuk kehidupan kota.</p>
-      <p class="deskripsi">Keunikan utama pantai ini terletak pada gugusan batu karang yang tersebar di sepanjang garis pantai. Salah satu batu karang yang paling ikonik adalah yang berbentuk seperti kodok sedang beristirahat, menjadi daya tarik utama bagi para wisatawan dan fotografer. Anda dapat menjelajahi area ini saat air surut dan mengabadikan momen yang tak terlupakan.</p>
-      <p class="deskripsi">Selain keindahan formasi batu karangnya, Pantai Tanjung Kodok juga menawarkan pemandangan matahari terbenam yang spektakuler. Langit yang berwarna-warni menjadi latar belakang yang sempurna untuk siluet batu kodok, menciptakan suasana romantis dan magis.</p>
-    </div>
-
-    <div class="section">
-      <h3>Apa yang bisa dilakukan</h3>
-      <div class="activities">
-        <div class="activity"><i class="fas fa-sun"></i> <span>Menikmati Pemandangan Batu Karang Unik</span></div>
-        <div class="activity"><i class="fas fa-hiking"></i> <span>Menikmati Sunset dan Sunrise</span></div>
-        <div class="activity"><i class="fas fa-camera"></i> <span>Mengunjungi Menara Rukyat</span></div>
-        <div class="activity"><i class="fas fa-horse"></i> <span>Bermain Pasir dan Aktivitas Anak-anak</span></div>
-        <div class="activity"><i class="fas fa-mountain"></i> <span>Menikmati Angkringan/Musik di Malam Hari (Weekend)</span></div>
-        <div class="activity"><i class="fas fa-history"></i> <span>Naik Perahu atau Kano (musiman)</span></div>
+<main class="container">
+  <!-- Main Content Column -->
+  <div class="main-content">
+    <div class="gallery-section">
+      <div class="gallery-grid">
+        <?php while ($gambar = mysqli_fetch_assoc($resultGambar)) { ?>
+          <img src="<?= $gambar['url'] ?>" alt="<?= $destinasi['nama_wisata'] ?>" class="gallery-image">
+        <?php } ?>
       </div>
     </div>
 
-    <div class="section">
-      <h3>Rating & Ulasan</h3>
-      <div class="review">
-        <div class="name">Joko Anwar</div>
-        <div class="stars">★★★★★</div>
-        <div class="comment">Pengalaman luar biasa! Pemandangan sunrise-nya menakjubkan. Sangat direkomendasikan untuk datang lebih awal dan menikmati kawasan ini di pagi hari.</div>
+    <section class="content-section about-section">
+      <h2 class="section-title">Tentang <?= $destinasi['nama_wisata'] ?></h2>
+      <p class="section-description"><?= $destinasi['deskripsi_wisata'] ?></p>
+    </section>
+
+    <section class="content-section activities-section">
+      <h2 class="section-title">Aktivitas di <?= $destinasi['nama_wisata'] ?></h2>
+      <div class="activities-grid">
+        <?php foreach ($list as $item) { 
+          $item = trim($item);
+          $itemFormatted = ucwords($item); ?>
+          <div class="activity-card">
+            <i class="fas fa-check-circle activity-icon"></i>
+            <span class="activity-text"><?= $itemFormatted ?></span>
+          </div>
+        <?php } ?>
       </div>
-      <div class="review">
-        <div class="name">Dina Aprilia</div>
-        <div class="stars">★★★★☆</div>
-        <div class="comment">Tempat bagus dan suasana pantai yang masih alami di Lamongan.</div>
+    </section>
+
+    <section class="content-section reviews-section">
+      <h2 class="section-title">Ulasan Pengunjung</h2>
+      <div class="reviews-container">
+        <?php while ($row = mysqli_fetch_assoc($resultUlasan)) { ?>
+        <div class="review-card">
+          <div class="review-header">
+            <h4 class="reviewer-name"><?= $row['nama_depan'] . ' ' . $row['nama_belakang'] ?></h4>
+            <div class="review-rating">
+              <?= str_repeat('★', $row['rating']) . str_repeat('☆', 5 - $row['rating']) ?>
+            </div>
+          </div>
+          <p class="review-comment"><?= $row['komentar'] ?></p>
+        </div>
+        <?php } ?>
       </div>
-      <div class="review">
-        <div class="name">Suci Rahma</div>
-        <div class="stars">★★★★★</div>
-        <div class="comment">Sangat recommended untuk liburan keluarga dan pecinta alam. Saya sangat terkesan dengan keramahan penduduk lokal dan keindahan alam yang tiada duanya.</div>
-      </div>
-    </div>
+    </section>
 
-  <!-- field ulasan -->
-   <div class="section">
-  <h3>Kirim Ulasan Anda</h3>
-  <form action="#" method="post" class="review-form">
-    <div class="form-group">
-      <label for="nama">Nama:</label>
-      <input type="text" id="nama" name="nama" required>
-    </div>
+    <section class="content-section review-form-section">
+      <h2 class="section-title">Berikan Ulasan Anda</h2>
+      <form action="./backend/proses_ulasan.php" method="post" class="review-form">
+        <!-- <div class="form-group">
+          <label for="nama" class="form-label">Nama Lengkap</label>
+          <input type="text" id="nama" name="nama" class="form-input" required>
+        </div> -->
 
-    <div class="form-group">
-      <label for="rating">Rating:</label>
-      <select id="rating" name="rating" required>
-        <option value="">Pilih Rating</option>
-        <option value="5">★★★★★ - Luar Biasa</option>
-        <option value="4">★★★★☆ - Bagus</option>
-        <option value="3">★★★☆☆ - Cukup</option>
-        <option value="2">★★☆☆☆ - Kurang</option>
-        <option value="1">★☆☆☆☆ - Buruk</option>
-      </select>
-    </div>
+        <div class="form-group">
+          <label for="rating" class="form-label">Rating</label>
+          <select id="rating" name="rating" class="form-select" required>
+            <option value="" disabled selected>Pilih Rating</option>
+            <option value="5">★★★★★ - Luar Biasa</option>
+            <option value="4">★★★★☆ - Bagus</option>
+            <option value="3">★★★☆☆ - Cukup</option>
+            <option value="2">★★☆☆☆ - Kurang</option>
+            <option value="1">★☆☆☆☆ - Buruk</option>
+          </select>
+        </div>
 
-    <div class="form-group">
-      <label for="komentar">Komentar:</label>
-      <textarea id="komentar" name="komentar" rows="4"></textarea>
-    </div>
+        <div class="form-group">
+          <label for="komentar" class="form-label">Komentar</label>
+          <textarea id="komentar" name="komentar" rows="5" class="form-textarea"></textarea>
+        </div>
+        <input type="hidden" name="id_wisata" value="<?= $id_wisata ?>">
 
-    <a href="#"><button type="submit" class="submit-btn">Kirim Ulasan</button></a>
-  </form>
-</div>
-</div>
+        <button type="submit" class="submit-button">
+          <i class="fas fa-paper-plane"></i> Kirim Ulasan
+        </button>
+      </form>
+    </section>
+  </div>
 
-  <!-- Right Column -->
-  <div class="right-column">
-    <div class="info-box">
-      <h4>Informasi Singkat</h4>
-      <ul>
-        <li style="margin-top:10px;">✔️ Waktu Terbaik: Pagi hari</li>
-        <li>✔️ Rekomendasi Kunjungan: 2-3 hari</li>
-        <li>✔️ Tiket Masuk: Rp 30.000</li>
-        <li>✔️ Jam Buka: Jam 08.00 - 17.00 WIB</li>
+  <!-- Sidebar Column -->
+  <aside class="sidebar">
+    <div class="info-card">
+      <h3 class="card-title">Informasi Wisata</h3>
+      <ul class="info-list">
+        <li class="info-item">
+          <i class="fas fa-clock info-icon"></i>
+          <span>Waktu Terbaik: Pagi hari</span>
+        </li>
+        <li class="info-item">
+          <i class="fas fa-calendar-day info-icon"></i>
+          <span>Durasi Kunjungan: 2-3 hari</span>
+        </li>
+        <li class="info-item">
+          <i class="fas fa-ticket-alt info-icon"></i>
+          <span>Tiket Masuk: Rp 30.000</span>
+        </li>
+        <li class="info-item">
+          <i class="fas fa-door-open info-icon"></i>
+          <span>Jam Buka: 08.00 - 17.00 WIB</span>
+        </li>
       </ul>
     </div>
 
-    <div class="location-box">
-      <h4>Lokasi</h4>
-      <img 
-        class="map" 
-        src="./Gambar/tanjungkodok.png" 
-        alt="Peta Lokasi Pantai Tanjung Kodok" 
-        width="100%" 
-        height="auto">
-      <p style="margin-top: 10px; font-size: 14px;">Pantai Tanjung Kodok, Labuhan, Brondong, Lamongan, Jawa Timur, Indonesia</p>
+    <div class="location-card">
+      <h3 class="card-title"><i class="fas fa-map-marker-alt location-icon"></i> Denah </h3>
+      <div class="map-container">
+        <img src="<?php echo $destinasi['denah']; ?>" alt="Peta Lokasi" class="map-image">
+      </div>
+      <p class="location-address">
+        <?php echo $destinasi['Alamat']; ?>
+      </p>
     </div>
 
-    <div class="related-box">
-      <h4>Wisata Terdekat</h4>
-      <ul>
-        <li>Wisata Bahari Lamongan</li>
-        <li>Pantai Maldives Kemantren</li>
-        <li>Tanjung Kodok Beach Resort Lamongan</li>
-        <li>Maharani Zoo & Goa</li>
-        <li>Pantai Lorena</li>
+    <div class="related-card">
+      <h3 class="card-title">Wisata Terdekat</h3>
+      <ul class="related-list">
+        <li class="related-item">
+          <i class="fas fa-umbrella-beach related-icon"></i>
+          Wisata Bahari Lamongan
+        </li>
+        <li class="related-item">
+          <i class="fas fa-water related-icon"></i>
+          Pantai Maldives Kemantren
+        </li>
+        <li class="related-item">
+          <i class="fas fa-resort related-icon"></i>
+          Tanjung Kodok Beach Resort
+        </li>
+        <li class="related-item">
+          <i class="fas fa-paw related-icon"></i>
+          Maharani Zoo & Goa
+        </li>
+        <li class="related-item">
+          <i class="fas fa-sun related-icon"></i>
+          Pantai Lorena
+        </li>
       </ul>
     </div>
     
-    <div class="info-box" style="margin-top: 20px;">
-      <h4>Tips Berkunjung</h4>
-      <ul>
-        <li style="margin-top:10px;">✔️ Datang lebih awal</li>
-        <li>✔️ Kenakan pakaian yang nyaman dan mudah kering</li>
-        <li>✔️ Bawa perlengkapan renang</li>
-        <li>✔️ Siapkan uang tunai atau kartu</li>
-        <li>✔️ Manfaatkan peta dan informasi</li>
-        <li>✔️ Jaga barang bawaan</li>
+    <div class="tips-card">
+      <h3 class="card-title">Tips Berkunjung</h3>
+      <ul class="tips-list">
+        <li class="tips-item">
+          <i class="fas fa-lightbulb tips-icon"></i>
+          Datang lebih awal untuk menghindari keramaian
+        </li>
+        <li class="tips-item">
+          <i class="fas fa-tshirt tips-icon"></i>
+          Kenakan pakaian yang nyaman
+        </li>
+        <li class="tips-item">
+          <i class="fas fa-swimming-pool tips-icon"></i>
+          Bawa perlengkapan renang
+        </li>
+        <li class="tips-item">
+          <i class="fas fa-wallet tips-icon"></i>
+          Siapkan uang tunai atau kartu
+        </li>
       </ul>
     </div>
-  </div>
-</div>
+  </aside>
+</main>
 
 <?php include 'Komponen/footer.php'; ?>
 </body>

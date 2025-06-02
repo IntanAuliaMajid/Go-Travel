@@ -25,7 +25,7 @@ if (mysqli_num_rows($result) == 1) {
     if (password_verify($password, $user['password'])) {
         // Simpan data user ke session
         $_SESSION['user'] = [
-            'id' => $user['id'],
+            'id' => $user['id_pengunjung'],
             'name' => $user['name'],
             'email' => $user['email'],
             'avatar' => $user['avatar'] ? $user['avatar'] : 'default_avatar.png'

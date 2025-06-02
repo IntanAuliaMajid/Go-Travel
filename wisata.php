@@ -67,7 +67,13 @@ SELECT
     AVG(u.rating) AS avg_rating,
     COUNT(u.id_ulasan) AS jumlah_ulasan
 FROM wisata w
-JOIN gambar g ON g.wisata_id = w.id_wisata
+-- Subquery untuk ambil 1 gambar per wisata
+LEFT JOIN (
+    SELECT wisata_id, MIN(id_gambar) as id_gambar
+    FROM gambar
+    GROUP BY wisata_id
+) g1 ON g1.wisata_id = w.id_wisata
+LEFT JOIN gambar g ON g.id_gambar = g1.id_gambar
 JOIN lokasi l ON l.id_lokasi = w.id_lokasi
 JOIN kategori_wisata k ON k.id_kategori = w.kategori_id
 LEFT JOIN ulasan u ON u.id_wisata = w.id_wisata
