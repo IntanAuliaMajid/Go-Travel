@@ -1,3 +1,6 @@
+<?php
+include "Komponen/navbar.php";
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -268,8 +271,6 @@
   </style>
 </head>
 <body>
-
-<?php include "Komponen/navbar.php" ?>
 
   <!-- Hero Section -->
   <header class="hero" id="home">

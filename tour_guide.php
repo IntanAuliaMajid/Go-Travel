@@ -1,3 +1,4 @@
+<?php include './Komponen/navbar.php'; ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -448,7 +449,7 @@
   </style>
 </head>
 <body>
-  <?php include './Komponen/navbar.php'; ?>
+  
   <!-- Hero Section -->
   <section class="hero">
     <h1>Tour Guide Go-Travel</h1>

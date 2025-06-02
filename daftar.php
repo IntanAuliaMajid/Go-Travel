@@ -101,26 +101,26 @@ body {
 </head>
 <body>
   <div class="container">
-    <div class="form-box">
+    <form class="form-box" action="backend/proses_daftar.php" method="POST">
       <h2>Daftar</h2>
       <label>Nama Awal</label>
-      <input type="text" placeholder="Masukan nama awal kamu disini..">
+      <input type="text" name="nama_depan" placeholder="Masukan nama awal kamu disini.." >
       
       <label>Nama Akhir</label>
-      <input type="text" placeholder="Masukan nama akhir kamu disini..">
+      <input type="text"  name="nama_belakang" placeholder="Masukan nama akhir kamu disini..">
 
       <label>Alamat Email</label>
-      <input type="email" placeholder="Masukan alamat email kamu disini..">
+      <input type="email" name="email" placeholder="Masukan alamat email kamu disini.." >
 
       <label>Password</label>
-      <input type="password" placeholder="Masukan kata sandi kamu disini..">
+      <input type="password" name="password" placeholder="Masukan kata sandi kamu disini.." >
 
       <label>Konfirmasi Password</label>
-      <input type="password" placeholder="Masukan kata sandi disini..">
+      <input type="password"  name="konfirmasi_password" placeholder="Masukan kata sandi disini..">
 
-      <a href="login.php" class="masuk">Daftar</a>
+      <button type="submit" class="masuk">Daftar</button>
       <p>Sudah punya akun? <a href="login.php">Masuk Disini</a></p>
-    </div>
+    </form>
     <div class="image-box">
       <img src="Gambar/logo.png" alt="Logo">
       <!-- <h1>Jelajah Jawa</h1>

@@ -1,3 +1,7 @@
+<?php 
+include 'Komponen/navbar.php'; 
+$query = "SELECT * FROM destinasi WHERE id = $_POST['id_wisata']";
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -8,7 +12,7 @@
     <link rel="stylesheet" href="./CSS/detail_destinasi.css" />  
 </head>
 <body>
-<?php include 'Komponen/navbar.php'; ?>
+
 
 <header class="hero">
   <div class="hero-text">

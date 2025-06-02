@@ -1,14 +1,13 @@
 <?php
+session_start();
 $current_page = basename($_SERVER['PHP_SELF']);
 
-// Data dummy untuk simulasi login
-$is_logged_in = true; // Set false untuk tampilan belum login
-$user_data = [
-    'name' => 'Intan Aulia Majid',
-    'email' => 'intanauliamajid@example.com',
-    'avatar' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8EFdqWXeeEQTETKt5_G2XHVLhWH6CtI9ohw&s', // atau gunakan './GAMBAR/user-avatar.jpg'
-    'role' => 'member' // bisa 'admin', 'member', dll
-];
+$is_logged_in = isset($_SESSION['user']); // Periksa apakah user sudah login
+
+if ($is_logged_in) {
+    $user_data = $_SESSION['user'];
+}
+
 ?>
 
 <nav id="navbar" class="navbar transparent">
@@ -60,7 +59,7 @@ $user_data = [
                             Pengaturan
                         </a>
                         <hr class="dropdown-divider">
-                        <a href="logout.php" class="dropdown-item logout">
+                        <a href="../backend/logout.php" class="dropdown-item logout">
                             Keluar
                         </a>
                     </div>
