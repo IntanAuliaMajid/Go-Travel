@@ -2,7 +2,7 @@
 session_start();
 $current_page = basename($_SERVER['PHP_SELF']);
 
-$is_logged_in = isset($_SESSION['user']); // Periksa apakah user sudah login
+$is_logged_in = isset($_SESSION['user']);
 
 if ($is_logged_in) {
     $user_data = $_SESSION['user'];
@@ -59,7 +59,7 @@ if ($is_logged_in) {
                             Pengaturan
                         </a>
                         <hr class="dropdown-divider">
-                        <a href="../backend/logout.php" class="dropdown-item logout">
+                        <a href="./backend/logout.php" class="dropdown-item logout">
                             Keluar
                         </a>
                     </div>

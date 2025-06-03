@@ -1,209 +1,448 @@
-<?php 
-include 'Komponen/navbar.php'; 
-include './backend/koneksi.php';
+<?php
+// AKTIFKAN UNTUK DEVELOPMENT, NONAKTIFKAN/HAPUS DI PRODUKSI!
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-$id_wisata = $_GET['id'];
+// 0. Mulai atau lanjutkan sesi
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
-$query = "SELECT * FROM wisata WHERE id_wisata = $id_wisata";
-$queryGambar = "SELECT * FROM gambar WHERE wisata_id = $id_wisata";
-// Eksekusi query untuk mendapatkan data wisata
-$resultGambar = mysqli_query($conn, $queryGambar);
-$result = mysqli_query($conn, $query);
-$destinasi = mysqli_fetch_assoc($result);
+include 'Komponen/navbar.php'; // Sertakan navbar
+include './backend/koneksi.php'; // Sertakan koneksi database
 
-$aktivitas = $destinasi['todo'];
-// Pecah berdasarkan koma
-$list = explode(",", $aktivitas);
+// 1. Ambil ID Wisata dari URL
+if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+    echo "<div class='container'><p class='error-message'>ID Wisata tidak valid.</p></div>";
+    include 'Komponen/footer.php'; // Sertakan footer sebelum exit
+    if ($conn) mysqli_close($conn); // Tutup koneksi jika ada sebelum exit
+    exit;
+}
+$id_wisata = (int)$_GET['id'];
 
-$ulasan = "SELECT pengunjung.id_pengunjung,pengunjung.nama_depan,pengunjung.nama_belakang,ulasan.rating,ulasan.komentar FROM ulasan JOIN pengunjung ON ulasan.id_pengunjung = pengunjung.id_pengunjung WHERE ulasan.id_wisata = $id_wisata";
-$resultUlasan = mysqli_query($conn, $ulasan);
+// 2. Handle Pengiriman Ulasan Baru
+$ulasan_message = '';
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['kirim_ulasan'])) {
+    if (!isset($_SESSION['user']['id'])) {
+        $ulasan_message = "<p class='error-message'>Anda harus login untuk mengirim ulasan.</p>";
+    } else {
+        $id_pengunjung = (int)$_SESSION['user']['id'];
+        $rating = isset($_POST['rating']) ? (int)$_POST['rating'] : 0;
+        $komentar = mysqli_real_escape_string($conn, $_POST['komentar']);
+
+        if (empty(trim($komentar))) { // Ditambahkan trim() untuk komentar
+            $ulasan_message = "<p class='error-message'>Komentar tidak boleh kosong.</p>";
+        } elseif ($rating >= 1 && $rating <= 5) {
+            $stmt_insert_ulasan = mysqli_prepare($conn, "INSERT INTO ulasan (id_wisata, id_pengunjung, rating, komentar) VALUES (?, ?, ?, ?)");
+            if ($stmt_insert_ulasan) { // Periksa apakah prepare berhasil
+                mysqli_stmt_bind_param($stmt_insert_ulasan, "iiis", $id_wisata, $id_pengunjung, $rating, $komentar);
+                if (mysqli_stmt_execute($stmt_insert_ulasan)) {
+                    $ulasan_message = "<p class='success-message'>Ulasan Anda berhasil dikirim!</p>";
+                } else {
+                    $ulasan_message = "<p class='error-message'>Gagal mengirim ulasan: " . mysqli_stmt_error($stmt_insert_ulasan) . "</p>";
+                }
+                mysqli_stmt_close($stmt_insert_ulasan);
+            } else {
+                $ulasan_message = "<p class='error-message'>Gagal mempersiapkan statement ulasan: " . mysqli_error($conn) . "</p>";
+            }
+        } else {
+            $ulasan_message = "<p class='error-message'>Rating tidak valid. Harap pilih rating antara 1 dan 5.</p>";
+        }
+    }
+}
+
+// 3. Query Data Utama Wisata
+$stmt_wisata = mysqli_prepare($conn, "
+    SELECT w.nama_wisata, w.deskripsi_wisata, w.todo, w.Alamat as alamat_wisata, w.denah, w.id_lokasi,
+           l.nama_lokasi,
+           t.nama_tips_berkunjung
+    FROM wisata w
+    LEFT JOIN lokasi l ON w.id_lokasi = l.id_lokasi
+    LEFT JOIN tips_berkunjung t ON w.id_tips_berkunjung = t.id_tips_berkunjung
+    WHERE w.id_wisata = ?
+");
+
+if (!$stmt_wisata) { // Periksa apakah prepare berhasil
+    echo "<div class='container'><p class='error-message'>Gagal mempersiapkan query wisata: " . mysqli_error($conn) . "</p></div>";
+    include 'Komponen/footer.php';
+    if ($conn) mysqli_close($conn);
+    exit;
+}
+
+mysqli_stmt_bind_param($stmt_wisata, "i", $id_wisata);
+mysqli_stmt_execute($stmt_wisata);
+$result_wisata = mysqli_stmt_get_result($stmt_wisata);
+$wisata = mysqli_fetch_assoc($result_wisata);
+mysqli_stmt_close($stmt_wisata);
+
+if (!$wisata) {
+    echo "<div class='container'><p class='error-message'>Wisata tidak ditemukan.</p></div>";
+    include 'Komponen/footer.php';
+    if ($conn) mysqli_close($conn);
+    exit;
+}
+
+$nama_wisata_display = htmlspecialchars($wisata['nama_wisata']);
+$deskripsi_parts = explode('.', $wisata['deskripsi_wisata'] ?? '', 2);
+$deskripsi_singkat_wisata = isset($deskripsi_parts[0]) && trim($deskripsi_parts[0]) !== '' ? htmlspecialchars(trim($deskripsi_parts[0])) . '.' : 'Jelajahi keindahan dan pesona ' . $nama_wisata_display . '.';
+
+// 4. Query Gambar dari tabel `gambar`
+$stmt_gallery = mysqli_prepare($conn, "SELECT url, caption FROM gambar WHERE wisata_id = ? ORDER BY id_gambar ASC");
+$gallery_images = [];
+if ($stmt_gallery) { // Periksa apakah prepare berhasil
+    mysqli_stmt_bind_param($stmt_gallery, "i", $id_wisata);
+    mysqli_stmt_execute($stmt_gallery);
+    $result_gallery = mysqli_stmt_get_result($stmt_gallery);
+    while ($img_row = mysqli_fetch_assoc($result_gallery)) {
+        $gallery_images[] = $img_row;
+    }
+    mysqli_stmt_close($stmt_gallery);
+} else {
+    // Handle error jika prepare gagal, misal tampilkan pesan atau log
+    // $ulasan_message .= "<p class='error-message'>Gagal memuat galeri.</p>";
+}
 
 
+$gambar_utama_wisata = !empty($gallery_images) ? htmlspecialchars($gallery_images[0]['url']) : './Gambar/default-hero.jpg';
+
+// 5. Query Ulasan
+$stmt_ulasan = mysqli_prepare($conn, "
+    SELECT u.rating, u.komentar, p.nama_depan, p.nama_belakang
+    FROM ulasan u
+    JOIN pengunjung p ON u.id_pengunjung = p.id_pengunjung
+    WHERE u.id_wisata = ?
+    ORDER BY u.id_ulasan DESC
+    LIMIT 5
+");
+$ulasan_list = [];
+if ($stmt_ulasan) { // Periksa apakah prepare berhasil
+    mysqli_stmt_bind_param($stmt_ulasan, "i", $id_wisata);
+    mysqli_stmt_execute($stmt_ulasan);
+    $result_ulasan = mysqli_stmt_get_result($stmt_ulasan);
+    while ($ulasan_row = mysqli_fetch_assoc($result_ulasan)) {
+        $ulasan_list[] = $ulasan_row;
+    }
+    mysqli_stmt_close($stmt_ulasan);
+} else {
+     // Handle error jika prepare gagal
+    // $ulasan_message .= "<p class='error-message'>Gagal memuat ulasan.</p>";
+}
+
+
+// 6. Parse Aktivitas (dari kolom `todo`)
+$activities_wisata = [];
+if (!empty($wisata['todo'])) {
+    $todo_items = explode(',', $wisata['todo']);
+    foreach ($todo_items as $item) {
+        $item_trimmed = trim($item);
+        if (empty($item_trimmed)) continue;
+
+        $icon = "fas fa-check-circle"; // Ikon default
+        if (stripos($item_trimmed, "sunrise") !== false || stripos($item_trimmed, "sunset") !== false) $icon = "fas fa-sun";
+        elseif (stripos($item_trimmed, "foto") !== false) $icon = "fas fa-camera";
+        elseif (stripos($item_trimmed, "renang") !== false) $icon = "fas fa-swimmer";
+        elseif (stripos($item_trimmed, "snorkeling") !== false || stripos($item_trimmed, "diving") !== false) $icon = "fas fa-water";
+        elseif (stripos($item_trimmed, "museum") !== false) $icon = "fas fa-landmark";
+        elseif (stripos($item_trimmed, "zoo") !== false || stripos($item_trimmed, "kebun binatang") !== false) $icon = "fas fa-paw";
+        elseif (stripos($item_trimmed, "kuliner") !== false || stripos($item_trimmed, "makan") !== false) $icon = "fas fa-utensils";
+        elseif (stripos($item_trimmed, "belanja") !== false || stripos($item_trimmed, "oleh-oleh") !== false) $icon = "fas fa-shopping-bag";
+        elseif (stripos($item_trimmed, "trekking") !== false || stripos($item_trimmed, "hiking") !== false) $icon = "fas fa-hiking";
+
+        $activities_wisata[] = ["icon" => $icon, "text" => htmlspecialchars($item_trimmed)];
+    }
+}
+
+// 7. Query Wisata Terdekat
+$wisata_terdekat_list = [];
+if (!empty($wisata['id_lokasi'])) {
+    $stmt_terdekat = mysqli_prepare($conn, "
+        SELECT id_wisata, nama_wisata
+        FROM wisata
+        WHERE id_lokasi = ? AND id_wisata != ?
+        ORDER BY RAND()
+        LIMIT 4
+    ");
+    if ($stmt_terdekat) { // Periksa apakah prepare berhasil
+        mysqli_stmt_bind_param($stmt_terdekat, "ii", $wisata['id_lokasi'], $id_wisata);
+        mysqli_stmt_execute($stmt_terdekat);
+        $result_terdekat = mysqli_stmt_get_result($stmt_terdekat);
+        while ($terdekat_row = mysqli_fetch_assoc($result_terdekat)) {
+            $wisata_terdekat_list[] = $terdekat_row;
+        }
+        mysqli_stmt_close($stmt_terdekat);
+    }  else {
+         // Handle error jika prepare gagal
+        // $ulasan_message .= "<p class='error-message'>Gagal memuat wisata terdekat.</p>";
+    }
+}
+
+// Informasi singkat
+$info_singkat = [
+    "Waktu Terbaik: Pagi & Sore",
+    "Estimasi Durasi: 2-4 Jam",
+];
+// if (isset($wisata['harga_tiket']) && $wisata['harga_tiket'] > 0) {
+//     $info_singkat[] = "Tiket: Rp " . number_format($wisata['harga_tiket']);
+// } else {
+//     $info_singkat[] = "Tiket: Bervariasi/Gratis";
+// }
+
+$tips_berkunjung_list = [];
+if(!empty($wisata['nama_tips_berkunjung'])){
+    $tips_array = explode(';', $wisata['nama_tips_berkunjung']);
+    foreach($tips_array as $tip_item){
+        if(!empty(trim($tip_item))) $tips_berkunjung_list[] = htmlspecialchars(trim($tip_item));
+    }
+}
+if (empty($tips_berkunjung_list)) {
+    $tips_berkunjung_list = [
+        "Datang lebih awal untuk pengalaman terbaik.",
+        "Kenakan pakaian dan alas kaki yang nyaman.",
+        "Bawa air minum dan tabir surya.",
+        "Jaga kebersihan lingkungan sekitar.",
+        "Patuhi peraturan yang berlaku di lokasi."
+    ];
+}
+
+$peta_lokasi_url = !empty($wisata['denah']) ? htmlspecialchars($wisata['denah']) : './Gambar/default-map.png';
+$alamat_display = !empty($wisata['alamat_wisata']) ? htmlspecialchars($wisata['alamat_wisata']) : 'Informasi alamat tidak tersedia.';
+if (empty($wisata['alamat_wisata']) && !empty($wisata['nama_lokasi'])) {
+    $alamat_display = "Berlokasi di area " . htmlspecialchars($wisata['nama_lokasi']);
+}
+
+// JANGAN tutup koneksi di sini lagi
+// mysqli_close($conn);
 ?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Detail Wisata - <?= $destinasi['nama_wisata'] ?></title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <link rel="stylesheet" href="./CSS/detail_destinasi.css" />  
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Detail Wisata - <?php echo $nama_wisata_display; ?></title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./CSS/detail_destinasi.css" />
 </head>
 <body>
+<?php // Navbar sudah diinclude di atas ?>
 
-<header class="hero">
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <h1><?= $destinasi['nama_wisata'] ?></h1>
-    <p class="hero-subtitle">Keajaiban Alam di Jawa Timur</p>
-  </div>
+<header class="hero" style="background-image: url('<?php echo $gambar_utama_wisata; ?>');">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <h1><?php echo $nama_wisata_display; ?></h1>
+        <p class="hero-subtitle"><?php echo $deskripsi_singkat_wisata; ?></p>
+    </div>
 </header>
 
-<main class="container">
-  <!-- Main Content Column -->
-  <div class="main-content">
-    <div class="gallery-section">
-      <div class="gallery-grid">
-        <?php while ($gambar = mysqli_fetch_assoc($resultGambar)) { ?>
-          <img src="<?= $gambar['url'] ?>" alt="<?= $destinasi['nama_wisata'] ?>" class="gallery-image">
-        <?php } ?>
-      </div>
-    </div>
-
-    <section class="content-section about-section">
-      <h2 class="section-title">Tentang <?= $destinasi['nama_wisata'] ?></h2>
-      <p class="section-description"><?= $destinasi['deskripsi_wisata'] ?></p>
-    </section>
-
-    <section class="content-section activities-section">
-      <h2 class="section-title">Aktivitas di <?= $destinasi['nama_wisata'] ?></h2>
-      <div class="activities-grid">
-        <?php foreach ($list as $item) { 
-          $item = trim($item);
-          $itemFormatted = ucwords($item); ?>
-          <div class="activity-card">
-            <i class="fas fa-check-circle activity-icon"></i>
-            <span class="activity-text"><?= $itemFormatted ?></span>
-          </div>
-        <?php } ?>
-      </div>
-    </section>
-
-    <section class="content-section reviews-section">
-      <h2 class="section-title">Ulasan Pengunjung</h2>
-      <div class="reviews-container">
-        <?php while ($row = mysqli_fetch_assoc($resultUlasan)) { ?>
-        <div class="review-card">
-          <div class="review-header">
-            <h4 class="reviewer-name"><?= $row['nama_depan'] . ' ' . $row['nama_belakang'] ?></h4>
-            <div class="review-rating">
-              <?= str_repeat('★', $row['rating']) . str_repeat('☆', 5 - $row['rating']) ?>
+<div class="container">
+    <main class="main-content">
+        <?php if (!empty($gallery_images) && count($gallery_images) > 0): // Diubah agar galeri tampil jika ada minimal 1 gambar (gambar utama bisa juga di galeri) ?>
+        <section class="content-section">
+            <h3 class="section-title">Galeri Foto</h3>
+            <div class="gallery-grid">
+                <?php foreach ($gallery_images as $image): // array_slice tidak perlu jika gambar_utama_wisata diambil dari $gallery_images[0] ?>
+                    <img class="gallery-image" src="<?php echo htmlspecialchars($image['url']); ?>" alt="<?php echo htmlspecialchars($image['caption'] ?: 'Galeri ' . $nama_wisata_display); ?>">
+                <?php endforeach; ?>
             </div>
-          </div>
-          <p class="review-comment"><?= $row['komentar'] ?></p>
+        </section>
+        <?php endif; ?>
+
+        <section class="content-section">
+            <h3 class="section-title">Tentang <?php echo $nama_wisata_display; ?></h3>
+            <div class="section-description">
+                <?php
+                if (!empty(trim($wisata['deskripsi_wisata']))) {
+                    $deskripsi_paragraphs = explode("\n", trim($wisata['deskripsi_wisata']));
+                    foreach ($deskripsi_paragraphs as $paragraph) {
+                        if(!empty(trim($paragraph))){
+                            echo "<p>" . nl2br(htmlspecialchars(trim($paragraph))) . "</p>";
+                        }
+                    }
+                } else {
+                    echo "<p>Informasi detail mengenai tempat ini akan segera hadir. Nikmati keindahan visual dan aktivitas yang ditawarkan!</p>";
+                }
+                ?>
+            </div>
+        </section>
+
+        <?php if (!empty($activities_wisata)): ?>
+        <section class="content-section">
+            <h3 class="section-title">Apa yang Bisa Dilakukan?</h3>
+            <div class="activities-grid">
+                <?php foreach ($activities_wisata as $activity): ?>
+                <div class="activity-card">
+                    <i class="<?php echo $activity['icon']; ?> activity-icon"></i>
+                    <span class="activity-text"><?php echo $activity['text']; ?></span>
+                </div>
+                <?php endforeach; ?>
+            </div>
+        </section>
+        <?php endif; ?>
+
+        <section class="content-section">
+            <h3 class="section-title">Rating & Ulasan Pengunjung</h3>
+            <div class="reviews-container">
+                <?php if (!empty($ulasan_list)): ?>
+                    <?php foreach ($ulasan_list as $ulasan): ?>
+                    <div class="review-card">
+                        <div class="review-header">
+                            <span class="reviewer-name"><?php echo htmlspecialchars($ulasan['nama_depan'] . ' ' . $ulasan['nama_belakang']); ?></span>
+                            <span class="review-rating">
+                                <?php for ($i = 1; $i <= 5; $i++): ?>
+                                    <?php echo ($i <= $ulasan['rating']) ? '<i class="fas fa-star"></i>' : '<i class="far fa-star"></i>'; ?>
+                                <?php endfor; ?>
+                            </span>
+                        </div>
+                        <p class="review-comment"><?php echo nl2br(htmlspecialchars($ulasan['komentar'])); ?></p>
+                    </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <p class="section-description">Belum ada ulasan untuk destinasi ini. Jadilah yang pertama memberikan ulasan!</p>
+                <?php endif; ?>
+            </div>
+        </section>
+
+        <section class="content-section" id="kirim-ulasan"> {/* ID ditambahkan di sini agar #kirim-ulasan bekerja */}
+            <h3 class="section-title">Bagikan Pengalaman Anda</h3>
+            <?php if (!empty($ulasan_message)) echo "<div class='form-message-container'>".$ulasan_message."</div>"; ?>
+
+            <?php if (isset($_SESSION['user']['id'])): ?>
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?id=<?php echo $id_wisata; ?>#kirim-ulasan" method="post" class="review-form">
+            {/* ID form 'kirim-ulasan' tidak terlalu penting karena section sudah punya ID, tapi bisa dibiarkan */}
+                <div class="form-group">
+                    <label for="rating" class="form-label">Rating Anda:</label>
+                    <div class="star-rating">
+                        <input type="radio" id="star5" name="rating" value="5" required /><label for="star5" title="Luar Biasa"></label>
+                        <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="Bagus"></label>
+                        <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="Cukup"></label>
+                        <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="Kurang"></label>
+                        <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="Buruk"></label>
+                    </div>
+                    <div class="rating-description-selected"></div>
+                </div>
+                <div class="form-group">
+                    <label for="komentar" class="form-label">Komentar Anda:</label>
+                    <textarea id="komentar" name="komentar" class="form-textarea" rows="4" placeholder="Tuliskan pengalaman menarik Anda di sini..." required></textarea>
+                </div>
+                <button type="submit" name="kirim_ulasan" class="submit-button">
+                    <i class="fas fa-paper-plane"></i> Kirim Ulasan
+                </button>
+            </form>
+            <?php else: ?>
+                <p class="section-description">Anda harus <a href="login.php" class="login-link">login</a> atau <a href="register.php" class="register-link">daftar</a> untuk mengirim ulasan.</p>
+            <?php endif; ?>
+        </section>
+    </main>
+
+    <aside class="sidebar">
+        <div class="info-card">
+            <h4 class="card-title">Informasi Penting</h4>
+            <ul class="info-list">
+                <?php foreach ($info_singkat as $info): ?>
+                <li class="info-item">
+                    <i class="fas fa-info-circle info-icon"></i>
+                    <span><?php echo htmlspecialchars($info); ?></span>
+                </li>
+                <?php endforeach; ?>
+            </ul>
         </div>
-        <?php } ?>
-      </div>
-    </section>
 
-    <section class="content-section review-form-section">
-      <h2 class="section-title">Berikan Ulasan Anda</h2>
-      <form action="./backend/proses_ulasan.php" method="post" class="review-form">
-        <!-- <div class="form-group">
-          <label for="nama" class="form-label">Nama Lengkap</label>
-          <input type="text" id="nama" name="nama" class="form-input" required>
-        </div> -->
-
-        <div class="form-group">
-          <label for="rating" class="form-label">Rating</label>
-          <select id="rating" name="rating" class="form-select" required>
-            <option value="" disabled selected>Pilih Rating</option>
-            <option value="5">★★★★★ - Luar Biasa</option>
-            <option value="4">★★★★☆ - Bagus</option>
-            <option value="3">★★★☆☆ - Cukup</option>
-            <option value="2">★★☆☆☆ - Kurang</option>
-            <option value="1">★☆☆☆☆ - Buruk</option>
-          </select>
+        <div class="location-card">
+            <h4 class="card-title">Lokasi Destinasi</h4>
+            <div class="map-container">
+                <?php
+                $map_query_param = ($wisata['alamat_wisata'] ?: $nama_wisata_display) . (!empty($wisata['nama_lokasi']) ? ', ' . $wisata['nama_lokasi'] : '');
+                // Menggunakan https untuk Google Maps dan memastikan q parameter untuk query pencarian
+                $map_link = "https://www.google.com/maps/search/?api=1&query=" . urlencode($map_query_param);
+                ?>
+                <a href="<?php echo $map_link; ?>" target="_blank" title="Lihat di Google Maps">
+                <?php if (filter_var($peta_lokasi_url, FILTER_VALIDATE_URL) || (file_exists($peta_lokasi_url) && $peta_lokasi_url !== './Gambar/default-map.png') ): ?>
+                    <img class="map-image" src="<?php echo $peta_lokasi_url; ?>" alt="Peta Lokasi <?php echo $nama_wisata_display; ?>">
+                <?php else: ?>
+                    <img class="map-image" src="./Gambar/default-map.png" alt="Peta Lokasi Default">
+                <?php endif; ?>
+                </a>
+            </div>
+            <div class="location-address">
+                <i class="fas fa-map-marker-alt location-icon"></i>
+                <span><?php echo $alamat_display; ?></span>
+            </div>
+            <?php if(!empty($wisata['nama_lokasi'])): ?>
+            <div class="location-area">
+                <i class="fas fa-thumbtack location-icon"></i>
+                <span>Area: <?php echo htmlspecialchars($wisata['nama_lokasi']); ?></span>
+            </div>
+            <?php endif; ?>
+             <a href="<?php echo $map_link; ?>" target="_blank" class="map-link-button">
+                <i class="fas fa-directions"></i> Lihat Rute di Peta
+            </a>
         </div>
 
-        <div class="form-group">
-          <label for="komentar" class="form-label">Komentar</label>
-          <textarea id="komentar" name="komentar" rows="5" class="form-textarea"></textarea>
+        <?php if (!empty($wisata_terdekat_list)): ?>
+        <div class="related-card">
+            <h4 class="card-title">Wisata Sekitar Lainnya</h4>
+            <ul class="related-list">
+                <?php foreach ($wisata_terdekat_list as $terdekat): ?>
+                <li class="related-item">
+                    <i class="fas fa-map-pin related-icon"></i>
+                    <a href="detail_destinasi.php?id=<?php echo $terdekat['id_wisata']; ?>"><?php echo htmlspecialchars($terdekat['nama_wisata']); ?></a>
+                </li>
+                <?php endforeach; ?>
+            </ul>
         </div>
-        <input type="hidden" name="id_wisata" value="<?= $id_wisata ?>">
+        <?php endif; ?>
 
-        <button type="submit" class="submit-button">
-          <i class="fas fa-paper-plane"></i> Kirim Ulasan
-        </button>
-      </form>
-    </section>
-  </div>
-
-  <!-- Sidebar Column -->
-  <aside class="sidebar">
-    <div class="info-card">
-      <h3 class="card-title">Informasi Wisata</h3>
-      <ul class="info-list">
-        <li class="info-item">
-          <i class="fas fa-clock info-icon"></i>
-          <span>Waktu Terbaik: Pagi hari</span>
-        </li>
-        <li class="info-item">
-          <i class="fas fa-calendar-day info-icon"></i>
-          <span>Durasi Kunjungan: 2-3 hari</span>
-        </li>
-        <li class="info-item">
-          <i class="fas fa-ticket-alt info-icon"></i>
-          <span>Tiket Masuk: Rp 30.000</span>
-        </li>
-        <li class="info-item">
-          <i class="fas fa-door-open info-icon"></i>
-          <span>Jam Buka: 08.00 - 17.00 WIB</span>
-        </li>
-      </ul>
-    </div>
-
-    <div class="location-card">
-      <h3 class="card-title"><i class="fas fa-map-marker-alt location-icon"></i> Denah </h3>
-      <div class="map-container">
-        <img src="<?php echo $destinasi['denah']; ?>" alt="Peta Lokasi" class="map-image">
-      </div>
-      <p class="location-address">
-        <?php echo $destinasi['Alamat']; ?>
-      </p>
-    </div>
-
-    <div class="related-card">
-      <h3 class="card-title">Wisata Terdekat</h3>
-      <ul class="related-list">
-        <li class="related-item">
-          <i class="fas fa-umbrella-beach related-icon"></i>
-          Wisata Bahari Lamongan
-        </li>
-        <li class="related-item">
-          <i class="fas fa-water related-icon"></i>
-          Pantai Maldives Kemantren
-        </li>
-        <li class="related-item">
-          <i class="fas fa-resort related-icon"></i>
-          Tanjung Kodok Beach Resort
-        </li>
-        <li class="related-item">
-          <i class="fas fa-paw related-icon"></i>
-          Maharani Zoo & Goa
-        </li>
-        <li class="related-item">
-          <i class="fas fa-sun related-icon"></i>
-          Pantai Lorena
-        </li>
-      </ul>
-    </div>
-    
-    <div class="tips-card">
-      <h3 class="card-title">Tips Berkunjung</h3>
-      <ul class="tips-list">
-        <li class="tips-item">
-          <i class="fas fa-lightbulb tips-icon"></i>
-          Datang lebih awal untuk menghindari keramaian
-        </li>
-        <li class="tips-item">
-          <i class="fas fa-tshirt tips-icon"></i>
-          Kenakan pakaian yang nyaman
-        </li>
-        <li class="tips-item">
-          <i class="fas fa-swimming-pool tips-icon"></i>
-          Bawa perlengkapan renang
-        </li>
-        <li class="tips-item">
-          <i class="fas fa-wallet tips-icon"></i>
-          Siapkan uang tunai atau kartu
-        </li>
-      </ul>
-    </div>
-  </aside>
-</main>
+        <?php if (!empty($tips_berkunjung_list)): ?>
+        <div class="tips-card">
+            <h4 class="card-title">Tips Berkunjung</h4>
+            <ul class="tips-list">
+                <?php foreach ($tips_berkunjung_list as $tip): ?>
+                <li class="tips-item">
+                    <i class="fas fa-lightbulb tips-icon"></i>
+                    <span><?php echo $tip; ?></span>
+                </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+        <?php endif; ?>
+    </aside>
+</div>
 
 <?php include 'Komponen/footer.php'; ?>
+
+<?php
+// Tutup koneksi database di akhir skrip setelah semua selesai
+if ($conn) {
+    mysqli_close($conn);
+}
+?>
+
+<script>
+// Script untuk deskripsi rating bintang interaktif
+const starRatingForm = document.querySelector('.star-rating');
+const ratingDescriptionSelected = document.querySelector('.rating-description-selected');
+const ratingLabels = {
+    "5": "Luar Biasa Sekali!",
+    "4": "Bagus & Memuaskan",
+    "3": "Cukup Baik",
+    "2": "Kurang Memuaskan",
+    "1": "Sangat Buruk"
+};
+
+if (starRatingForm && ratingDescriptionSelected) {
+    const radioButtons = starRatingForm.querySelectorAll('input[type="radio"]');
+    radioButtons.forEach(radio => {
+        radio.addEventListener('change', function(event) {
+            if (event.target.name === 'rating') {
+                ratingDescriptionSelected.textContent = ratingLabels[event.target.value] || '';
+                ratingDescriptionSelected.style.marginTop = '8px';
+                ratingDescriptionSelected.style.fontSize = '0.9em';
+                ratingDescriptionSelected.style.color = 'var(--dark-color)'; // Pastikan var(--dark-color) terdefinisi di CSS Anda
+            }
+        });
+    });
+}
+</script>
 </body>
 </html>
