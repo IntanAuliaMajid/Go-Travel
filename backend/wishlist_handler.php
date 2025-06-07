@@ -6,14 +6,15 @@ if (session_status() == PHP_SESSION_NONE) {
 
 // Sesuaikan path jika koneksi.php tidak selevel dengan proses_wishlist.php
 // Jika koneksi.php ada di root folder backend:
-include 'koneksi.php'; 
+include 'koneksi.php';
 // Jika koneksi.php ada di level atas (misal di root utama proyek):
-// include '../koneksi.php'; 
+// include '../koneksi.php';
 
 header('Content-Type: application/json');
 
 // 1. Cek apakah pengguna sudah login
-if (!isset($_SESSION['user']['id'])) {
+// PERBAIKAN: Ganti 'id' dengan 'id_pengunjung' untuk konsistensi dengan sesi
+if (!isset($_SESSION['user']['id_pengunjung'])) {
     echo json_encode(['success' => false, 'message' => 'Sesi berakhir atau Anda belum login. Silakan login kembali untuk menggunakan fitur wishlist.']);
     exit;
 }
@@ -24,7 +25,8 @@ if (!isset($_POST['id_wisata'])) {
     exit;
 }
 
-$id_pengunjung = (int)$_SESSION['user']['id'];
+// PERBAIKAN: Ganti 'id' dengan 'id_pengunjung' untuk mengambil ID pengguna dari sesi
+$id_pengunjung = (int)$_SESSION['user']['id_pengunjung'];
 $id_wisata = (int)$_POST['id_wisata'];
 
 if ($id_wisata <= 0) {
@@ -48,7 +50,6 @@ $result_check = mysqli_stmt_get_result($stmt_check);
 
 if (mysqli_num_rows($result_check) > 0) {
     // 4. Jika ada, hapus dari wishlist
-    $row = mysqli_fetch_assoc($result_check); // Tidak perlu mengambil id_wishlist, bisa delete by user_id & wisata_id
     mysqli_stmt_close($stmt_check); // Tutup statement check lebih awal
 
     $sql_delete = "DELETE FROM wishlist WHERE user_id = ? AND wisata_id = ?";
@@ -76,7 +77,7 @@ if (mysqli_num_rows($result_check) > 0) {
     // 5. Jika tidak ada, tambahkan ke wishlist
     $sql_insert = "INSERT INTO wishlist (user_id, wisata_id, created_at) VALUES (?, ?, NOW())";
     $stmt_insert = mysqli_prepare($conn, $sql_insert);
-    
+
     if (!$stmt_insert) {
         error_log("MySQLi prepare error (insert): " . mysqli_error($conn));
         echo json_encode(['success' => false, 'message' => 'Terjadi kesalahan pada server (tambah).']);
@@ -91,10 +92,6 @@ if (mysqli_num_rows($result_check) > 0) {
         error_log("MySQLi execute error (insert): " . mysqli_stmt_error($stmt_insert) . " (Errno: " . mysqli_errno($conn) . ")");
         // Error 1062: Duplicate entry for key 'unique_wishlist' (jika ada race condition kecil atau jika cek awal gagal)
         if(mysqli_errno($conn) == 1062){ // Error number for duplicate entry
-            // Ini bisa terjadi jika ada race condition, meskipun sudah dicek.
-            // Atau jika logika cek awal gagal dan mencoba insert padahal sudah ada.
-            // Mengembalikan status 'added' bisa jadi membingungkan jika sebenarnya sudah ada.
-            // Mungkin lebih baik mengembalikan pesan bahwa item sudah ada.
             echo json_encode(['success' => true, 'status' => 'exists', 'message' => 'Wisata ini sudah ada di wishlist Anda.']);
         } else {
             echo json_encode(['success' => false, 'message' => 'Gagal menambahkan wisata ke wishlist: ' . mysqli_stmt_error($stmt_insert)]);

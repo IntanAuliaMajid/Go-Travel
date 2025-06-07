@@ -82,8 +82,8 @@ if (!$result) {
 
 // >>> MODIFIKASI UNTUK WISHLIST DINAMIS <<<
 $user_wishlist_ids = [];
-if (isset($_SESSION['user']['id'])) {
-    $id_pengunjung_logged_in = (int)$_SESSION['user']['id'];
+if (isset($_SESSION['user']['id_pengunjung'])) {
+    $id_pengunjung_logged_in = (int)$_SESSION['user']['id_pengunjung'];
     $queryWishlist = "SELECT wisata_id FROM wishlist WHERE user_id = $id_pengunjung_logged_in";
     $resultWishlist = mysqli_query($conn, $queryWishlist);
     if ($resultWishlist) {
@@ -256,7 +256,10 @@ function buildPaginationUrl($page, $kategori = '', $lokasi = '') {
         ?>
         <div class="destination-card">
           <div class="card-image">
-            <img src="<?= htmlspecialchars($row['url'] ?? 'https://via.placeholder.com/300x200?text=No+Image'); ?>" alt="<?= htmlspecialchars($row['nama_wisata']); ?>" onerror="this.src='https://via.placeholder.com/300x200?text=No+Image'">
+            <img src="<?= htmlspecialchars(str_replace('../', './', $row['url'] ?? 'https://via.placeholder.com/300x200?text=No+Image')); ?>" 
+     alt="<?= htmlspecialchars($row['nama_wisata']); ?>" 
+     onerror="this.src='https://via.placeholder.com/300x200?text=No+Image'">
+
             <button class="wishlist-button <?= $wishlist_button_class ?>" data-wisata-id="<?= $row['id_wisata']; ?>" title="Tambahkan ke Wishlist">
               <i class="<?= $wishlist_icon_class ?>"></i>
             </button>
@@ -400,7 +403,7 @@ function buildPaginationUrl($page, $kategori = '', $lokasi = '') {
         const icon = this.querySelector('i');
 
         // Cek apakah pengguna sudah login (dari PHP via variabel global JS jika perlu, atau minta login)
-        <?php if (!isset($_SESSION['user']['id'])): ?>
+        <?php if (!isset($_SESSION['user']['id_pengunjung'])): ?>
             alert('Anda harus login untuk menggunakan fitur wishlist.');
             // window.location.href = 'login.php'; // Arahkan ke halaman login
             return;

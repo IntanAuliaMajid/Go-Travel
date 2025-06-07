@@ -1,13 +1,26 @@
 <?php
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 $current_page = basename($_SERVER['PHP_SELF']);
 
 $is_logged_in = isset($_SESSION['user']);
 
 if ($is_logged_in) {
     $user_data = $_SESSION['user'];
-}
 
+    // Pastikan avatar punya path yang benar.
+    // Jika avatar di DB hanya nama file, Anda perlu prefix dengan path folder.
+    // Jika sudah full path (misal: ./uploads/avatars/nama_file.png), maka ini cukup.
+    // Asumsi: Avatar di sesi sudah punya full path relatif dari root proyek.
+    $user_avatar_url = !empty($user_data['avatar']) ? htmlspecialchars($user_data['avatar']) : './uploads/avatars/default_avatar.png';
+    
+    // Menggunakan nama depan dan belakang untuk tampilan nama lengkap
+    $display_name = htmlspecialchars($user_data['nama_depan'] . ' ' . $user_data['nama_belakang']);
+    // Menggunakan username jika Anda ingin menampilkannya
+    $display_username = htmlspecialchars($user_data['username'] ?? '');
+
+}
 ?>
 
 <nav id="navbar" class="navbar transparent">
@@ -23,39 +36,37 @@ if ($is_logged_in) {
             <li><a href="blog.php" class="<?php echo (($current_page == 'blog.php') || ($current_page == 'blog_detail.php')) ? 'active' : ''; ?>">Blog</a></li>
             <li><a href="kontak.php" class="<?php echo ($current_page == 'kontak.php') ? 'active' : ''; ?>">Kontak</a></li>
             <li><a href="Gallery Page.php" class="<?php echo ($current_page == 'Gallery Page.php') ? 'active' : ''; ?>">Galeri</a></li>
-            <li><a href="tour_guide.php" class="<?php echo ($current_page == 'tour_guide.php') ? 'active' : ''; ?>">Tour Guide</a></li>
+            <li><a href="tour_guide.php" class="<?php echo (($current_page == 'tour_guide.php') || ($current_page == 'tour_guide_detail.php')) ? 'active' : ''; ?>">Pemandu Wisata</a></li>
             <li><a href="kuliner.php" class="<?php echo ($current_page == 'kuliner.php') ? 'active' : ''; ?>">Kuliner</a></li>
-            <!-- <li><a href="wishlist.php" class="<?php echo ($current_page == 'wishlist.php') ? 'active' : ''; ?>">Wishlist</a></li> -->
-        </ul>
+            </ul>
 
         <?php if ($is_logged_in): ?>
-            <!-- Tampilan untuk user yang sudah login -->
             <div class="user-section">
                 <div class="user-menu">
                     <div class="user-info" onclick="toggleUserDropdown()">
-                        <img src="<?php echo $user_data['avatar']; ?>" alt="User Avatar" class="user-avatar">
-                        <span class="user-name"><?php echo $user_data['name']; ?></span>
+                        <img src="<?php echo $user_avatar_url; ?>" alt="User Avatar" class="user-avatar">
+                        <span class="user-name"><?php echo $display_name; ?></span>
                         <i class="dropdown-arrow">▼</i>
                     </div>
                     <div class="user-dropdown" id="userDropdown">
                         <div class="dropdown-header">
-                            <img src="<?php echo $user_data['avatar']; ?>" alt="User Avatar" class="dropdown-avatar">
+                            <img src="<?php echo $user_avatar_url; ?>" alt="User Avatar" class="dropdown-avatar">
                             <div class="dropdown-info">
-                                <span class="dropdown-name"><?php echo $user_data['name']; ?></span>
-                                <span class="dropdown-email"><?php echo $user_data['email']; ?></span>
+                                <span class="dropdown-name"><?php echo $display_name; ?></span>
+                                <span class="dropdown-email"><?php echo htmlspecialchars($user_data['email']); ?></span>
                             </div>
                         </div>
                         <hr class="dropdown-divider">
                         <a href="user_dashboard.php" class="dropdown-item">
                             Profil Saya
                         </a>
-                        <a href="riwayat_pemesanan.php" class="dropdown-item">
+                        <a href="profil.php#profile_pemesanan" class="dropdown-item">
                             Riwayat Pemesanan
                         </a>
-                        <a href="wishlist.php" class="dropdown-item">
+                        <a href="profil.php#profile_wishlist" class="dropdown-item">
                             Wishlist
                         </a>
-                        <a href="pengaturan.php" class="dropdown-item">
+                        <a href="profil.php#profile_pengaturan" class="dropdown-item">
                             Pengaturan
                         </a>
                         <hr class="dropdown-divider">
@@ -66,18 +77,15 @@ if ($is_logged_in) {
                 </div>
             </div>
         <?php else: ?>
-            <!-- Tampilan untuk user yang belum login -->
             <div class="auth-buttons">
-                <a href="daftar.php" class="btn-outline <?php echo ($current_page == 'register.php') ? 'active' : ''; ?>">Daftar</a>
+                <a href="daftar.php" class="btn-outline <?php echo ($current_page == 'daftar.php') ? 'active' : ''; ?>">Daftar</a>
                 <a href="login.php" class="btn-solid <?php echo ($current_page == 'login.php') ? 'active' : ''; ?>">Masuk</a>
             </div>
         <?php endif; ?>
     </div>
 </nav>
 
-<script src="./JS/beranda.js"></script>
-
-<script>
+<script src="./JS/beranda.js"></script> <script>
 function toggleUserDropdown() {
     const dropdown = document.getElementById('userDropdown');
     dropdown.classList.toggle('show');
@@ -88,13 +96,15 @@ document.addEventListener('click', function(event) {
     const userMenu = document.querySelector('.user-menu');
     const dropdown = document.getElementById('userDropdown');
     
-    if (!userMenu.contains(event.target)) {
+    // Periksa jika yang diklik bukan bagian dari user-menu (termasuk dropdown itu sendiri)
+    if (userMenu && !userMenu.contains(event.target) && dropdown.classList.contains('show')) {
         dropdown.classList.remove('show');
     }
 });
 </script>
 
 <style>
+/* CSS yang sudah ada sebelumnya dari navbar.php */
 * {
     margin: 0;
     padding: 0;

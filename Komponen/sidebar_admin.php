@@ -160,7 +160,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
         <li><a href="../newadmin/pemesanan.php" class="<?= ($current_page == 'pemesanan.php') ? 'active' : '' ?>">Pemesanan</a></li>
         <li><a href="../newadmin/pengguna.php" class="<?= ($current_page == 'pengguna.php') ? 'active' : '' ?>">Pengguna</a></li>
         <li><a href="../newadmin/blog.php" class="<?= ($current_page == 'blog.php') || ($current_page == 'tambah_blog.php') ? 'active' : '' ?>">Blog</a></li>
-        <li><a href="../newadmin/paket_wisata.php" class="<?= ($current_page == 'paket_wisata.php') || ($current_page == 'tambah_paket.php') ? 'active' : '' ?>">Paket Wisata</a></li>
+        <li><a href="../newadmin/wisata.php" class="<?= ($current_page == 'wisata.php') || ($current_page == 'tambah_wisata.php') || ($current_page == 'edit_wisata.php') ? 'active' : '' ?>">Wisata</a></li>
+        <li><a href="../newadmin/paket_wisata.php" class="<?= ($current_page == 'paket_wisata.php') || ($current_page == 'tambah_paket.php') || ($current_page == 'edit_paket.php')  ? 'active' : '' ?>">Paket Wisata</a></li>
         <li><a href="../newadmin/pertanyaan.php" class="<?= ($current_page == 'pertanyaan.php') ? 'active' : '' ?>">Pertanyaan</a></li>
         <li><a href="../newadmin/pemandu_wisata.php" class="<?= ($current_page == 'pemandu_wisata.php') ? 'active' : '' ?>">Pemandu Wisata</a></li>
         <li><a href="../newadmin/kendaraan.php" class="<?= ($current_page == 'kendaraan.php') || ($current_page == 'edit_kendaraan.php') || ($current_page == 'tambah_kendaraan.php') ? 'active' : '' ?>">Kendaraan</a></li>

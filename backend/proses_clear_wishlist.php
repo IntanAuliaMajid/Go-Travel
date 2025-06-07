@@ -3,12 +3,12 @@ session_start();
 include 'koneksi.php'; // Pastikan path ini benar
 header('Content-Type: application/json');
 // 1. Cek apakah pengguna sudah login
-if (!isset($_SESSION['user']['id'])) {
+if (!isset($_SESSION['user']['id_pengunjung'])) {
     echo json_encode(['success' => false, 'message' => 'Sesi berakhir atau Anda belum login. Silakan login kembali.']);
     exit;
 }
 
-$id_pengunjung = (int)$_SESSION['user']['id'];
+$id_pengunjung = (int)$_SESSION['user']['id_pengunjung'];
 
 // 2. Hapus semua item wishlist untuk pengguna ini
 $sql_clear = "DELETE FROM wishlist WHERE user_id = ?";

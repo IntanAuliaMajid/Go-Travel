@@ -1,16 +1,24 @@
 <?php
-// File: logout.php
-
-// Mulai session untuk mengakses data session
+// backend/logout.php
 session_start();
 
-// Hapus semua data session
-session_unset();
+// Hapus semua variabel sesi
+$_SESSION = array();
 
-// Hancurkan session
+// Hapus cookie sesi
+if (ini_get("session.use_cookies")) {
+    $params = session_get_cookie_params();
+    setcookie(session_name(), '', time() - 42000,
+        $params["path"], $params["domain"],
+        $params["secure"], $params["httponly"]
+    );
+}
+
+// Akhiri sesi
 session_destroy();
 
-// Redirect pengguna ke halaman login
-header("Location: ../login.php");
+// Redirect ke halaman login atau beranda
+header("Location: ../login.php"); // Atau ke index.php
 exit();
 ?>
+
