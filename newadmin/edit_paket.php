@@ -80,7 +80,7 @@ function handleFileUpload($file_input_name, $id_entity, $upload_dir_abs, $prefix
             throw new Exception("Gagal memindahkan file " . htmlspecialchars($file_name_original) . ": " . $error_details);
         }
     } else if (isset($_FILES[$file_input_name]) && $_FILES[$file_input_name]['error'] !== UPLOAD_ERR_NO_FILE) {
-         // Tangani error lain selain 'tidak ada file'
+        // Tangani error lain selain 'tidak ada file'
         $upload_error_code = $_FILES[$file_input_name]['error'];
         $error_details = 'Terjadi error umum saat upload: ';
         switch ($upload_error_code) {
@@ -214,7 +214,7 @@ if (isset($_POST['add_rencana'])) {
     $hari = $_POST['rencana_hari'];
     $jam = $_POST['rencana_jam'];
     $perjalanan = $_POST['rencana_perjalanan'];
-    $deskripsi_perjalanan = $_POST['rencana_deskripsi']; // Corrected typo here
+    $deskripsi_perjalanan = $_POST['rencana_deskripsi'];
     $stmt = $conn->prepare("INSERT INTO rencana_perjalanan (hari, jam, perjalanan, deskripsi_perjalanan, id_paket) VALUES (?, ?, ?, ?, ?)");
     $stmt->bind_param("isssi", $hari, $jam, $perjalanan, $deskripsi_perjalanan, $id_paket_wisata);
     if($stmt->execute()){ $_SESSION['success_message'] = "Langkah rencana perjalanan berhasil ditambahkan."; } else { $_SESSION['error_message'] = "Gagal menambahkan rencana perjalanan."; }
@@ -222,6 +222,33 @@ if (isset($_POST['add_rencana'])) {
     header("Location: edit_paket.php?id=" . $id_paket_wisata);
     exit();
 }
+
+// ===================================================================================
+// == START: FUNGSI BARU UNTUK EDIT RENCANA PERJALANAN ==
+// ===================================================================================
+if (isset($_POST['update_rencana'])) {
+    $id_rencana_perjalanan = $_POST['id_rencana_perjalanan_edit'];
+    $hari = $_POST['rencana_hari'];
+    $jam = $_POST['rencana_jam'];
+    $perjalanan = $_POST['rencana_perjalanan'];
+    $deskripsi_perjalanan = $_POST['rencana_deskripsi'];
+
+    $stmt = $conn->prepare("UPDATE rencana_perjalanan SET hari = ?, jam = ?, perjalanan = ?, deskripsi_perjalanan = ? WHERE id_rencana_perjalanan = ?");
+    $stmt->bind_param("isssi", $hari, $jam, $perjalanan, $deskripsi_perjalanan, $id_rencana_perjalanan);
+
+    if($stmt->execute()){
+        $_SESSION['success_message'] = "Rencana perjalanan berhasil diperbarui.";
+    } else {
+        $_SESSION['error_message'] = "Gagal memperbarui rencana perjalanan: " . $stmt->error;
+    }
+    $stmt->close();
+    header("Location: edit_paket.php?id=" . $id_paket_wisata);
+    exit();
+}
+// ===================================================================================
+// == END: FUNGSI BARU UNTUK EDIT RENCANA PERJALANAN ==
+// ===================================================================================
+
 
 // Handle Update Main Package Data
 if (isset($_POST['update_paket'])) {
@@ -424,11 +451,17 @@ unset($_SESSION['success_message'], $_SESSION['error_message']);
         table { width: 100%; border-collapse: collapse; }
         th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #e9ecef; vertical-align: middle; }
         thead th { background-color: #e9ecef; font-weight: 600; }
+        .action-buttons { display: flex; gap: 10px; align-items: center; }
         .action-buttons form { display: inline; }
-        .btn-delete { background: none; border: none; color: var(--danger-color); cursor: pointer; font-size: 1.1rem; }
+        .btn-edit, .btn-delete { background: none; border: none; cursor: pointer; font-size: 1.1rem; }
+        .btn-edit { color: var(--warning-color); }
+        .btn-delete { color: var(--danger-color); }
         .btn-delete:disabled { color: #ccc; cursor: not-allowed; }
         .details-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; align-items: flex-end; border-top: 1px solid #e9ecef; padding-top: 20px; margin-top: 20px; }
-        .btn-add { background-color: var(--primary-color); color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; }
+        .btn-add, .btn-update, .btn-cancel { border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; color: white; display: inline-flex; align-items: center; gap: 5px; }
+        .btn-add { background-color: var(--primary-color); }
+        .btn-update { background-color: var(--success-color); }
+        .btn-cancel { background-color: var(--light-text); }
         .harga-display { margin-top: 8px; font-size: 0.9rem; font-weight: 600; color: var(--success-color); height: 1.2em; }
         .auto-managed-item { color: var(--light-text); font-style: italic; font-size: 0.85rem; margin-left: 5px;}
         .image-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; margin-bottom: 20px;}
@@ -615,20 +648,27 @@ unset($_SESSION['success_message'], $_SESSION['error_message']);
             </div>
         </div>
 
-        <div class="card">
+        <div class="card" id="rencana-perjalanan-card">
             <div class="card-header"><i class="fas fa-route"></i> Kelola Rencana Perjalanan</div>
             <div class="card-body">
                 <table>
-                    <thead><tr><th>Hari</th><th>Jam</th><th>Aktivitas</th><th>Deskripsi</th><th style="width: 50px;">Aksi</th></tr></thead>
+                    <thead><tr><th>Hari</th><th>Jam</th><th>Aktivitas</th><th>Deskripsi</th><th style="width: 100px;">Aksi</th></tr></thead>
                     <tbody>
                         <?php if(!empty($rencana_list)): ?>
                             <?php foreach($rencana_list as $item): ?>
-                            <tr>
+                            <tr
+                                data-id="<?php echo $item['id_rencana_perjalanan']; ?>"
+                                data-hari="<?php echo htmlspecialchars($item['hari']); ?>"
+                                data-jam="<?php echo htmlspecialchars($item['jam']); ?>"
+                                data-perjalanan="<?php echo htmlspecialchars($item['perjalanan']); ?>"
+                                data-deskripsi="<?php echo htmlspecialchars($item['deskripsi_perjalanan']); ?>"
+                            >
                                 <td><?php echo htmlspecialchars($item['hari']); ?></td>
                                 <td><?php echo htmlspecialchars($item['jam']); ?></td>
                                 <td><?php echo htmlspecialchars($item['perjalanan']); ?></td>
                                 <td><?php echo htmlspecialchars($item['deskripsi_perjalanan']); ?></td>
                                 <td class="action-buttons">
+                                    <button type="button" class="btn-edit btn-edit-rencana"><i class="fas fa-pen-to-square"></i></button>
                                     <form action="edit_paket.php?id=<?php echo $id_paket_wisata; ?>" method="POST" onsubmit="return confirm('Yakin ingin menghapus langkah ini?');">
                                         <input type="hidden" name="id_rencana_perjalanan" value="<?php echo $item['id_rencana_perjalanan']; ?>">
                                         <button type="submit" name="delete_rencana" class="btn-delete"><i class="fas fa-trash"></i></button>
@@ -641,17 +681,19 @@ unset($_SESSION['success_message'], $_SESSION['error_message']);
                         <?php endif; ?>
                     </tbody>
                 </table>
-                <form action="edit_paket.php?id=<?php echo $id_paket_wisata; ?>" method="POST" class="details-form">
-                    <input type="hidden" name="add_rencana" value="1">
-                    <div class="form-group"><label>Hari Ke-</label><input type="number" name="rencana_hari" class="form-control" placeholder="1" required></div>
-                    <div class="form-group"><label>Jam</label><input type="text" name="rencana_jam" class="form-control" placeholder="08:00 - 09:00" required></div>
-                    <div class="form-group"><label>Aktivitas</label><input type="text" name="rencana_perjalanan" class="form-control" placeholder="Sarapan di Hotel" required></div>
-                    <div class="form-group"><label>Deskripsi</label><input type="text" name="rencana_deskripsi" class="form-control" placeholder="Deskripsi singkat aktivitas" required></div>
-                    <div class="form-group"><button type="submit" class="btn-add"><i class="fas fa-plus"></i> Tambah</button></div>
+                <form id="form-rencana" action="edit_paket.php?id=<?php echo $id_paket_wisata; ?>" method="POST" class="details-form">
+                    <input type="hidden" name="id_rencana_perjalanan_edit" id="id_rencana_perjalanan_edit">
+
+                    <div class="form-group"><label for="rencana_hari">Hari Ke-</label><input type="number" id="rencana_hari" name="rencana_hari" class="form-control" placeholder="1" required></div>
+                    <div class="form-group"><label for="rencana_jam">Jam</label><input type="text" id="rencana_jam" name="rencana_jam" class="form-control" placeholder="08:00 - 09:00" required></div>
+                    <div class="form-group"><label for="rencana_perjalanan">Aktivitas</label><input type="text" id="rencana_perjalanan" name="rencana_perjalanan" class="form-control" placeholder="Sarapan di Hotel" required></div>
+                    <div class="form-group"><label for="rencana_deskripsi">Deskripsi</label><input type="text" id="rencana_deskripsi" name="rencana_deskripsi" class="form-control" placeholder="Deskripsi singkat aktivitas" required></div>
+                    <div class="form-group" id="rencana-form-actions">
+                        </div>
                 </form>
             </div>
         </div>
-    </main>
+        </main>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -702,6 +744,66 @@ unset($_SESSION['success_message'], $_SESSION['error_message']);
 
             radioButtons.forEach(radio => { radio.addEventListener('change', toggleDenahSections); });
             if(document.querySelector('input[name="denah_type"]:checked')){ toggleDenahSections(); }
+
+
+            // ===================================================================================
+            // == START: JAVASCRIPT BARU UNTUK EDIT RENCANA PERJALANAN ==
+            // ===================================================================================
+            const rencanaForm = document.getElementById('form-rencana');
+            const rencanaFormActions = document.getElementById('rencana-form-actions');
+            const editButtons = document.querySelectorAll('.btn-edit-rencana');
+            
+            const idInput = document.getElementById('id_rencana_perjalanan_edit');
+            const hariInput = document.getElementById('rencana_hari');
+            const jamInput = document.getElementById('rencana_jam');
+            const perjalananInput = document.getElementById('rencana_perjalanan');
+            const deskripsiInput = document.getElementById('rencana_deskripsi');
+
+            const switchToAddMode = () => {
+                rencanaForm.reset();
+                idInput.value = '';
+                rencanaFormActions.innerHTML = `
+                    <button type="submit" name="add_rencana" class="btn-add"><i class="fas fa-plus"></i> Tambah</button>
+                `;
+                document.querySelector('.card-header i.fa-route').parentElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            };
+
+            const switchToEditMode = (data) => {
+                idInput.value = data.id;
+                hariInput.value = data.hari;
+                jamInput.value = data.jam;
+                perjalananInput.value = data.perjalanan;
+                deskripsiInput.value = data.deskripsi;
+                
+                rencanaFormActions.innerHTML = `
+                    <button type="submit" name="update_rencana" class="btn-update"><i class="fas fa-save"></i> Update</button>
+                    <button type="button" id="btn-cancel-edit" class="btn-cancel"><i class="fas fa-times"></i> Batal</button>
+                `;
+                
+                document.getElementById('btn-cancel-edit').addEventListener('click', switchToAddMode);
+                hariInput.focus();
+                hariInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            };
+
+            editButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const row = e.target.closest('tr');
+                    const data = {
+                        id: row.dataset.id,
+                        hari: row.dataset.hari,
+                        jam: row.dataset.jam,
+                        perjalanan: row.dataset.perjalanan,
+                        deskripsi: row.dataset.deskripsi
+                    };
+                    switchToEditMode(data);
+                });
+            });
+
+            // Setel mode awal ke 'Tambah' saat halaman dimuat
+            switchToAddMode(false);
+            // ===================================================================================
+            // == END: JAVASCRIPT BARU ==
+            // ===================================================================================
         });
     </script>
 

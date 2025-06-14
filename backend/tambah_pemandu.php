@@ -52,13 +52,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $conn->commit();
         $_SESSION['success_message'] = "Pemandu wisata baru berhasil ditambahkan.";
-        header("Location: manajemen_pemandu.php");
+        header("Location: ../newadmin/pemandu_wisata.php");
         exit();
     } catch (Exception $e) {
         $conn->rollback();
         if ($foto_path_db && file_exists('../' . $foto_path_db)) unlink('../' . $foto_path_db);
         $_SESSION['error_message'] = "Gagal menambahkan pemandu: " . $e->getMessage();
-        header("Location: tambah_pemandu.php");
+        header("Location: ../newadmin/pemandu_wisata.php");
         exit();
     }
 }
@@ -107,7 +107,7 @@ $conn->close();
                     </div>
                 </div>
             </div>
-            <div class="form-actions"><a href="manajemen_pemandu.php" class="btn btn-cancel">Batal</a><button type="submit" class="btn btn-submit">Simpan</button></div>
+            <div class="form-actions"><a href="../newadmin/pemandu_wisata.php" class="btn btn-cancel">Batal</a><button type="submit" class="btn btn-submit">Simpan</button></div>
         </form>
     </div>
 </body>

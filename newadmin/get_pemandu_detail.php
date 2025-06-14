@@ -1,4 +1,6 @@
 <?php
+// File: get_pemandu_detail.php (VERSI DENGAN PERBAIKAN UPLOAD)
+
 header('Content-Type: application/json');
 require_once '../backend/koneksi.php';
 
@@ -32,8 +34,9 @@ try {
         echo json_encode(['error' => 'Pemandu tidak ditemukan.']); exit();
     }
     
-    ob_start();
+    ob_start(); // Mulai menangkap output HTML
     if ($type === 'view') {
+        // ... (Kode untuk view tidak perlu diubah, bisa disalin dari jawaban lengkap sebelumnya)
         $stmt_lang = $conn->prepare("SELECT b.nama_bahasa FROM pemandu_bahasa pb JOIN bahasa b ON pb.id_bahasa = b.id_bahasa WHERE pb.id_pemandu_wisata = ?");
         $stmt_lang->bind_param("i", $id);
         $stmt_lang->execute();
@@ -77,7 +80,15 @@ try {
                 <div class="form-group"><label>Pengalaman</label><input type="text" name="pengalaman" value="<?php echo htmlspecialchars($pemandu['pengalaman']); ?>"></div>
                 <div class="form-group"><label>Rating (Read-Only)</label><div style="padding: 10px; background-color: #f0f0f0; border-radius: 5px;"><?php echo display_rating_stars_json($pemandu['rating']); ?></div></div>
                 <div class="form-group full-width"><label>Spesialisasi</label><input type="text" name="spesialisasi" value="<?php echo htmlspecialchars($pemandu['spesialisasi']); ?>"></div>
-                <div class="form-group full-width"><label>Ganti Foto (Opsional)</label><input type="file" name="pemandu_foto" accept="image/*"></div>
+                
+                <div class="form-group full-width">
+                    <label>Ganti Foto (Kosongkan jika tidak diubah)</label>
+                    <input type="file" name="pemandu_foto" accept="image/jpeg,image/png,image/gif">
+                     <?php if(!empty($pemandu['foto_url'])): ?>
+                        <small>Foto saat ini: <a href="../<?php echo htmlspecialchars($pemandu['foto_url']); ?>" target="_blank"><?php echo basename($pemandu['foto_url']); ?></a></small>
+                    <?php endif; ?>
+                </div>
+
                 <div class="form-group full-width"><label>Biodata</label><textarea name="biodata" rows="3"><?php echo htmlspecialchars($pemandu['biodata']); ?></textarea></div>
                 <div class="form-group full-width">
                     <label>Bahasa yang Dikuasai</label>

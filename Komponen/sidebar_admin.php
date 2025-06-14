@@ -157,18 +157,19 @@ $current_page = basename($_SERVER['PHP_SELF']);
     <nav>
       <ul>
         <li><a href="../newadmin/dashboard.php" class="<?= ($current_page == 'dashboard.php') ? 'active' : '' ?>">Dashboard</a></li>
-        <li><a href="../newadmin/pemesanan.php" class="<?= ($current_page == 'pemesanan.php') ? 'active' : '' ?>">Pemesanan</a></li>
+        <li><a href="../newadmin/pemesanan.php" class="<?= ($current_page == 'pemesanan.php') || ($current_page == 'order_detail.php')  || ($current_page == 'order_edit.php') ? 'active' : '' ?>">Pemesanan</a></li>
         <li><a href="../newadmin/pengguna.php" class="<?= ($current_page == 'pengguna.php') ? 'active' : '' ?>">Pengguna</a></li>
-        <li><a href="../newadmin/blog.php" class="<?= ($current_page == 'blog.php') || ($current_page == 'tambah_blog.php') ? 'active' : '' ?>">Blog</a></li>
+        <li><a href="../newadmin/blog.php" class="<?= ($current_page == 'blog.php') || ($current_page == 'tambah_blog.php') || ($current_page == 'edit_blog.php') ? 'active' : '' ?>">Blog</a></li>
         <li><a href="../newadmin/wisata.php" class="<?= ($current_page == 'wisata.php') || ($current_page == 'tambah_wisata.php') || ($current_page == 'edit_wisata.php') ? 'active' : '' ?>">Wisata</a></li>
         <li><a href="../newadmin/paket_wisata.php" class="<?= ($current_page == 'paket_wisata.php') || ($current_page == 'tambah_paket.php') || ($current_page == 'edit_paket.php')  ? 'active' : '' ?>">Paket Wisata</a></li>
         <li><a href="../newadmin/pertanyaan.php" class="<?= ($current_page == 'pertanyaan.php') ? 'active' : '' ?>">Pertanyaan</a></li>
         <li><a href="../newadmin/pemandu_wisata.php" class="<?= ($current_page == 'pemandu_wisata.php') ? 'active' : '' ?>">Pemandu Wisata</a></li>
         <li><a href="../newadmin/kendaraan.php" class="<?= ($current_page == 'kendaraan.php') || ($current_page == 'edit_kendaraan.php') || ($current_page == 'tambah_kendaraan.php') ? 'active' : '' ?>">Kendaraan</a></li>
         <li><a href="../newadmin/penginapan.php" class="<?= ($current_page == 'penginapan.php') || ($current_page == 'tambah_penginapan.php') || ($current_page == 'edit_penginapan.php') ? 'active' : '' ?>">Penginapan</a></li>
+        <li><a href="../newadmin/kuliner.php" class="<?= ($current_page == 'kuliner.php') || ($current_page == 'kuliner.php') ? 'active' : '' ?>">kuliner</a></li>
         <li><a href="../newadmin/galeri.php" class="<?= ($current_page == 'galeri.php') ? 'active' : '' ?>">Galeri</a></li>
         <li><a href="../newadmin/kontak_admin.php" class="<?= ($current_page == 'kontak_admin.php') ? 'active' : '' ?>">Kontak</a></li>
-        <li><a href="/admin/logout.php">Keluar</a></li>
+        <li><a href="../backend/log_out.php">Keluar</a></li>
       </ul>
     </nav>
   </div>

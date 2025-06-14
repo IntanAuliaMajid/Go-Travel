@@ -350,7 +350,7 @@ $conn->close();
     <main>
         <div class="header-container">
             <h1 class="page-title">Tambah Artikel Baru</h1>
-            <a href="manajemen_artikel.php" class="btn btn-outline">
+            <a href="blog.php" class="btn btn-outline">
                 <i class="fas fa-arrow-left"></i> Kembali ke Manajemen Artikel
             </a>
         </div>

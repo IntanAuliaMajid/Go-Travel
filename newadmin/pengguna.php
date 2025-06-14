@@ -44,8 +44,11 @@ $types_pengunjung = "";
 $params_admin = [];
 $types_admin = "";
 
-$sql_pengunjung = "SELECT id_pengunjung, nama_depan, nama_belakang, username, email, avatar, 'pengunjung' AS role_type, NULL AS last_login_admin FROM pengunjung";
-$sql_admin = "SELECT id_admin AS id_pengunjung, nama_lengkap AS nama_depan, '' AS nama_belakang, username, email, NULL AS avatar, 'admin' AS role_type, last_login AS last_login_admin FROM admin";
+// =================================================================================
+// PERBAIKAN 1: Memperbarui query SQL untuk mengambil 'last_login' dari kedua tabel
+// =================================================================================
+$sql_pengunjung = "SELECT id_pengunjung, nama_depan, nama_belakang, username, email, avatar, 'pengunjung' AS role_type, last_login FROM pengunjung";
+$sql_admin = "SELECT id_admin AS id_pengunjung, nama_lengkap AS nama_depan, '' AS nama_belakang, username, email, NULL AS avatar, 'admin' AS role_type, last_login FROM admin";
 
 if (!empty($search_term)) {
     $like_term = "%" . $search_term . "%";
@@ -63,16 +66,11 @@ $stmt_final = null;
 if ($conn) {
     $stmt_final = $conn->prepare($final_sql);
     if ($stmt_final) {
-        $all_params = array_merge($params_pengunjung, $params_admin);
-        $all_types = $types_pengunjung . $types_admin;
-
-        if (!empty($all_params)) {
-            $bind_params_ref = [];
-            $bind_params_ref[] = $all_types;
-            foreach ($all_params as $key => $value) {
-                $bind_params_ref[] = &$all_params[$key];
-            }
-            call_user_func_array([$stmt_final, 'bind_param'], $bind_params_ref);
+        if (!empty($search_term)) {
+            // Jika ada pencarian, gabungkan parameter dan tipe
+            $all_params = array_merge($params_pengunjung, $params_admin);
+            $all_types = $types_pengunjung . $types_admin;
+            $stmt_final->bind_param($all_types, ...$all_params);
         }
 
         if ($stmt_final->execute()) {
@@ -101,7 +99,7 @@ if ($conn) {
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f9; color: #333; line-height: 1.6; }
-    .main-content { margin-left: 220px; padding: 20px; }
+    .main-content { margin-left: 240px; padding: 20px; }
     .dashboard-header { background: #ffffff; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
     .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
     .header-top h1 { color: #2c3e50; font-size: 1.8rem; font-weight: 600; }
@@ -202,16 +200,21 @@ if ($conn) {
                 $user_id_for_action = $user['id_pengunjung'];
                 $role_badge_class = ($user['role_type'] === 'admin') ? 'role-admin' : 'role-pengunjung';
                 $role_display_name = ($user['role_type'] === 'admin') ? 'Admin' : 'Pengguna';
-                $last_login_display = ($user['role_type'] === 'admin' && $user['last_login_admin']) ? date('d M Y H:i', strtotime($user['last_login_admin'])) : 'N/A';
+                
+                // ==============================================================================
+                // PERBAIKAN 2: Memperbarui logika tampilan agar bisa menampilkan 'last_login'
+                // untuk admin dan pengunjung
+                // ==============================================================================
+                $last_login_display = !empty($user['last_login']) ? date('d M Y, H:i', strtotime($user['last_login'])) : 'N/A';
               ?>
               <tr>
                 <td>
                   <div class="user-info"> 
                     <div class="user-avatar">
                         <?php
-                            $avatar_src = '../uploads/avatars/' . $user['avatar'];
-                            if ($user['role_type'] === 'pengunjung' && !empty($user['avatar']) && file_exists(__DIR__ . '/../uploads/avatars/' . $user['avatar'])) {
-                                echo '<img src="' . htmlspecialchars($avatar_src) . '" alt="Avatar">';
+                            $avatar_path = '../uploads/avatars/' . basename($user['avatar']); // Keamanan: gunakan basename
+                            if ($user['role_type'] === 'pengunjung' && !empty($user['avatar']) && file_exists($avatar_path)) {
+                                echo '<img src="' . htmlspecialchars($avatar_path) . '" alt="Avatar">';
                             } else {
                                 echo get_initials_user(htmlspecialchars($user['nama_depan']), htmlspecialchars($user['nama_belakang']));
                             }
@@ -251,11 +254,11 @@ if ($conn) {
       if (e.key === 'Enter' || this.value.length === 0 || this.value.length > 2) { this.form.submit(); }
     });
 
-    function viewUser(role, id) { window.location.href = `../backend/view_pengguna.php?role=${role}&id=${id}`; }
-    function editUser(role, id) { window.location.href = `../backend/edit_pengguna.php?role=${role}&id=${id}`; }
+    function viewUser(role, id) { window.location.href = `lihat_pengguna.php?role=${role}&id=${id}`; }
+    function editUser(role, id) { window.location.href = `edit_pengguna.php?role=${role}&id=${id}`; }
     function deleteUser(role, id) {
         if (confirm(`Apakah Anda yakin ingin menghapus ${role} ini? Data tidak dapat dikembalikan.`)) {
-            window.location.href = `../backend/hapus_pengguna.php?role=${role}&id=${id}`;
+            window.location.href = `hapus_pengguna.php?role=${role}&id=${id}`;
         }
     }
   </script>

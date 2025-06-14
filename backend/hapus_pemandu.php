@@ -4,7 +4,7 @@ require_once '../backend/koneksi.php';
 
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     $_SESSION['error_message'] = "ID Pemandu tidak valid.";
-    header("Location: manajemen_pemandu.php");
+    header("Location: ../newadmin/pemandu_wisata.php");
     exit();
 }
 
@@ -44,6 +44,6 @@ try {
 }
 
 $conn->close();
-header("Location: manajemen_pemandu.php");
+header("Location: ../newadmin/pemandu_wisata.php");
 exit();
 ?>

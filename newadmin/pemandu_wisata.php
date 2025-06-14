@@ -103,7 +103,7 @@ $conn->close();
     <div id="notification"></div>
     <header class="dashboard-header">
       <h1>Manajemen Pemandu Wisata</h1>
-      <a href="tambah_pemandu.php" class="btn-add"><i class="fas fa-plus"></i> Tambah Pemandu</a>
+      <a href="../backend/tambah_pemandu.php" class="btn-add"><i class="fas fa-plus"></i> Tambah Pemandu</a>
     </header>
 
     <div class="table-container">
@@ -119,8 +119,28 @@ $conn->close();
                 <td>
                   <div class="pemandu-info">
                     <div class="pemandu-avatar">
-                        <?php if (!empty($pemandu['foto_url']) && filter_var($pemandu['foto_url'], FILTER_VALIDATE_URL)): ?><img src="<?php echo htmlspecialchars($pemandu['foto_url']); ?>" alt="Avatar"><?php else: echo get_initials(htmlspecialchars($pemandu['nama_pemandu'])); endif; ?>
-                    </div>
+    <?php
+    $foto_path = $pemandu['foto_url'];
+    if (!empty($foto_path)) {
+        // Cek 1: Apakah ini URL internet yang valid?
+        if (filter_var($foto_path, FILTER_VALIDATE_URL)) {
+            echo '<img src="' . htmlspecialchars($foto_path) . '" alt="Avatar">';
+        } 
+        // Cek 2: Jika bukan URL, apakah ini file lokal yang ada di server?
+        elseif (file_exists('../' . $foto_path)) {
+            // Gunakan path relatif dari halaman ini untuk atribut src
+            echo '<img src="../' . htmlspecialchars($foto_path) . '" alt="Avatar">';
+        } 
+        // Jika keduanya gagal, tampilkan inisial
+        else {
+            echo get_initials(htmlspecialchars($pemandu['nama_pemandu']));
+        }
+    } else {
+        // Jika foto_url kosong, tampilkan inisial
+        echo get_initials(htmlspecialchars($pemandu['nama_pemandu']));
+    }
+    ?>
+</div>
                     <div class="pemandu-details">
                       <h4><?php echo htmlspecialchars($pemandu['nama_pemandu']); ?></h4>
                       <span><?php echo htmlspecialchars($pemandu['email']); ?></span>
@@ -134,7 +154,7 @@ $conn->close();
                   <div class="action-buttons">
                     <button class="btn btn-view" onclick="openModal('view', <?php echo $pemandu['id_pemandu_wisata']; ?>)" title="Lihat"><i class="fas fa-eye"></i></button>
                     <button class="btn btn-edit" onclick="openModal('edit', <?php echo $pemandu['id_pemandu_wisata']; ?>)" title="Edit"><i class="fas fa-edit"></i></button>
-                    <a href="hapus_pemandu.php?id=<?php echo $pemandu['id_pemandu_wisata']; ?>" class="btn btn-delete" title="Hapus" onclick="return confirm('Apakah Anda yakin?');"><i class="fas fa-trash"></i></a>
+                    <a href="../backend/hapus_pemandu.php?id=<?php echo $pemandu['id_pemandu_wisata']; ?>" class="btn btn-delete" title="Hapus" onclick="return confirm('Apakah Anda yakin?');"><i class="fas fa-trash"></i></a>
                   </div>
                 </td>
               </tr>

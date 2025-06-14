@@ -42,12 +42,12 @@ if (!function_exists('format_rupiah')) {
 }
 
 $snapToken = ''; 
-$midtransClientKey = 'SB-Mid-client-RU-4tatn5CIGtpeG'; // GANTI DENGAN CLIENT KEY ANDA (JIKA BELUM)
+$midtransClientKey = 'xxxxxxxxxx'; // GANTI DENGAN CLIENT KEY ANDA (JIKA BELUM)
 
 if ($data_valid_untuk_pembayaran) {
     require_once 'vendor/autoload.php'; 
 
-    \Midtrans\Config::$serverKey = 'SB-Mid-server-1zCj_s8Ixz5PgsPt4xpWFnNS'; // GANTI DENGAN SERVER KEY ANDA (JIKA BELUM)
+    \Midtrans\Config::$serverKey = 'xxxxxxxx'; // GANTI DENGAN SERVER KEY ANDA (JIKA BELUM)
     \Midtrans\Config::$isProduction = false; 
     \Midtrans\Config::$isSanitized = true;
     \Midtrans\Config::$is3ds = true; 

@@ -1,520 +1,180 @@
+<?php
+session_start();
+require_once '../backend/koneksi.php';
+
+// Helper functions
+function format_rupiah($number) {
+    return 'Rp ' . number_format($number, 0, ',', '.');
+}
+
+function display_stars($rating) {
+    $output = '';
+    $rating = (int)$rating;
+    if ($rating > 0 && $rating <= 5) {
+        for ($i = 1; $i <= 5; $i++) {
+            $output .= '<i class="' . ($i <= $rating ? 'fas' : 'far') . ' fa-star" style="color: #f39c12;"></i>';
+        }
+    } else {
+        $output = '<span style="color: #777; font-size: 0.9em;">N/A</span>';
+    }
+    return $output;
+}
+
+// --- Fetch Data Penginapan ---
+$penginapan_list = [];
+$sql = "SELECT id_akomodasi_penginapan, nama_penginapan, gambar_url, rating_bintang, harga_per_malam FROM akomodasi_penginapan ORDER BY nama_penginapan ASC";
+$result = $conn->query($sql);
+if (!$result) {
+    die("Error executing query: " . $conn->error);
+}
+while ($row = $result->fetch_assoc()) {
+    $penginapan_list[] = $row;
+}
+$conn->close();
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard Admin - Manajemen Penginapan</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      min-height: 100vh;
-      color: #333;
-    }
-
-    main {
-      margin-left: 220px;
-      padding: 30px;
-      min-height: 100vh;
-      transition: margin-left 0.3s ease;
-    }
-
-    /* Dashboard Header */
-    .dashboard-header {
-      background: white;
-      padding: 25px 30px;
-      border-radius: 15px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-      margin-bottom: 30px;
-      border-left: 5px solid #9b59b6;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .dashboard-header::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 100px;
-      height: 100px;
-      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%239b59b6" stroke-width="1" opacity="0.1"><path d="M20 9V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v2M4 9v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9M4 9h16M8 5v4m8-4v4m-4-4v4"></path></svg>') no-repeat center;
-      background-size: contain;
-    }
-
-    .dashboard-header h1 {
-      font-size: 2.2rem;
-      color: #2c3e50;
-      margin-bottom: 10px;
-      font-weight: 600;
-    }
-
-    .dashboard-header p {
-      color: #7f8c8d;
-      font-size: 1.1rem;
-    }
-
-    /* Stats Cards */
-    .stats-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 25px;
-      margin-bottom: 30px;
-    }
-
-    .stat-card {
-      background: white;
-      padding: 25px;
-      border-radius: 15px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .stat-card.purple::before {
-      background: linear-gradient(90deg, #9b59b6, #8e44ad);
-    }
-
-    .stat-card.green::before {
-      background: linear-gradient(90deg, #27ae60, #2ecc71);
-    }
-
-    .stat-card.orange::before {
-      background: linear-gradient(90deg, #e67e22, #d35400);
-    }
-
-    .stat-card.blue::before {
-      background: linear-gradient(90deg, #3498db, #2980b9);
-    }
-
-    .stat-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-    }
-
-    .stat-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-    }
-
-    .stat-card h3 {
-      font-size: 2rem;
-      color: #2c3e50;
-      margin-bottom: 10px;
-    }
-
-    .stat-card p {
-      color: #7f8c8d;
-      font-size: 1rem;
-      margin-bottom: 15px;
-    }
-
-    .stat-icon {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      font-size: 2.5rem;
-      opacity: 0.3;
-    }
-
-    .stat-card.purple .stat-icon { color: #9b59b6; }
-    .stat-card.green .stat-icon { color: #27ae60; }
-    .stat-card.orange .stat-icon { color: #e67e22; }
-    .stat-card.blue .stat-icon { color: #3498db; }
-
-    /* Quick Actions */
-    .quick-actions {
-      background: white;
-      padding: 25px;
-      border-radius: 15px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-      margin-bottom: 30px;
-    }
-
-    .quick-actions h2 {
-      color: #2c3e50;
-      margin-bottom: 20px;
-      font-size: 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .action-buttons {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
-    }
-
-    .action-btn {
-      background: linear-gradient(135deg, #9b59b6, #8e44ad);
-      color: white;
-      padding: 15px 20px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-size: 1rem;
-      text-align: center;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-    }
-
-    .action-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 20px rgba(155, 89, 182, 0.3);
-      text-decoration: none;
-      color: white;
-    }
-
-    .action-btn.green {
-      background: linear-gradient(135deg, #27ae60, #2ecc71);
-    }
-
-    .action-btn.green:hover {
-      box-shadow: 0 10px 20px rgba(39, 174, 96, 0.3);
-    }
-
-    .action-btn.orange {
-      background: linear-gradient(135deg, #e67e22, #d35400);
-    }
-
-    .action-btn.orange:hover {
-      box-shadow: 0 10px 20px rgba(230, 126, 34, 0.3);
-    }
-
-    /* Accommodation Management */
-    .accommodation-management {
-      background: white;
-      padding: 25px;
-      border-radius: 15px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    }
-
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-
-    .section-header h2 {
-      color: #2c3e50;
-      font-size: 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .search-bar {
-      display: flex;
-      gap: 10px;
-    }
-
-    .search-bar input {
-      padding: 10px 15px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      width: 250px;
-    }
-
-    .search-bar button {
-      background: #9b59b6;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      padding: 10px 15px;
-      cursor: pointer;
-    }
-
-    .accommodation-table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    .accommodation-table th {
-      background: #f8f9fa;
-      text-align: left;
-      padding: 15px;
-      color: #2c3e50;
-      font-weight: 600;
-      border-bottom: 2px solid #eee;
-    }
-
-    .accommodation-table td {
-      padding: 15px;
-      border-bottom: 1px solid #eee;
-      color: #555;
-    }
-
-    .accommodation-table tr:hover {
-      background: #f9f9f9;
-    }
-
-    .status-badge {
-      padding: 5px 10px;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      font-weight: 500;
-    }
-
-    .status-badge.available {
-      background: #d4edda;
-      color: #155724;
-    }
-
-    .status-badge.full {
-      background: #fff3cd;
-      color: #856404;
-    }
-
-    .status-badge.maintenance {
-      background: #f8d7da;
-      color: #721c24;
-    }
-
-    .rating-stars {
-      color: #f1c40f;
-      font-size: 0.9rem;
-    }
-
-    .action-icons {
-      display: flex;
-      gap: 12px;
-    }
-
-    .action-icons a {
-      color: #555;
-      transition: color 0.3s;
-      text-decoration: none;
-    }
-
-    .action-icons a:hover {
-      color: #9b59b6;
-    }
-
-    /* Mobile Responsive */
-    @media (max-width: 768px) {
-      main {
-        margin-left: 0;
-        padding: 20px;
-      }
-
-      .dashboard-header h1 {
-        font-size: 1.8rem;
-      }
-
-      .stats-container {
-        grid-template-columns: 1fr;
-      }
-
-      .action-buttons {
-        grid-template-columns: 1fr;
-      }
-
-      .section-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
-      }
-
-      .search-bar {
-        width: 100%;
-      }
-
-      .search-bar input {
-        width: 100%;
-      }
-
-      .accommodation-table {
-        display: block;
-        overflow-x: auto;
-      }
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Manajemen Penginapan</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Menggunakan style yang sama persis dengan modul lain untuk konsistensi */
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f6f9; color: #333; line-height: 1.6; margin: 0; }
+        .main-content { margin-left: 220px; padding: 30px; }
+        .dashboard-header { background: #ffffff; border-radius: 8px; padding: 20px; margin-bottom: 25px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
+        .dashboard-header h1 { color: #2c3e50; font-size: 1.8rem; font-weight: 600; margin: 0; }
+        .btn-add { background-color: #3498db; color: white; border: none; padding: 10px 18px; border-radius: 6px; cursor: pointer; font-weight: 500; font-size: 0.9rem; text-decoration: none; display: flex; align-items: center; gap: 8px; }
+        .table-container { background: #ffffff; border-radius: 8px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); overflow: hidden; }
+        .table-wrapper { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; }
+        th { background-color: #f8f9fa; padding: 12px 15px; text-align: left; font-weight: 600; color: #495057; font-size: 0.85rem; text-transform: uppercase; border-bottom: 2px solid #dee2e6; }
+        td { padding: 15px; border-bottom: 1px solid #ecf0f1; vertical-align: middle; font-size: 0.9rem; }
+        .thumbnail { width: 120px; height: 70px; border-radius: 6px; background-color: #e9ecef; display: flex; align-items: center; justify-content: center; color: #adb5bd; overflow: hidden; flex-shrink: 0; }
+        .thumbnail img { width: 100%; height: 100%; object-fit: cover; }
+        .action-buttons { display: flex; gap: 8px; }
+        .btn { padding: 8px 12px; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem; text-decoration: none; color: white; }
+        .btn i { font-size: 0.9em; }
+        .btn-edit { background-color: #f39c12; }
+        .btn-delete { background-color: #e74c3c; }
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); }
+        .modal-content { background-color: #fefefe; margin: 10% auto; padding: 25px 30px; border-radius: 10px; width: 80%; max-width: 500px; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e5e5e5; padding-bottom: 15px; margin-bottom: 20px; }
+        .close-button { color: #aaa; font-size: 28px; font-weight: bold; cursor: pointer; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: 600; }
+        .form-group input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
+        .modal-footer { margin-top: 20px; padding-top: 20px; border-top: 1px solid #eee; display: flex; justify-content: flex-end; gap: 10px; }
+        #notification { position: fixed; top: 20px; right: 20px; padding: 15px 20px; border-radius: 6px; color: white; font-weight: 500; z-index: 2000; display: none; }
+        #notification.success { background-color: #2ecc71; }
+        #notification.error { background-color: #e74c3c; }
+    </style>
 </head>
 <body>
-  <!-- Sidebar tetap sama seperti di contoh -->
   <?php include '../komponen/sidebar_admin.php'; ?>
+  <main class="main-content">
+    <div id="notification"></div>
+    <header class="dashboard-header">
+      <h1>Manajemen Penginapan</h1>
+      <a href="../backend/tambah_penginapan.php" class="btn-add"><i class="fas fa-plus"></i> Tambah Penginapan</a>
+    </header>
 
-  <main>
-    <!-- Dashboard Header -->
-    <div class="dashboard-header">
-      <h1><i class="fas fa-hotel" style="color: #9b59b6; margin-right: 10px;"></i>Penginapan</h1>
-      <p>Kelola akomodasi wisata dengan mudah. Tambah, edit, atau hapus penginapan sesuai kebutuhan.</p>
-    </div>
-
-    <!-- Stats Cards -->
-    <div class="stats-container">
-      <div class="stat-card purple">
-        <div class="stat-icon">
-          <i class="fas fa-hotel"></i>
-        </div>
-        <h3>38</h3>
-        <p>Total Penginapan</p>
+    <div class="table-container">
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>Gambar</th><th>Nama Penginapan</th><th>Rating</th><th>Harga/Malam</th><th>Aksi</th></tr>
+          </thead>
+          <tbody>
+            <?php if (!empty($penginapan_list)): ?>
+              <?php foreach($penginapan_list as $penginapan): ?>
+              <tr data-id="<?php echo $penginapan['id_akomodasi_penginapan']; ?>">
+                <td>
+                  <div class="thumbnail">
+                    <?php if (!empty($penginapan['gambar_url']) && (filter_var($penginapan['gambar_url'], FILTER_VALIDATE_URL) || file_exists('../' . $penginapan['gambar_url']))): ?>
+                        <img src="<?php echo filter_var($penginapan['gambar_url'], FILTER_VALIDATE_URL) ? htmlspecialchars($penginapan['gambar_url']) : '../' . htmlspecialchars($penginapan['gambar_url']); ?>" alt="<?php echo htmlspecialchars($penginapan['nama_penginapan']); ?>">
+                    <?php else: ?>
+                        <i class="fas fa-hotel"></i>
+                    <?php endif; ?>
+                  </div>
+                </td>
+                <td><?php echo htmlspecialchars($penginapan['nama_penginapan']); ?></td>
+                <td><?php echo display_stars($penginapan['rating_bintang']); ?></td>
+                <td><?php echo format_rupiah($penginapan['harga_per_malam']); ?></td>
+                <td>
+                  <div class="action-buttons">
+                    <button class="btn btn-edit" onclick="openEditModal(<?php echo $penginapan['id_akomodasi_penginapan']; ?>)" title="Edit"><i class="fas fa-edit"></i> Edit</button>
+                    <a href="../backend/hapus_penginapan.php?id=<?php echo $penginapan['id_akomodasi_penginapan']; ?>" class="btn btn-delete" title="Hapus" onclick="return confirm('Apakah Anda yakin ingin menghapus penginapan ini?');"><i class="fas fa-trash"></i> Hapus</a>
+                  </div>
+                </td>
+              </tr>
+              <?php endforeach; ?>
+            <?php else: ?>
+              <tr><td colspan="5" style="text-align: center; padding: 20px;">Tidak ada data penginapan.</td></tr>
+            <?php endif; ?>
+          </tbody>
+        </table>
       </div>
-      
-      <div class="stat-card green">
-        <div class="stat-icon">
-          <i class="fas fa-bed"></i>
-        </div>
-        <h3>287</h3>
-        <p>Kamar Tersedia</p>
-      </div>
-    
-    </div>
-
-    <!-- Quick Actions -->
-    <div class="quick-actions">
-      <h2> Tambah Penginapan</h2>
-      <div class="action-buttons">
-        <a href="tambah_penginapan.php" class="action-btn">
-          <i class="fas fa-plus-circle"></i> Tambah
-        </a>
-      </div>
-    </div>
-
-    <!-- Accommodation Management -->
-    <div class="accommodation-management">
-      <div class="section-header">
-        <h2><i class="fas fa-list"></i> Daftar Penginapan</h2>
-        <div class="search-bar">
-          <input type="text" placeholder="Cari penginapan...">
-          <button><i class="fas fa-search"></i></button>
-        </div>
-      </div>
-      
-      <table class="accommodation-table">
-        <thead>
-          <tr>
-            <th>No</th>
-            <th>Nama Penginapan</th>
-            <th>Lokasi</th>
-            <th>Tipe</th>
-            <th>Harga/Malam</th>
-            <th>Status</th>
-            <th>Aksi</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>Grand Luxury Resort</td>
-            <td>Bali, Ubud</td>
-            <td>Resort</td>
-            <td>Rp 1.500.000</td>
-            <td><span class="status-badge available">Tersedia</span></td>
-            <td>
-              <div class="action-icons">
-                <a href="edit_penginapan.php?id=1" title="Edit"><i class="fas fa-edit"></i></a>
-                <a href="hapus_penginapan.php?id=1" title="Hapus" onclick="return confirm('Yakin ingin menghapus penginapan ini?')"><i class="fas fa-trash-alt"></i></a>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Ocean View Hotel</td>
-            <td>Lombok, Pantai Kuta</td>
-            <td>Hotel Bintang 4</td>
-            <td>Rp 850.000</td>
-            <td><span class="status-badge full">Penuh</span></td>
-            <td>
-              <div class="action-icons">
-                <a href="edit_penginapan.php?id=2" title="Edit"><i class="fas fa-edit"></i></a>
-                <a href="hapus_penginapan.php?id=2" title="Hapus" onclick="return confirm('Yakin ingin menghapus penginapan ini?')"><i class="fas fa-trash-alt"></i></a>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>Mountain Cabin Retreat</td>
-            <td>Jawa Barat, Puncak</td>
-            <td>Villa</td>
-            <td>Rp 2.200.000</td>
-            <td><span class="status-badge available">Tersedia</span></td>
-            <td>
-              <div class="action-icons">
-                <a href="edit_penginapan.php?id=3" title="Edit"><i class="fas fa-edit"></i></a>
-                <a href="hapus_penginapan.php?id=3" title="Hapus" onclick="return confirm('Yakin ingin menghapus penginapan ini?')"><i class="fas fa-trash-alt"></i></a>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td>City Central Inn</td>
-            <td>Jakarta Pusat</td>
-            <td>Hotel Bintang 3</td>
-            <td>Rp 650.000</td>
-            <td><span class="status-badge maintenance">Renovasi</span></td>
-            <td>
-              <div class="action-icons">
-                <a href="edit_penginapan.php?id=4" title="Edit"><i class="fas fa-edit"></i></a>
-                <a href="hapus_penginapan.php?id=4" title="Hapus" onclick="return confirm('Yakin ingin menghapus penginapan ini?')"><i class="fas fa-trash-alt"></i></a>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>5</td>
-            <td>Beachfront Bungalows</td>
-            <td>Bali, Canggu</td>
-            <td>Bungalow</td>
-            <td>Rp 1.100.000</td>
-            <td><span class="status-badge available">Tersedia</span></td>
-            <td>
-              <div class="action-icons">
-                <a href="edit_penginapan.php?id=5" title="Edit"><i class="fas fa-edit"></i></a>
-                <a href="hapus_penginapan.php?id=5" title="Hapus" onclick="return confirm('Yakin ingin menghapus penginapan ini?')"><i class="fas fa-trash-alt"></i></a>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
     </div>
   </main>
 
-  <script>
-    // Simple search functionality
-    const searchInput = document.querySelector('.search-bar input');
-    const searchButton = document.querySelector('.search-bar button');
-    const tableRows = document.querySelectorAll('.accommodation-table tbody tr');
+  <div id="editModal" class="modal"><div class="modal-content"><div class="modal-header"><h2 id="modalTitle">Edit Penginapan</h2><span class="close-button">&times;</span></div><div class="modal-body" id="modalBody"></div></div></div>
 
-    function performSearch() {
-      const searchTerm = searchInput.value.toLowerCase();
-      
-      tableRows.forEach(row => {
-        const text = row.textContent.toLowerCase();
-        if (text.includes(searchTerm)) {
-          row.style.display = '';
-        } else {
-          row.style.display = 'none';
+  <script>
+    const modal = document.getElementById('editModal');
+    const modalBody = document.getElementById('modalBody');
+    const closeBtn = document.querySelector('.close-button');
+
+    closeBtn.onclick = () => modal.style.display = 'none';
+    window.onclick = (event) => { if (event.target == modal) { modal.style.display = 'none'; } };
+
+    async function openEditModal(id) {
+        modal.style.display = 'block';
+        modalBody.innerHTML = '<p>Memuat...</p>';
+        try {
+            const response = await fetch(`../backend/get_penginapan_detail.php?id=${id}`);
+            const data = await response.json();
+            if (data.error) throw new Error(data.error);
+            modalBody.innerHTML = data.html;
+        } catch (error) {
+            modalBody.innerHTML = `<p style="color: red;">Gagal memuat data: ${error.message}</p>`;
         }
-      });
     }
 
-    searchButton.addEventListener('click', performSearch);
-    searchInput.addEventListener('keyup', function(e) {
-      if (e.key === 'Enter') {
-        performSearch();
-      }
+    modalBody.addEventListener('submit', async function(event) {
+        if (event.target.id === 'editPenginapanForm') {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const submitButton = event.target.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+            submitButton.innerHTML = 'Menyimpan...';
+
+            try {
+                const response = await fetch('../backend/update_penginapan.php', { method: 'POST', body: formData });
+                const result = await response.json();
+                if (result.status === 'success') {
+                    modal.style.display = 'none';
+                    showNotification(result.message, 'success');
+                    setTimeout(() => location.reload(), 1500);
+                } else {
+                    throw new Error(result.message);
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+                submitButton.disabled = false;
+                submitButton.innerHTML = 'Simpan Perubahan';
+            }
+        }
     });
 
-    // Real-time search
-    searchInput.addEventListener('input', performSearch);
+    function showNotification(message, type) {
+        const notification = document.getElementById('notification');
+        notification.textContent = message;
+        notification.className = type;
+        notification.style.display = 'block';
+        setTimeout(() => { notification.style.display = 'none'; }, 3000);
+    }
   </script>
 </body>
 </html>

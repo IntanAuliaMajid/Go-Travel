@@ -51,6 +51,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['article_id'])) {
         // --- PROSES UPLOAD GAMBAR BARU (JIKA ADA) ---
         if (isset($_FILES['gambar_artikel_baru']) && $_FILES['gambar_artikel_baru']['error'] == 0) {
             $upload_dir = '../uploads/artikel/'; // Pastikan folder ini ada dan writable!
+            if (!is_dir($upload_dir)) {
+                mkdir($upload_dir, 0775, true);
+            }
+            
             $allowed_types = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
             $max_size = 5 * 1024 * 1024; // 5 MB
 
@@ -72,12 +76,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['article_id'])) {
                 $target_file = $upload_dir . $new_file_name;
 
                 if (move_uploaded_file($file_tmp, $target_file)) {
-                    // File berhasil diupload, sekarang masukkan ke DB
-                    $image_url = 'http://' . $_SERVER['HTTP_HOST'] . '/gotravel/uploads/artikel/' . $new_file_name; // Sesuaikan path URL
+                    // ==========================================================
+                    // PERBAIKAN BAGIAN 1: Menyimpan path relatif ke database
+                    // ==========================================================
+                    $path_relatif_untuk_db = 'uploads/artikel/' . $new_file_name;
                     
                     $stmt_img = $conn->prepare("INSERT INTO gambar_artikel (url) VALUES (?)");
                     if ($stmt_img) {
-                        $stmt_img->bind_param("s", $image_url);
+                        $stmt_img->bind_param("s", $path_relatif_untuk_db);
                         if ($stmt_img->execute()) {
                             $new_gambar_id = $conn->insert_id; // Dapatkan ID gambar yang baru saja di-insert
                         } else {
@@ -141,7 +147,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['article_id'])) {
 
 // --- Fetch Data Artikel untuk Ditampilkan di Form ---
 if ($article_id && empty($error_message)) {
-    // ... (Logika fetch data sama seperti sebelumnya, tidak perlu diubah)
     $sql_fetch = "SELECT a.id_artikel, a.judul_artikel, a.isi_artikel, a.tag, a.id_jenis_artikel,
                          ga.url AS gambar_url
                   FROM artikel a
@@ -172,11 +177,10 @@ $conn->close();
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin GoTravel - Edit Artikel (Dikembangkan)</title>
+    <title>Admin GoTravel - Edit Artikel</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-   <script src="https://cdn.tiny.cloud/1/f8t5evd0wdqu166izusls3oby6rw52z7vd5idrxss3y1fzzj/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/f8t5evd0wdqu166izusls3oby6rw52z7vd5idrxss3y1fzzj/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <style>
-        /* [Salin CSS dari file sebelumnya di sini, tidak ada perubahan] */
         :root {
             --primary: #5a7d7c; --primary-dark: #4c6867; --secondary: #36454F;
             --text-dark: #2c3e50; --text-light: #6b7280; --bg-light: #f9fafb;
@@ -258,8 +262,7 @@ $conn->close();
     <main>
         <div class="header-container">
             <h1 class="page-title">Edit Artikel</h1>
-            <a href="blog.php" class="btn btn-outline">
-                <i class="fas fa-arrow-left"></i> Kembali ke Manajemen
+            <a href="blog.php" class="btn btn-outline"> <i class="fas fa-arrow-left"></i> Kembali ke Manajemen
             </a>
         </div>
 
@@ -299,7 +302,25 @@ $conn->close();
                         <label class="form-label">Gambar Utama</label>
                         <div class="image-preview-group">
                             <div class="image-preview-current">
-                                <img src="<?php echo !empty($article['gambar_url']) ? htmlspecialchars($article['gambar_url']) : 'https://via.placeholder.com/150x100?text=No+Image'; ?>" 
+                                <?php
+                                    // ==========================================================
+                                    // PERBAIKAN BAGIAN 2: Logika "pintar" untuk menampilkan gambar
+                                    // ==========================================================
+                                    $gambar_src = 'https://via.placeholder.com/150x100?text=No+Image'; // Gambar default
+                                    if (!empty($article['gambar_url'])) {
+                                        $url = $article['gambar_url'];
+                                        // Jika URL adalah link eksternal (dimulai dengan http atau https)
+                                        if (strpos($url, 'http') === 0) {
+                                            $gambar_src = htmlspecialchars($url);
+                                        }
+                                        // Jika tidak, berarti itu adalah path lokal
+                                        else {
+                                            // Tambahkan ../ karena skrip ini ada di dalam folder 'newadmin'
+                                            $gambar_src = '../' . htmlspecialchars($url);
+                                        }
+                                    }
+                                ?>
+                                <img src="<?php echo $gambar_src; ?>" 
                                      alt="Gambar Saat Ini" class="image-preview" id="preview-image">
                                 <small class="form-hint">Gambar saat ini</small>
                             </div>
@@ -346,7 +367,7 @@ $conn->close();
                 selector: '#isi_artikel_editor',
                 plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
                 toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
-                height: 400, // Atur tinggi editor
+                height: 400,
             });
 
             // Script untuk preview gambar saat dipilih
