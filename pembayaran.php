@@ -42,12 +42,12 @@ if (!function_exists('format_rupiah')) {
 }
 
 $snapToken = ''; 
-$midtransClientKey = 'xxxxxxxxxx'; // GANTI DENGAN CLIENT KEY ANDA (JIKA BELUM)
+$midtransClientKey = 'SB-Mid-client-RU-4tatn5CIGtpeG'; // GANTI DENGAN CLIENT KEY ANDA (JIKA BELUM)
 
 if ($data_valid_untuk_pembayaran) {
     require_once 'vendor/autoload.php'; 
 
-    \Midtrans\Config::$serverKey = 'xxxxxxxx'; // GANTI DENGAN SERVER KEY ANDA (JIKA BELUM)
+    \Midtrans\Config::$serverKey = 'SB-Mid-server-1zCj_s8Ixz5PgsPt4xpWFnNS'; // GANTI DENGAN SERVER KEY ANDA (JIKA BELUM)
     \Midtrans\Config::$isProduction = false; 
     \Midtrans\Config::$isSanitized = true;
     \Midtrans\Config::$is3ds = true; 
@@ -285,35 +285,6 @@ if ($data_valid_untuk_pembayaran) {
                             </div>
                         </div>
 
-                        <div class="payment-method" data-method="transfer">
-                            <div class="payment-header">
-                                <div class="payment-icon"><i class="fas fa-university"></i></div>
-                                <div class="payment-name">Transfer Bank (Verifikasi Manual)</div>
-                            </div>
-                            <div class="payment-description">
-                                Transfer ke rekening bank kami. Konfirmasi manual mungkin memerlukan waktu. Sertakan ID Pesanan Anda (<?php echo htmlspecialchars($kode_pemesanan_unik); ?>) pada berita transfer.
-                            </div>
-                            <div class="transfer-info" id="transferDetails" style="display: none;">
-                                <p style="font-size:0.9em; color:#555; margin-bottom:1rem;">Silakan transfer sejumlah <strong><?php echo format_rupiah($total_pembayaran); ?></strong> ke salah satu rekening berikut:</p>
-                                <div class="bank-details">
-                                    <div>
-                                        <div class="bank-info">Bank Mandiri</div>
-                                        <div>No. Rek: 1570-0000-1234-567</div>
-                                        <div>a.n PT GoTravel Indonesia</div>
-                                    </div>
-                                    <button class="copy-btn" onclick="copyToClipboard('157000001234567')"><i class="fas fa-copy"></i> Salin</button>
-                                </div>
-                                <div class="bank-details" style="margin-top:1rem;">
-                                    <div>
-                                        <div class="bank-info">Bank BCA</div>
-                                        <div>No. Rek: 0123-456-7890</div>
-                                        <div>a.n PT GoTravel Indonesia</div>
-                                    </div>
-                                    <button class="copy-btn" onclick="copyToClipboard('01234567890')"><i class="fas fa-copy"></i> Salin</button>
-                                </div>
-                                <p style="font-size:0.85em; color:#777; margin-top:1.5rem;">Penting: Setelah melakukan transfer, mohon lakukan konfirmasi pembayaran melalui tautan yang akan kami kirimkan ke email Anda atau melalui halaman status pesanan Anda.</p>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 

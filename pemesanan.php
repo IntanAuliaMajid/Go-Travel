@@ -359,7 +359,7 @@ $is_paket_keluarga = ($paket_info && isset($paket_info['id_jenis_paket']) && $pa
 
           <div class="form-group">
             <label for="catatan_tambahan">Catatan Tambahan (Opsional)</label>
-            <textarea id="catatan_tambahan" name="catatan_tambahan" rows="3" placeholder="Contoh: Jumlah aktual anggota keluarga, preferensi kamar, alergi makanan, dll."></textarea>
+            <textarea id="catatan_tambahan" name="catatan_tambahan" rows="3" placeholder="Contoh: Permintaan khusus (kamar non-smoking, preferensi diet), alergi makanan, dll."></textarea>
           </div>
 
           <div class="form-actions">
@@ -423,10 +423,6 @@ $is_paket_keluarga = ($paket_info && isset($paket_info['id_jenis_paket']) && $pa
             <span class="label">Subtotal Paket</span>
             <span class="value" id="summary_subtotal_paket"><?php echo format_rupiah($harga_paket_untuk_kalkulasi); ?></span>
         </div>
-        <div class="price-row" id="row_diskon_grup">
-            <span class="label">Diskon Grup (Estimasi jika >3 org)</span>
-            <span class="value" id="summary_diskon">Rp 0</span>
-        </div>
         <div class="price-row">
             <span class="label">Biaya Administrasi</span>
             <span class="value" id="summary_biaya_admin"><?php echo format_rupiah(10000); ?></span>
@@ -456,7 +452,6 @@ $is_paket_keluarga = ($paket_info && isset($paket_info['id_jenis_paket']) && $pa
 
       const summaryJumlahDisplay = document.getElementById('summary_jumlah_display');
       const summarySubtotalPaket = document.getElementById('summary_subtotal_paket');
-      const summaryDiskon = document.getElementById('summary_diskon');
       const summaryTotalPembayaran = document.getElementById('summary_total_pembayaran');
       const totalHargaKeseluruhanHiddenInput = document.getElementById('total_harga_keseluruhan_hidden');
       const summaryHargaDasarPaketDisplay = document.getElementById('summary_harga_dasar_paket_display');
@@ -464,7 +459,6 @@ $is_paket_keluarga = ($paket_info && isset($paket_info['id_jenis_paket']) && $pa
       const infoPaketKeluarga = document.getElementById('info_paket_keluarga');
       const titleRincianHarga = document.getElementById('title_rincian_harga');
       const labelHargaDasarPaket = document.getElementById('label_harga_dasar_paket');
-      const rowDiskonGrup = document.getElementById('row_diskon_grup');
       const summaryLabelJumlah = document.getElementById('summary_label_jumlah');
 
       const additionalPassengersContainer = document.getElementById('additional_passengers_container');
@@ -479,7 +473,6 @@ $is_paket_keluarga = ($paket_info && isset($paket_info['id_jenis_paket']) && $pa
           if(infoPaketKeluarga) infoPaketKeluarga.style.display = 'block';
           if(titleRincianHarga) titleRincianHarga.textContent = 'Rincian Harga Paket Keluarga:';
           if(labelHargaDasarPaket) labelHargaDasarPaket.textContent = 'Harga Dasar Paket (Keluarga)';
-          if(rowDiskonGrup) rowDiskonGrup.style.display = 'none';
           if(summaryLabelJumlah) summaryLabelJumlah.textContent = 'Jumlah';
       }
 
@@ -496,7 +489,7 @@ $is_paket_keluarga = ($paket_info && isset($paket_info['id_jenis_paket']) && $pa
           if (hargaPaketUntukKalkulasi === 0) {
                   if(summaryJumlahDisplay) summaryJumlahDisplay.textContent = isFamilyPackage ? '1 Paket Keluarga' : jumlah + ' Orang';
                   if(summarySubtotalPaket) summarySubtotalPaket.textContent = 'N/A';
-                  if(summaryDiskon && !isFamilyPackage) summaryDiskon.textContent = 'N/A';
+    
                   if(summaryTotalPembayaran) summaryTotalPembayaran.textContent = 'N/A';
                   if(totalHargaKeseluruhanHiddenInput) totalHargaKeseluruhanHiddenInput.value = 0;
                   return;
@@ -504,7 +497,6 @@ $is_paket_keluarga = ($paket_info && isset($paket_info['id_jenis_paket']) && $pa
           if (jumlah <= 0 && !isFamilyPackage) {
               if(summaryJumlahDisplay) summaryJumlahDisplay.textContent = '0 Orang';
               if(summarySubtotalPaket) summarySubtotalPaket.textContent = formatRupiahJS(0);
-              if(summaryDiskon) summaryDiskon.textContent = formatRupiahJS(0);
               if(summaryTotalPembayaran) summaryTotalPembayaran.textContent = formatRupiahJS(biayaAdmin);
               if(totalHargaKeseluruhanHiddenInput) totalHargaKeseluruhanHiddenInput.value = biayaAdmin;
               return;
@@ -517,22 +509,12 @@ $is_paket_keluarga = ($paket_info && isset($paket_info['id_jenis_paket']) && $pa
               subtotalPaket = hargaPaketUntukKalkulasi * jumlah;
           }
 
-          let diskonGrup = 0;
-          if (!isFamilyPackage && jumlah > 3) {
-              diskonGrup = subtotalPaket * 0.05;
-          }
 
-          const total = subtotalPaket - diskonGrup + biayaAdmin;
+          const total = subtotalPaket + biayaAdmin;
 
           if(summaryJumlahDisplay) summaryJumlahDisplay.textContent = isFamilyPackage ? '1 Paket Keluarga' : jumlah + ' Orang';
           if(summarySubtotalPaket) summarySubtotalPaket.textContent = formatRupiahJS(subtotalPaket);
-          if(summaryDiskon) {
-              if (isFamilyPackage) {
-                  summaryDiskon.textContent = 'Rp 0';
-              } else {
-                  summaryDiskon.textContent = formatRupiahJS(diskonGrup > 0 ? -diskonGrup : 0);
-              }
-          }
+
           if(summaryTotalPembayaran) summaryTotalPembayaran.textContent = formatRupiahJS(total);
           if(totalHargaKeseluruhanHiddenInput) totalHargaKeseluruhanHiddenInput.value = total;
       }

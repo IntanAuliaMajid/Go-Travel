@@ -1,5 +1,5 @@
 <?php
-// FILE: detail_paket_wisata.php (Contoh Nama File)
+// FILE: detail_paket_wisata.php
 
 // =================================================================
 // BAGIAN 1: LOGIKA PHP (KONEKSI, QUERY, DAN FUNGSI)
@@ -180,7 +180,7 @@ $harga_final_untuk_sidebar = ($subtotal_rincian_komponen > 0) ? $subtotal_rincia
         .package-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 0; }
         .package-card { background: #f9f9f9; padding: 1.2rem; border-radius: 8px; border: 1px solid #e8e8e8; display: flex; flex-direction: column; }
         .package-card h4 { color: #2c7a51; margin-bottom: 0.8rem; font-size: 1.1rem; display: flex; align-items: center; gap: 8px; }
-        .package-card img { width: 100%; height: 180px; object-fit: cover; border-radius: 6px; margin-bottom: 0.8rem; }
+        .package-card img { width: 100%; height: 180px; object-fit: cover; border-radius: 6px; margin-bottom: 0.8rem; background-color: #eee; }
         .package-card h5 { font-size: 1rem; color: #333; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 8px; }
         .package-features { list-style: none; margin: 0.8rem 0 0 0; padding: 0; font-size: 0.85rem; }
         .package-features li { margin-bottom: 0.4rem; display: flex; align-items: center; color: #555; }
@@ -260,8 +260,6 @@ $harga_final_untuk_sidebar = ($subtotal_rincian_komponen > 0) ? $subtotal_rincia
     </style>
 </head>
 <body>
-
-<?php // include 'Komponen/navbar.php'; -> Pindah ke atas ?>
 
 <section class="detail-hero">
     <div class="detail-container-hero-text">
@@ -360,7 +358,23 @@ $harga_final_untuk_sidebar = ($subtotal_rincian_komponen > 0) ? $subtotal_rincia
             </div>
             <?php endif; ?>
 
-        </div>
+            <?php if (!empty($wisataresult['denah_paket']) && $wisataresult['denah_paket'] !== 'default_denah.png'): ?>
+            <div class="detail-section">
+                <h3>Denah & Lokasi</h3>
+                <?php
+                    // Membersihkan path denah dari ../ atau ./ agar URL menjadi benar
+                    $denah_url = $wisataresult['denah_paket'];
+                    if (strpos($denah_url, 'http') !== 0) { // Jika bukan URL lengkap
+                        $denah_url = str_replace(['../', './'], '', $denah_url);
+                    }
+                ?>
+                <img src="<?php echo htmlspecialchars($denah_url); ?>" 
+                     alt="Denah Lokasi <?php echo htmlspecialchars($wisataresult['nama_paket']); ?>" 
+                     style="width: 100%; height: auto; border-radius: 8px; margin-top: 1rem; border: 1px solid #eee; background-color: #f9f9f9;"
+                     onerror="this.onerror=null; this.parentElement.style.display='none';">
+            </div>
+            <?php endif; ?>
+            </div>
 
         <div class="detail-info">
             <div class="detail-meta">
@@ -401,42 +415,34 @@ $harga_final_untuk_sidebar = ($subtotal_rincian_komponen > 0) ? $subtotal_rincia
             </div>
             
             <?php if (!empty($wisataresult['info_penting'])): ?>
-<div class="info-penting-box">
-    <h4><i class="fas fa-exclamation-triangle"></i> Info Penting</h4>
-    <ol>
-        <?php
-            // 1. Pecah string dari database berdasarkan baris baru (newline).
-            //    preg_split lebih andal daripada explode("\n", ...) karena bisa menangani berbagai jenis line break (\n atau \r\n).
-            $info_items = preg_split('/\r\n?|\n/', $wisataresult['info_penting']);
-            
-            foreach ($info_items as $item):
-                // 2. Hapus nomor manual di awal baris (seperti "1. ", "2. ", dst.) agar tidak terjadi penomoran ganda.
-                //    Regex ini akan menghapus angka, titik, dan spasi di awal setiap baris.
-                $cleaned_item = preg_replace('/^\d+\.\s*/', '', $item);
+            <div class="info-penting-box">
+                <h4><i class="fas fa-exclamation-triangle"></i> Info Penting</h4>
+                <ol>
+                    <?php
+                        $info_items = preg_split('/\r\n?|\n/', $wisataresult['info_penting']);
+                        foreach ($info_items as $item):
+                            $cleaned_item = preg_replace('/^\d+\.\s*/', '', $item);
+                            $trimmed_item = trim($cleaned_item);
+                            if (!empty($trimmed_item)):
+                    ?>
+                    <li>
+                        <?php echo htmlspecialchars($trimmed_item); ?>
+                    </li>
+                    <?php 
+                            endif;
+                        endforeach; 
+                    ?>
+                </ol>
+            </div>
+            <?php else: ?>
+            <div class="info-penting-box" style="background-color: #f0fdf4; border-left-color: #4ade80;">
+                <p style="margin:0; font-size: 0.9rem; color: #555;">
+                    <i class="fas fa-check-circle" style="color:#4ade80; margin-right: 8px;"></i>
+                    Tidak ada info penting tambahan untuk paket ini.
+                </p>
+            </div>
+            <?php endif; ?>
 
-                // 3. Bersihkan spasi ekstra di awal dan akhir.
-                $trimmed_item = trim($cleaned_item);
-                
-                // 4. Hanya tampilkan jika baris tidak kosong setelah dibersihkan.
-                if (!empty($trimmed_item)):
-        ?>
-        <li>
-            <?php echo htmlspecialchars($trimmed_item); ?>
-        </li>
-        <?php 
-                endif;
-            endforeach; 
-        ?>
-    </ol>
-</div>
-<?php else: ?>
-<div class="info-penting-box" style="background-color: #f0fdf4; border-left-color: #4ade80;">
-    <p style="margin:0; font-size: 0.9rem; color: #555;">
-        <i class="fas fa-check-circle" style="color:#4ade80; margin-right: 8px;"></i>
-        Tidak ada info penting tambahan untuk paket ini.
-    </p>
-</div>
-<?php endif; ?>
             <a href="pemesanan.php?id_paket=<?php echo htmlspecialchars($id_paket_wisata); ?>" class="pesan-sekarang-link">
                 <button class="pesan-sekarang">
                     <i class="fas fa-shopping-cart"></i> Pesan Paket Sekarang
