@@ -1,6 +1,6 @@
 <?php
 // PASTIKAN INI ADALAH BARIS PERTAMA DALAM FILE, TANPA SPASI ATAU APAPUN SEBELUMNYA
-include 'Komponen/navbar.php';
+session_start(); // WAJIB ADA JIKA MENGGUNAKAN $_SESSION, DAN HARUS DI PALING ATAS
 
 require_once 'backend/koneksi.php'; // Koneksi database
 
@@ -37,14 +37,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_contact_form'])
         exit;
     } else {
         $sql_insert_message = "INSERT INTO contact_messages (first_name, last_name, email, phone, subject, message)
-                               VALUES (?, ?, ?, ?, ?, ?)";
+                                VALUES (?, ?, ?, ?, ?, ?)";
         $stmt_insert = $conn->prepare($sql_insert_message);
         if ($stmt_insert) {
             $stmt_insert->bind_param("ssssss", $firstName, $lastName, $email_form, $phone, $subject, $message_content);
             if ($stmt_insert->execute()) {
                 $_SESSION['form_message'] = "Pesan Anda berhasil dikirim! Kami akan segera menghubungi Anda.";
                 $_SESSION['form_message_type'] = 'success';
-                // Tidak perlu menyimpan submitted_values lagi karena form akan kosong setelah sukses
                 header("Location: kontak.php#formMessageScrollTarget");
                 exit;
             } else {
@@ -80,7 +79,6 @@ if (isset($_SESSION['form_message'])) {
 // --- Fetch Contact Info ---
 $contact_info = null;
 $office_hours_parsed = [];
-// Default values jika tidak ada data di DB
 $default_contact_info = [
     'alamat_kantor' => 'Jl. Contoh Alamat No. 1, Kota Contoh, 12345',
     'telepon' => '(021) 000-0000',
@@ -97,7 +95,6 @@ if ($result_kontak && $result_kontak->num_rows > 0) {
     $contact_info = $default_contact_info;
 }
 
-// Parse jam_operasional
 if (!empty($contact_info['jam_operasional'])) {
     $hours_entries = explode(',', $contact_info['jam_operasional']);
     foreach ($hours_entries as $entry) {
@@ -105,11 +102,10 @@ if (!empty($contact_info['jam_operasional'])) {
         if (count($parts) == 2) {
             $office_hours_parsed[] = ['day' => trim($parts[0]), 'time' => trim($parts[1])];
         } else {
-            $office_hours_parsed[] = ['day' => trim($parts[0]),'time' => '']; // Atau 'Tutup'
+            $office_hours_parsed[] = ['day' => trim($parts[0]),'time' => ''];
         }
     }
 }
-
 
 // --- Fetch FAQ Data ---
 $faq_list = [];
@@ -121,8 +117,9 @@ if ($result_faq && $result_faq->num_rows > 0) {
     }
 }
 
-// SETELAH SEMUA LOGIKA PHP SELESAI, BARU INCLUDE NAVBAR DAN MULAI HTML
-
+// SETELAH SEMUA LOGIKA PHP SELESAI, BARU MULAI HTML
+// Di sinilah kita menyertakan navbar
+include 'Komponen/navbar.php';
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -132,7 +129,7 @@ if ($result_faq && $result_faq->num_rows > 0) {
   <title>Kontak Kami - GoTravel</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
-    /* ... (CSS Anda dari sebelumnya tetap di sini, pastikan tidak ada duplikasi) ... */
+    /* ... CSS Anda tidak perlu diubah ... */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f7f9fc; color: #333; line-height: 1.6; }
     .hero { background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://akasiamas.com/cfind/source/thumb/images/images/content/cover_w970_h499_kontak.jpg') no-repeat center center/cover; height: 60vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: #fff; padding: 2rem; }
@@ -189,7 +186,7 @@ if ($result_faq && $result_faq->num_rows > 0) {
   </style>
 </head>
 <body>
-  <section class="hero">
+<section class="hero">
     <h1>Hubungi Kami</h1>
     <p>Kami siap membantu merencanakan petualangan wisata terbaik Anda di Indonesia</p>
   </section>
@@ -200,7 +197,6 @@ if ($result_faq && $result_faq->num_rows > 0) {
         <h2>Mari Berbicara</h2>
         <p>Tim ahli kami siap membantu Anda merencanakan liburan impian ke destinasi wisata terbaik Indonesia</p>
       </div>
-
       <div class="contact-grid">
         <div class="contact-form-container">
           <h2>Kirim Pesan</h2>
@@ -210,7 +206,7 @@ if ($result_faq && $result_faq->num_rows > 0) {
               <?php echo htmlspecialchars($form_submission_message); ?>
             </div>
             <?php endif; ?>
-          <form id="contactForm" class="contact-form" method="POST" action="kontak.php#formMessageScrollTarget">
+          <form id="contactForm" class="contact-form" method="POST" action="kontak.php">
             <div class="form-row">
               <div class="form-group">
                 <label for="firstName">Nama Depan *</label>
@@ -339,8 +335,9 @@ if ($result_faq && $result_faq->num_rows > 0) {
   </section>
 
   <?php include 'Komponen/footer.php'; ?>
-
+  
   <script>
+    // ... Javascript Anda tidak perlu diubah ...
     function toggleFAQ(element) {
       const faqItem = element.parentElement;
       const isActive = faqItem.classList.contains('active');
@@ -366,32 +363,12 @@ if ($result_faq && $result_faq->num_rows > 0) {
       }
     }
     
-    // Scroll ke pesan form jika ada (setelah redirect dari PHP)
     window.addEventListener('DOMContentLoaded', (event) => {
         const formMessageTarget = document.getElementById('formMessageScrollTarget');
-        if (formMessageTarget && formMessageTarget.innerText.trim() !== '') {
-            // Cek apakah pesan ini hasil dari redirect (misalnya, tidak ada input dari user di halaman ini)
-            // atau apakah ada error message dari submit di halaman yang sama.
-            // Ini untuk menghindari scroll jika pengguna hanya mengisi form lalu ada error validasi sebelum submit.
-            // Jika ada query param `status` dari redirect, atau jika message ada tanpa nilai form yang diisi ulang (untuk kasus error non-redirect)
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.has('status')) {
-                 formMessageTarget.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            } else if (formMessageTarget.classList.contains('error') && 
-                       document.getElementById('firstName').value === '' && 
-                       document.getElementById('lastName').value === '') {
-                // Kasus error yang bukan dari submit di halaman ini (misal, direct load dengan pesan error dari session)
-                // Sebaiknya logika ini lebih disempurnakan tergantung flow aplikasi
-            } else if (formMessageTarget.classList.contains('error') && 
-                       (document.getElementById('firstName').value !== '' || 
-                        document.getElementById('lastName').value !== '')) {
-                // Error validasi dari submit di halaman ini, scroll juga
-                formMessageTarget.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-
+        if (formMessageTarget) {
+            formMessageTarget.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
     });
-
 
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
@@ -399,7 +376,7 @@ if ($result_faq && $result_faq->num_rows > 0) {
         if (hrefAttr.length > 1 && hrefAttr.startsWith('#')) {
             const targetId = hrefAttr.substring(1);
             const targetElement = document.getElementById(targetId);
-            if (targetElement && targetId !== 'formMessageScrollTarget') { // Jangan preventDefault untuk anchor form message kita
+            if (targetElement && targetId !== 'formMessageScrollTarget') {
                 e.preventDefault();
                 targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }

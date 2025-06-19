@@ -87,7 +87,7 @@ $conn->close();
                 <td>
                   <div class="action-buttons">
                     <button class="btn btn-edit" onclick="openEditModal(<?php echo $kendaraan['id_kendaraan']; ?>)" title="Edit"><i class="fas fa-edit"></i> Edit</button>
-                    <a href="hapus_kendaraan.php?id=<?php echo $kendaraan['id_kendaraan']; ?>" class="btn btn-delete" title="Hapus" onclick="return confirm('Apakah Anda yakin ingin menghapus kendaraan ini?');"><i class="fas fa-trash"></i> Hapus</a>
+                    <a href="../backend/hapus_kendaraan.php?id=<?php echo $kendaraan['id_kendaraan']; ?>" class="btn btn-delete" title="Hapus" onclick="return confirm('Apakah Anda yakin ingin menghapus kendaraan ini?');"><i class="fas fa-trash"></i> Hapus</a>
                   </div>
                 </td>
               </tr>

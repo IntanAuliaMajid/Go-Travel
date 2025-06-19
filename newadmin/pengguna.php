@@ -254,11 +254,11 @@ if ($conn) {
       if (e.key === 'Enter' || this.value.length === 0 || this.value.length > 2) { this.form.submit(); }
     });
 
-    function viewUser(role, id) { window.location.href = `lihat_pengguna.php?role=${role}&id=${id}`; }
-    function editUser(role, id) { window.location.href = `edit_pengguna.php?role=${role}&id=${id}`; }
+    function viewUser(role, id) { window.location.href = `../backend/view_pengguna.php?role=${role}&id=${id}`; }
+    function editUser(role, id) { window.location.href = `../backend/edit_pengguna.php?role=${role}&id=${id}`; }
     function deleteUser(role, id) {
         if (confirm(`Apakah Anda yakin ingin menghapus ${role} ini? Data tidak dapat dikembalikan.`)) {
-            window.location.href = `hapus_pengguna.php?role=${role}&id=${id}`;
+            window.location.href = `../backend/hapus_pengguna.php?role=${role}&id=${id}`;
         }
     }
   </script>

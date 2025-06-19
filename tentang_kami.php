@@ -1,3 +1,4 @@
+<?php include "Komponen/navbar.php" ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -162,7 +163,7 @@
 
     .team-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
       gap: 3rem;
       margin-top: 3rem;
     }
@@ -402,9 +403,7 @@
 </head>
 <body>
 
-<?php include "Komponen/navbar.php" ?>
 
-  <!-- Hero Section -->
   <header class="hero" id="home">
     <div class="hero-content">
       <p class="hero-subtitle">Mengenal Lebih Dekat</p>
@@ -413,11 +412,10 @@
     </div>
   </header>
 
-  <!-- About Section -->
   <section class="about" id="about">
     <div class="container">
       <h2 class="section-title">Kisah Kami</h2>
-      <p class="section-subtitle">Perjalanan Go-Travel dimulai dari kecintaan terhadap keindahan alam dan budaya Nusantara</p>
+      <p class="section-subtitle">Perjalanan Go-Travel dimulai dari kecintaan terhadap keindahan alam dan budaya di Jawa dan Jakarta.</p>
       
       <div class="about-grid">
         <div class="about-image">
@@ -432,7 +430,6 @@
     </div>
   </section>
 
-  <!-- Values Section -->
   <section class="values">
     <div class="container">
       <h2 class="section-title">Nilai-Nilai Kami</h2>
@@ -466,7 +463,6 @@
     </div>
   </section>
 
-  <!-- Team Section -->
   <section class="team">
     <div class="container">
       <h2 class="section-title">Tim Kami</h2>
@@ -474,9 +470,9 @@
       
       <div class="team-grid">
         <div class="team-member">
-          <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Budi Santoso" class="member-photo">
+          <a href="homepage_intan.php"><img src="./Gambar/intanpas.jpg" alt="Intan Aulia Majid" class="member-photo"></a>
           <div class="member-info">
-            <h3 class="member-name">Budi Santoso</h3>
+            <h3 class="member-name">Intan Aulia Majid</h3>
             <p class="member-position">Founder & CEO</p>
             <p class="member-bio">Pendiri Go-Travel dengan pengalaman 15 tahun di industri pariwisata. Memiliki passion yang besar untuk mempromosikan keindahan Indonesia.</p>
             <div class="social-links">
@@ -488,9 +484,23 @@
         </div>
         
         <div class="team-member">
-          <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Ani Wijaya" class="member-photo">
+          <a href="homepage_faiqo.php"><img src="./Gambar/faiqo.jpg" alt="Faiqo Noril Laili" class="member-photo"></a>
           <div class="member-info">
-            <h3 class="member-name">Ani Wijaya</h3>
+            <h3 class="member-name">Faiqo Noril Laili</h3>
+            <p class="member-position">Direktur Operasional</p>
+            <p class="member-bio">Ahli dalam mengelola operasional perjalanan dengan pengalaman 10 tahun. Memastikan setiap detail perjalanan berjalan sempurna.</p>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="team-member">
+          <a href="homepage_aden.php"><img src="./Gambar/aden.jpg" alt="Aden Muliana Azis" class="member-photo"></a>
+          <div class="member-info">
+            <h3 class="member-name">Aden Muliana Azis</h3>
             <p class="member-position">Direktur Operasional</p>
             <p class="member-bio">Ahli dalam mengelola operasional perjalanan dengan pengalaman 10 tahun. Memastikan setiap detail perjalanan berjalan sempurna.</p>
             <div class="social-links">
@@ -502,9 +512,23 @@
         </div>
         
         <div class="team-member">
-          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Dewi Puspita" class="member-photo">
+          <a href="homepage_fuad.php"><img src="./Gambar/fuad.jpg" alt="Achmad Saiful Fuadi" class="member-photo"></a>
           <div class="member-info">
-            <h3 class="member-name">Dewi Puspita</h3>
+            <h3 class="member-name">Achmad Saiful Fuadi</h3>
+            <p class="member-position">Manajer Pemasaran</p>
+            <p class="member-bio">Spesialis pemasaran digital dengan kreativitas tinggi. Bertanggung jawab membawa Go-Travel dikenal oleh lebih banyak orang.</p>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="team-member">
+          <a href="homepage_javier.php"><img src="./Gambar/javier.jpg" alt="Javier Saviola" class="member-photo"></a>
+          <div class="member-info">
+            <h3 class="member-name">Javier Saviola</h3>
             <p class="member-position">Manajer Pemasaran</p>
             <p class="member-bio">Spesialis pemasaran digital dengan kreativitas tinggi. Bertanggung jawab membawa Go-Travel dikenal oleh lebih banyak orang.</p>
             <div class="social-links">
@@ -516,9 +540,9 @@
         </div>
         
         <div class="team-member">
-          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Rudi Hermawan" class="member-photo">
+          <a href="homepage_fiki.php"><img src="./Gambar/fiki.jpg" alt="Zulfikar Ramdan F" class="member-photo"></a>
           <div class="member-info">
-            <h3 class="member-name">Rudi Hermawan</h3>
+            <h3 class="member-name">Zulfikar Ramdan F</h3>
             <p class="member-position">Kepala Pemandu</p>
             <p class="member-bio">Pemandu wisata berpengalaman yang mengenal setiap sudut Indonesia. Penuh cerita menarik dan pengetahuan lokal yang mendalam.</p>
             <div class="social-links">
@@ -532,7 +556,6 @@
     </div>
   </section>
 
-  <!-- Timeline Section -->
   <section class="timeline">
     <div class="container">
       <h2 class="section-title">Perjalanan Kami</h2>
@@ -549,41 +572,40 @@
         <div class="timeline-item">
           <div class="timeline-content">
             <div class="timeline-year">2013</div>
-            <h3 class="timeline-title">Ekspansi ke Bali</h3>
-            <p class="timeline-desc">Membuka cabang pertama di Bali dan memperluas layanan ke destinasi wisata internasional. Tim bertambah menjadi 20 orang.</p>
+            <h3 class="timeline-title">Ekspansi ke Jakarta</h3>
+            <p class="timeline-desc">Membuka kantor perwakilan di Jakarta untuk melayani permintaan wisata di ibu kota dan memperkuat jaringan layanan kami di Pulau Jawa.</p>
           </div>
         </div>
         <div class="timeline-item">
           <div class="timeline-content">
             <div class="timeline-year">2016</div>
             <h3 class="timeline-title">Penghargaan Industri</h3>
-            <p class="timeline-desc">Menerima penghargaan "Tour Operator Terbaik" dari Kementerian Pariwisata untuk layanan inovatif dan kepuasan pelanggan yang tinggi.</p>
+            <p class="timeline-desc">Menerima penghargaan "Operator Tur Lokal Inovatif" untuk layanan wisata tematik di Jawa Timur dari asosiasi pariwisata regional.</p>
           </div>
         </div>
         <div class="timeline-item">
           <div class="timeline-content">
             <div class="timeline-year">2019</div>
             <h3 class="timeline-title">Platform Digital</h3>
-            <p class="timeline-desc">Meluncurkan platform pemesanan online yang memudahkan pelanggan merencanakan perjalanan mereka secara mandiri.</p>
+            <p class="timeline-desc">Meluncurkan platform pemesanan online yang memudahkan pelanggan merencanakan perjalanan mereka secara mandiri di wilayah layanan kami.</p>
           </div>
         </div>
         <div class="timeline-item">
           <div class="timeline-content">
             <div class="timeline-year">2023</div>
-            <h3 class="timeline-title">Ekspansi Internasional</h3>
-            <p class="timeline-desc">Memulai layanan tur ke destinasi Asia Tenggara dengan fokus pada pengalaman budaya dan alam yang autentik.</p>
+            <h3 class="timeline-title">Cakupan Penuh Jawa Timur & Jakarta</h3>
+            <p class="timeline-desc">Menyediakan paket wisata lengkap yang mencakup seluruh wilayah layanan utama: Surabaya, Jakarta, Madura (Bangkalan & Pamekasan), dan Lamongan.</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- CTA Section -->
   <section class="cta-section">
     <div class="container">
       <h2 class="cta-title">Siap untuk Petualangan Berikutnya?</h2>
       <p class="cta-description">Bergabunglah dengan ribuan wisatawan yang telah mempercayai Go-Travel untuk pengalaman perjalanan tak terlupakan mereka</p>
-      <a href="#" class="cta-button">Mulai Perjalanan Anda</a>
+      <a href="paket_wisata.php" class="cta-button">Lihat Paket Wisata</a>
     </div>
   </section>
 

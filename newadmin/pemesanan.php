@@ -11,9 +11,9 @@ function get_initials($name) {
         $initials .= strtoupper(substr(end($words), 0, 1));
     } elseif (count($words) == 1 && !empty($words[0])) {
         $initials .= strtoupper(substr($words[0], 0, 1));
-         if (strlen($words[0]) > 1) {
-            $initials .= strtoupper(substr($words[0], 1, 1));
-         }
+          if (strlen($words[0]) > 1) {
+              $initials .= strtoupper(substr($words[0], 1, 1));
+          }
     }
     return $initials ?: 'N/A';
 }
@@ -107,15 +107,15 @@ if (!empty($filter_end_date)) {
 }
 
 $sql_orders = "SELECT
-                p.id_pemesanan, p.kode_pemesanan, p.nama_lengkap, p.email,
-                pw.nama_paket, pw.durasi_paket, pw.harga AS harga_paket,
-                p.tanggal_keberangkatan, p.jumlah_peserta,
-                p.total_harga, p.status_pemesanan, p.tanggal_pemesanan,
-                peng.avatar AS customer_avatar_url -- Assuming 'pengunjung' table has 'avatar' and can be joined by email or an ID
-            FROM pemesanan p
-            JOIN paket_wisata pw ON p.id_paket_wisata = pw.id_paket_wisata
-            LEFT JOIN pengunjung peng ON p.email = peng.email -- Join to get avatar
-            ";
+                    p.id_pemesanan, p.kode_pemesanan, p.nama_lengkap, p.email,
+                    pw.nama_paket, pw.durasi_paket, pw.harga AS harga_paket,
+                    p.tanggal_keberangkatan, p.jumlah_peserta,
+                    p.total_harga, p.status_pemesanan, p.tanggal_pemesanan,
+                    peng.avatar AS customer_avatar_url -- Assuming 'pengunjung' table has 'avatar' and can be joined by email or an ID
+                FROM pemesanan p
+                JOIN paket_wisata pw ON p.id_paket_wisata = pw.id_paket_wisata
+                LEFT JOIN pengunjung peng ON p.email = peng.email -- Join to get avatar
+                ";
 
 if (!empty($where_clauses)) {
     $sql_orders .= " WHERE " . implode(" AND ", $where_clauses);
@@ -252,7 +252,7 @@ $payment_status_map = [ // Derived from status_pemesanan for this example
     .status-badge.confirmed { background-color: #d4edda; color: #155724; } /* Dikonfirmasi */
     .status-badge.pending { background-color: #fff3cd; color: #856404; }   /* Menunggu & Belum Bayar */
     .status-badge.cancelled { background-color: #f8d7da; color: #721c24; } /* Dibatalkan */
-    .status-badge.paid { background-color: #d1ecf1; color: #0c5460; }      /* Lunas */
+    .status-badge.paid { background-color: #d1ecf1; color: #0c5460; }       /* Lunas */
 
     .action-buttons { display: flex; gap: 5px; }
     .btn-action {
@@ -397,7 +397,7 @@ $payment_status_map = [ // Derived from status_pemesanan for this example
                   <div class="customer-info">
                     <div class="customer-avatar">
                         <?php if (!empty($row['customer_avatar_url'])): ?>
-                            <img src="<?php echo htmlspecialchars($row['customer_avatar_url']); ?>" alt="Avatar">
+                            <img src="<?php echo "." . htmlspecialchars($row['customer_avatar_url']); ?>" alt="Avatar">
                         <?php else: ?>
                             <?php echo get_initials(htmlspecialchars($row['nama_lengkap'])); ?>
                         <?php endif; ?>
@@ -449,17 +449,7 @@ $payment_status_map = [ // Derived from status_pemesanan for this example
                     <a href="order_edit.php?id=<?php echo $row['id_pemesanan']; ?>" class="btn-action btn-edit" title="Edit">
                       <i class="fas fa-edit"></i>
                     </a>
-                    <?php if ($row['status_pemesanan'] === 'pending'): ?>
-                      <a href="order_action.php?action=confirm&id=<?php echo $row['id_pemesanan']; ?>" class="btn-action btn-confirm" title="Konfirmasi Order" onclick="return confirm('Konfirmasi pemesanan ini?')">
-                        <i class="fas fa-check"></i>
-                      </a>
-                    <?php endif; ?>
-                     <?php if ($row['status_pemesanan'] !== 'cancelled' && $row['status_pemesanan'] !== 'completed'): ?>
-                      <a href="order_action.php?action=cancel&id=<?php echo $row['id_pemesanan']; ?>" class="btn-action btn-cancel" title="Batalkan Order" onclick="return confirm('Anda yakin ingin membatalkan pemesanan ini?')">
-                        <i class="fas fa-times"></i>
-                      </a>
-                    <?php endif; ?>
-                  </div>
+                    </div>
                 </td>
               </tr>
             <?php endwhile; ?>

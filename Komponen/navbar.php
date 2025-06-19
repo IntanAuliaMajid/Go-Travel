@@ -37,7 +37,7 @@ if ($is_logged_in) {
             <li><a href="kontak.php" class="<?php echo ($current_page == 'kontak.php') ? 'active' : ''; ?>">Kontak</a></li>
             <li><a href="Gallery Page.php" class="<?php echo ($current_page == 'Gallery Page.php') ? 'active' : ''; ?>">Galeri</a></li>
             <li><a href="tour_guide.php" class="<?php echo (($current_page == 'tour_guide.php') || ($current_page == 'tour_guide_detail.php')) ? 'active' : ''; ?>">Pemandu Wisata</a></li>
-            <li><a href="kuliner.php" class="<?php echo ($current_page == 'kuliner.php') ? 'active' : ''; ?>">Kuliner</a></li>
+            <li><a href="kendaraan.php" class="<?php echo (($current_page == 'kendaraan.php') || ($current_page == 'kendaraan_detail.php')) ? 'active' : ''; ?>">Kendaraan</a></li>
             </ul>
 
         <?php if ($is_logged_in): ?>
@@ -60,10 +60,10 @@ if ($is_logged_in) {
                         <a href="user_dashboard.php" class="dropdown-item">
                             Profil Saya
                         </a>
-                        <a href="profil.php#profile_pemesanan" class="dropdown-item">
+                        <a href="riwayat_pemesanan.php" class="dropdown-item">
                             Riwayat Pemesanan
                         </a>
-                        <a href="profil.php#profile_wishlist" class="dropdown-item">
+                        <a href="wishlist.php" class="dropdown-item">
                             Wishlist
                         </a>
                         <a href="profil.php#profile_pengaturan" class="dropdown-item">

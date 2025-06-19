@@ -13,9 +13,6 @@
         <h1>Syarat dan ketentuan</h1>
         <p>ketentuan penggunaan layanan dan kebijakan pemesanan layanan dan kebijakan pemesanan wisata di jawa</p>
     </div>
-    <div class="breadcrumb">
-        <span><a href="beranda.php">Beranda</a> > syarat & ketentuan</span>
-    </div>
     <div class="halaman">
         <p>Dengan mengakses dan menggunakan layanan Wisata jawa, Anda menyetujui untuk terikat oleh syarat dan ketentuan berikut. Harap baca dengan seksama sebelum melakukan pemesanan.</p>
     </div>

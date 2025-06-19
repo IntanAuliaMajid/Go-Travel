@@ -357,7 +357,6 @@ $harga_final_untuk_sidebar = ($subtotal_rincian_komponen > 0) ? $subtotal_rincia
                 </div>
             </div>
             <?php endif; ?>
-
             <?php if (!empty($wisataresult['denah_paket']) && $wisataresult['denah_paket'] !== 'default_denah.png'): ?>
             <div class="detail-section">
                 <h3>Denah & Lokasi</h3>
@@ -368,6 +367,7 @@ $harga_final_untuk_sidebar = ($subtotal_rincian_komponen > 0) ? $subtotal_rincia
                         $denah_url = str_replace(['../', './'], '', $denah_url);
                     }
                 ?>
+            
                 <img src="<?php echo htmlspecialchars($denah_url); ?>" 
                      alt="Denah Lokasi <?php echo htmlspecialchars($wisataresult['nama_paket']); ?>" 
                      style="width: 100%; height: auto; border-radius: 8px; margin-top: 1rem; border: 1px solid #eee; background-color: #f9f9f9;"

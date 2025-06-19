@@ -71,7 +71,7 @@ $conn->close();
                     <p class="wishlist-location"><i class="fas fa-map-marker-alt"></i> <?php echo htmlspecialchars($item['nama_lokasi']); ?></p>
                 </div>
                 <div class="wishlist-actions">
-                    <a href="detail_wisata.php?id=<?php echo htmlspecialchars($item['wisata_id']); ?>" class="wishlist-btn btn-view" title="Lihat Detail">
+                    <a href="wisata_detail.php?id=<?php echo htmlspecialchars($item['wisata_id']); ?>" class="wishlist-btn btn-view" title="Lihat Detail">
                         <i class="fas fa-eye"></i>
                     </a>
                     <button class="wishlist-btn btn-remove" data-wisata-id="<?php echo htmlspecialchars($item['wisata_id']); ?>" title="Hapus dari Wishlist">

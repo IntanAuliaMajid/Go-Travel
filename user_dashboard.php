@@ -825,7 +825,7 @@ $conn->close();
                             targetDiv.innerHTML = html;
                             targetDiv.classList.add('active'); // Show the active tab
 
-                            // Re-attach event listeners for newly loaded content if necessary
+                            // Re-attach event listeners for newly loaded content
                             if (tabId === 'profile_wishlist') {
                                 attachWishlistRemoveListeners();
                             }
@@ -835,9 +835,9 @@ $conn->close();
                              if (tabId === 'profile_pengaturan') {
                                 attachPasswordFormListener();
                             }
-                            // Add this for profile_pemesanan if you have interactive elements there
+                            // PERBAIKAN: Panggil fungsi untuk tombol pemesanan
                             if (tabId === 'profile_pemesanan') {
-                                // attachBookingActionListeners(); // If you have buttons like cancel, view details, etc.
+                                attachBookingActionListeners(); 
                             }
 
                         })
@@ -962,21 +962,122 @@ $conn->close();
                             .then(data => {
                                 if (data.success) {
                                     showNotification(data.message, 'success');
-                                    // Optionally update sidebar count if needed, or trigger a re-load of the count
                                 } else {
                                     showNotification(data.message, 'error');
-                                    // Revert UI change if deletion failed
-                                    setTimeout(() => loadTabContent('profile_wishlist'), 500); // Reload wishlist tab on error
+                                    setTimeout(() => loadTabContent('profile_wishlist'), 500); 
                                 }
                             })
                             .catch(error => {
                                 console.error('Error:', error);
                                 showNotification('Terjadi kesalahan saat menghapus dari wishlist.', 'error');
-                                setTimeout(() => loadTabContent('profile_wishlist'), 500); // Reload wishlist tab on error
+                                setTimeout(() => loadTabContent('profile_wishlist'), 500);
                             });
                         }
                     });
                 });
+            }
+
+            // PERBAIKAN: Fungsi baru untuk event listener di tab pemesanan
+            function attachBookingActionListeners() {
+                const viewDetailButtons = document.querySelectorAll('.view-detail-btn');
+                const cancelBookingButtons = document.querySelectorAll('.cancel-booking-btn');
+                const modal = document.getElementById('bookingDetailModal');
+
+                if (!modal) {
+                    console.error("Modal detail pemesanan tidak ditemukan!");
+                    return;
+                }
+                
+                const closeButton = modal.querySelector('.close-button');
+                const modalBodyContent = document.getElementById('modal-body-content');
+                const modalKodePemesanan = document.getElementById('modal-kode-pemesanan');
+
+                // Helper function untuk keamanan (mencegah XSS)
+                const htmlspecialchars = (str) => {
+                    if (typeof str !== 'string') return str;
+                    const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+                    return str.replace(/[&<>"']/g, m => map[m]);
+                };
+
+                // Event listener untuk tombol 'Detail'
+                viewDetailButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const idPemesanan = this.dataset.idPemesanan;
+                        modal.style.display = 'block';
+                        modalBodyContent.innerHTML = '<p>Loading detail pemesanan...</p>';
+                        modalKodePemesanan.textContent = '';
+
+                        fetch('backend/fetch_booking_detail.php?id=' + idPemesanan)
+                            .then(response => response.ok ? response.json() : Promise.reject('Gagal mengambil data'))
+                            .then(data => {
+                                if (data.success) {
+                                    const { booking, participants } = data;
+                                    modalKodePemesanan.textContent = booking.kode_pemesanan;
+                                    let detailHtml = `<p><strong>Nama Paket:</strong> ${htmlspecialchars(booking.nama_paket)}</p>
+                                                    <p><strong>Total Harga:</strong> Rp${new Intl.NumberFormat('id-ID').format(booking.total_harga)}</p>
+                                                    <p><strong>Status:</strong> <span class="booking-status ${htmlspecialchars(booking.status_class)}">${htmlspecialchars(booking.status_text)}</span></p>
+                                                    // ... tambahkan detail lain sesuai kebutuhan ...`;
+                                    modalBodyContent.innerHTML = detailHtml;
+                                } else {
+                                    modalBodyContent.innerHTML = `<p style="color:red;">${htmlspecialchars(data.message)}</p>`;
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error fetching booking detail:', error);
+                                modalBodyContent.innerHTML = '<p style="color:red;">Terjadi kesalahan jaringan.</p>';
+                            });
+                    });
+                });
+
+                // Event listener untuk tombol 'Batalkan'
+                cancelBookingButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const idPemesanan = this.dataset.idPemesanan;
+                        
+                        if (confirm('Apakah Anda yakin ingin membatalkan pemesanan ini?')) {
+                            fetch('backend/cancel_booking.php', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                                body: 'id_pemesanan=' + encodeURIComponent(idPemesanan)
+                            })
+                            .then(response => {
+                                if (!response.ok) {
+                                    // Jika respons bukan JSON, akan ditangkap di .catch
+                                    return response.json().then(err => Promise.reject(err));
+                                }
+                                return response.json();
+                            })
+                            .then(data => {
+                                if (data.success) {
+                                    showNotification(data.message, 'success');
+                                    const bookingItem = document.getElementById('booking-item-' + idPemesanan);
+                                    if (bookingItem) {
+                                        bookingItem.style.transition = 'opacity 0.4s ease';
+                                        bookingItem.style.opacity = '0';
+                                        setTimeout(() => bookingItem.remove(), 400);
+                                    }
+                                } else {
+                                    showNotification(data.message || 'Gagal membatalkan pesanan.', 'error');
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error saat membatalkan pemesanan:', error);
+                                const errorMessage = error.message || 'Terjadi kesalahan pada server. Silakan cek log.';
+                                showNotification(errorMessage, 'error');
+                            });
+                        }
+                    });
+                });
+                
+                // Event listener untuk modal
+                if (closeButton) {
+                    closeButton.onclick = () => { modal.style.display = "none"; }
+                }
+                window.onclick = (event) => {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                }
             }
         });
 
@@ -1042,7 +1143,6 @@ $conn->close();
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     photoPreview.src = e.target.result;
-                    // showNotification('Foto berhasil dipilih. Klik "Simpan Foto" untuk menyimpan.', 'info');
                 };
                 reader.readAsDataURL(file);
             }

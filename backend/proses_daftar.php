@@ -45,11 +45,13 @@ if ($cek_email->num_rows > 0) {
 }
 $cek_email->close();
 
+$avatar_default = 'default_avatar.png';
 // 3. Siapkan statement untuk menyimpan data (dengan kolom username)
-$stmt = $conn->prepare("INSERT INTO pengunjung (nama_depan, nama_belakang, username, email, password) VALUES (?, ?, ?, ?, ?)");
+$stmt = $conn->prepare("INSERT INTO pengunjung (nama_depan, nama_belakang, username, email, password, avatar) VALUES (?, ?, ?, ?, ?, ?)");
 
 // 4. Sesuaikan bind_param untuk menyertakan username
-$stmt->bind_param("sssss", $nama_depan, $nama_belakang, $username, $email, $hash);
+$stmt->bind_param("ssssss", $nama_depan, $nama_belakang, $username, $email, $hash, $avatar_default);
+
 
 if ($stmt->execute()) {
     echo "<script>

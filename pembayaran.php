@@ -1,9 +1,12 @@
 <?php
-// session_start(); // Diasumsikan sudah ada di navbar.php dan navbar.php dipanggil pertama
-include 'Komponen/navbar.php'; 
-include 'backend/koneksi.php'; 
+session_start(); // Pastikan session sudah dimulai
 
-// --- DEBUG: Lihat isi session ---
+// Pastikan file koneksi database sudah di-include dengan path yang benar
+// Asumsi 'koneksi.php' berada di folder 'backend' yang sejajar dengan file ini (jika pembayaran_midtrans.php di root Go-Travel)
+include 'backend/koneksi.php'; 
+include 'Komponen/navbar.php'; // Asumsi 'Komponen/navbar.php' ada di folder 'Komponen' yang sejajar
+
+// --- DEBUG: Lihat isi session (Uncomment untuk debugging) ---
 // echo "<pre>SESSION DATA:\n";
 // var_dump($_SESSION);
 // echo "</pre>";
@@ -20,6 +23,9 @@ $nama_paket_dipesan = isset($_SESSION['nama_paket_dipesan']) ? trim($_SESSION['n
 $durasi_paket_dipesan = isset($_SESSION['durasi_paket_dipesan']) ? trim($_SESSION['durasi_paket_dipesan']) : '-';
 $jumlah_peserta_dipesan = isset($_SESSION['jumlah_peserta_dipesan']) ? (int)$_SESSION['jumlah_peserta_dipesan'] : 1;
 
+// Variabel untuk menyimpan URL gambar paket wisata (default)
+$gambar_paket_url = 'img/default_package.jpg'; 
+
 $data_valid_untuk_pembayaran = true;
 if ($total_pembayaran <= 0) {
     error_log("Pembayaran Error: Total pembayaran adalah nol atau kurang untuk Order ID: " . $kode_pemesanan_unik);
@@ -34,7 +40,65 @@ if (empty($nama_pelanggan_lengkap) || empty($email_pelanggan) || empty($telepon_
     $data_valid_untuk_pembayaran = false;
 }
 
+// Ambil URL gambar paket wisata dari database
+if (!empty($id_paket_wisata_session)) {
+    // Pastikan koneksi ke database masih terbuka
+    if ($conn->ping()) { // Memastikan koneksi masih hidup
+        $gambar_sql = "SELECT url_gambar FROM gambar_paket 
+                       WHERE id_paket_wisata = ? 
+                       ORDER BY is_thumbnail DESC, id_gambar_paket ASC 
+                       LIMIT 1";
+        $gambar_stmt = $conn->prepare($gambar_sql);
+        if ($gambar_stmt) {
+            $gambar_stmt->bind_param("i", $id_paket_wisata_session);
+            $gambar_stmt->execute();
+            $gambar_result = $gambar_stmt->get_result();
+            if ($gambar_row = $gambar_result->fetch_assoc()) {
+                $raw_gambar_from_db = $gambar_row['url_gambar']; 
+                
+                // Path relatif dari root dokumen web (misal: "uploads/paket/nama_gambar.jpg")
+                // Sesuaikan 'uploads/paket/' jika folder Anda berbeda
+                $relative_web_path = 'uploads/paket/' . $raw_gambar_from_db;
+                
+                // Path absolut di server untuk pemeriksaan file_exists()
+                // Asumsi: file pembayaran_midtrans.php ada di root folder Go-Travel,
+                // dan folder uploads juga ada di root folder Go-Travel.
+                // Jika Go-Travel adalah folder di dalam htdocs:
+                // __DIR__ akan menjadi "/path/to/htdocs/Go-Travel"
+                // Maka $absolute_server_path akan menjadi "/path/to/htdocs/Go-Travel/uploads/paket/nama_gambar.jpg"
+                $absolute_server_path = __DIR__ . '/' . $relative_web_path; 
 
+                // --- DEBUG: Cek Path Gambar yang Dikomposisikan dan Keberadaan File ---
+                // echo "<h2>DEBUG: Path Gambar & Keberadaan File</h2>";
+                // echo "id_paket_wisata_session: " . htmlspecialchars($id_paket_wisata_session) . "<br>";
+                // echo "raw_gambar_from_db: " . htmlspecialchars($raw_gambar_from_db) . "<br>";
+                // echo "relative_web_path (untuk src HTML): " . htmlspecialchars($relative_web_path) . "<br>";
+                // echo "absolute_server_path (untuk file_exists): " . htmlspecialchars($absolute_server_path) . "<br>";
+                // echo "file_exists(\$absolute_server_path): " . (file_exists($absolute_server_path) ? 'true' : 'false') . "<br>";
+                // --- AKHIR DEBUG ---
+
+                if (file_exists($absolute_server_path)) {
+                    $gambar_paket_url = $relative_web_path; // Gunakan path ini di tag <img>
+                } else {
+                    $gambar_paket_url = 'img/default_package.jpg'; // Fallback jika file fisik tidak ada
+                    error_log("Gambar paket tidak ditemukan di server: " . $absolute_server_path);
+                }
+            } else {
+                error_log("Tidak ada gambar yang ditemukan di DB untuk id_paket_wisata: " . $id_paket_wisata_session);
+            }
+            $gambar_stmt->close();
+        } else {
+            error_log("Pembayaran Error: Gagal menyiapkan query gambar paket: " . $conn->error);
+        }
+    } else {
+        error_log("Pembayaran Info: Koneksi database terputus atau tidak valid saat mengambil gambar paket.");
+    }
+} else {
+    error_log("Pembayaran Info: id_paket_wisata_session kosong, menggunakan gambar default.");
+}
+
+
+// Fungsi format rupiah
 if (!function_exists('format_rupiah')) {
     function format_rupiah($number) {
         return 'Rp ' . number_format(floatval($number), 0, ',', '.');
@@ -45,10 +109,11 @@ $snapToken = '';
 $midtransClientKey = 'SB-Mid-client-RU-4tatn5CIGtpeG'; // GANTI DENGAN CLIENT KEY ANDA (JIKA BELUM)
 
 if ($data_valid_untuk_pembayaran) {
+    // Pastikan vendor autoload ada di root proyek
     require_once 'vendor/autoload.php'; 
 
     \Midtrans\Config::$serverKey = 'SB-Mid-server-1zCj_s8Ixz5PgsPt4xpWFnNS'; // GANTI DENGAN SERVER KEY ANDA (JIKA BELUM)
-    \Midtrans\Config::$isProduction = false; 
+    \Midtrans\Config::$isProduction = false; // Set ke true jika sudah production
     \Midtrans\Config::$isSanitized = true;
     \Midtrans\Config::$is3ds = true; 
 
@@ -75,20 +140,22 @@ if ($data_valid_untuk_pembayaran) {
                 'id' => (string)$id_paket_wisata_session,
                 'price' => (int)$total_pembayaran, 
                 'quantity' => 1, 
-                'name' => substr($nama_paket_dipesan, 0, 50)
+                'name' => substr($nama_paket_dipesan, 0, 50) // Batasi nama item maks 50 karakter
             )
         ),
         'callbacks' => array(
+            // Pastikan URL callback ini dapat diakses oleh Midtrans Notification URL
+            // Di lingkungan lokal, Anda mungkin perlu ngrok atau sejenisnya jika Midtrans memanggil balik ke sini
             'finish' => "http://localhost/Go-Travel/pembayaran_konfirmasi.php?order_id=".(string)$kode_pemesanan_unik
         ),
         'expiry' => array(
             'start_time' => date("Y-m-d H:i:s O"),
             'unit' => 'hour', 
-            'duration' => 24
+            'duration' => 24 // Kadaluarsa transaksi dalam 24 jam
         )
     );
 
-    // --- DEBUG: Lihat parameter yang dikirim ke Midtrans ---
+    // --- DEBUG: Lihat parameter yang dikirim ke Midtrans (Uncomment untuk debugging) ---
     // echo "<pre>PARAMS TO MIDTRANS:\n";
     // var_dump($params);
     // echo "</pre>";
@@ -100,6 +167,9 @@ if ($data_valid_untuk_pembayaran) {
         error_log("Midtrans Snap Token Exception (Order ID: ".$kode_pemesanan_unik."): " . $e->getMessage());
     }
 }
+
+// Tutup koneksi database setelah semua query selesai
+$conn->close(); 
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -117,7 +187,7 @@ if ($data_valid_untuk_pembayaran) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
     <style>
-        /* CSS Anda yang sudah ada dari prompt sebelumnya, dengan sedikit penyesuaian */
+        /* CSS Anda yang sudah ada */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: #f8f9fa; color: #333; line-height:1.6; display: flex; flex-direction: column; min-height: 100vh;} /* Sticky footer */
         main.payment-page-main-content { flex-grow: 1; } /* Untuk sticky footer */
@@ -277,23 +347,26 @@ if ($data_valid_untuk_pembayaran) {
                     <div class="payment-methods">
                         <div class="payment-method" data-method="midtrans">
                             <div class="payment-header">
-                                 <div class="payment-icon"><img src="https://docs.midtrans.com/assets/img/midtrans-logo.png" alt="Midtrans"></div>
-                                <div class="payment-name">Midtrans Payment Gateway</div>
+                                   <div class="payment-icon"><img src="https://docs.midtrans.com/assets/img/midtrans-logo.png" alt="Midtrans"></div>
+                                 <div class="payment-name">Midtrans Payment Gateway</div>
                             </div>
                             <div class="payment-description">
                                 Bayar dengan Kartu Kredit/Debit, GoPay, ShopeePay, QRIS, Virtual Account Bank (BCA, Mandiri, BRI, dll.), dan lainnya.
                             </div>
                         </div>
+                        </div>
 
                     </div>
-                </div>
                 
                 <div class="order-summary">
                     <h2 class="section-title">Ringkasan Pesanan</h2>
                     
                     <div class="package-mini">
                         <div class="package-mini-header">
-                            <img src="https://via.placeholder.com/60x60?text=Paket" alt="<?php echo htmlspecialchars($nama_paket_dipesan); ?>" class="package-mini-image">
+                            <img src="<?php echo htmlspecialchars($gambar_paket_url); ?>" 
+                                 alt="<?php echo htmlspecialchars($nama_paket_dipesan); ?>" 
+                                 class="package-mini-image" 
+                                 onerror="this.onerror=null;this.src='img/default_package.jpg';">
                             <div class="package-mini-info">
                                 <h3><?php echo htmlspecialchars($nama_paket_dipesan); ?></h3>
                                 <p>
@@ -315,7 +388,7 @@ if ($data_valid_untuk_pembayaran) {
                             <span class="summary-label">Nama Pemesan:</span>
                             <span class="summary-value"><?php echo htmlspecialchars($nama_pelanggan_lengkap); ?></span>
                         </div>
-                         <div class="summary-item">
+                           <div class="summary-item">
                             <span class="summary-label">Email:</span>
                             <span class="summary-value"><?php echo htmlspecialchars($email_pelanggan); ?></span>
                         </div>
@@ -328,18 +401,6 @@ if ($data_valid_untuk_pembayaran) {
                             <span>Total Pembayaran:</span>
                             <span><?php echo format_rupiah($total_pembayaran); ?></span>
                         </div>
-                    </div>
-                    
-                    <div class="security-info">
-                        <div class="security-header">
-                            <i class="fas fa-shield-alt"></i>
-                            <h3>Pembayaran Aman & Terjamin</h3>
-                        </div>
-                        <ul class="security-list">
-                            <li>Transaksi Anda dilindungi enkripsi SSL.</li>
-                            <li>Kami menjaga privasi data Anda.</li>
-                            <li>Pembayaran diproses oleh Midtrans, payment gateway terpercaya di Indonesia (untuk opsi Midtrans).</li>
-                        </ul>
                     </div>
 
                     <div class="action-buttons">
@@ -360,7 +421,7 @@ if ($data_valid_untuk_pembayaran) {
         document.addEventListener('DOMContentLoaded', function() {
             const snapToken = "<?php echo $snapToken; ?>"; 
             const paymentMethods = document.querySelectorAll('.payment-method');
-            const transferDetails = document.getElementById('transferDetails');
+            const transferDetails = document.getElementById('transferDetails'); // Untuk metode transfer manual jika diaktifkan
             let selectedMethod = null; 
 
             function activatePaymentMethod(methodElement) {
@@ -369,18 +430,21 @@ if ($data_valid_untuk_pembayaran) {
                 methodElement.classList.add('active');
                 selectedMethod = methodElement.getAttribute('data-method');
 
+                // Logika untuk menampilkan/menyembunyikan detail transfer manual
                 if (transferDetails) {
                     transferDetails.style.display = (selectedMethod === 'transfer') ? 'block' : 'none';
                 }
             }
 
+            // Aktifkan metode pembayaran Midtrans secara default
             const defaultMidtransMethod = document.querySelector('.payment-method[data-method="midtrans"]');
             if (defaultMidtransMethod) {
                 activatePaymentMethod(defaultMidtransMethod);
-            } else if (paymentMethods.length > 0) {
+            } else if (paymentMethods.length > 0) { // Jika tidak ada midtrans, aktifkan yang pertama
                 activatePaymentMethod(paymentMethods[0]);
             }
 
+            // Tambahkan event listener untuk setiap metode pembayaran
             paymentMethods.forEach(method => {
                 method.addEventListener('click', function() {
                     activatePaymentMethod(this);
@@ -389,7 +453,7 @@ if ($data_valid_untuk_pembayaran) {
 
             var payButton = document.getElementById('pay-button');
             if (payButton) {
-                // Hanya tambahkan event listener jika tombol ada (yaitu, tidak ada error kritis sebelumnya)
+                // Hanya tambahkan event listener jika tombol ada dan token valid
                 if (<?php echo ($data_valid_untuk_pembayaran && !empty($snapToken)) ? 'true' : 'false'; ?>) {
                     payButton.addEventListener('click', function () {
                         if (!selectedMethod) {
@@ -402,29 +466,36 @@ if ($data_valid_untuk_pembayaran) {
                                 snap.pay(snapToken, {
                                     onSuccess: function(result){
                                         console.log('Midtrans Success:', result);
-                                        handleMidtransResponse(result, 'success');
+                                        // Kirim respon ke backend untuk update status di database
+                                        handleMidtransResponse(result, 'completed'); 
                                     },
                                     onPending: function(result){
                                         console.log('Midtrans Pending:', result);
+                                        // Kirim respon ke backend untuk update status di database
                                         handleMidtransResponse(result, 'pending');
                                     },
                                     onError: function(result){
                                         console.error('Midtrans Error:', result);
-                                        handleMidtransResponse(result, 'error');
+                                        // Kirim respon ke backend untuk update status di database
+                                        handleMidtransResponse(result, 'failed'); 
                                     },
                                     onClose: function(){
                                         console.log('Anda menutup popup pembayaran sebelum menyelesaikan transaksi.');
+                                        // Opsional: Anda bisa mengirimkan status 'closed' atau 'cancelled_by_user' ke backend
+                                        // handleMidtransResponse({order_id: '<?php echo htmlspecialchars($kode_pemesanan_unik); ?>'}, 'cancelled_by_user');
                                     }
                                 });
                             } else {
                                 alert('Error: Token pembayaran Midtrans tidak tersedia. Silakan coba muat ulang halaman atau hubungi dukungan jika masalah berlanjut.');
                             }
                         } else if (selectedMethod === 'transfer') {
+                            // Logika untuk transfer manual (jika Anda mengaktifkannya)
+                            // Ini akan mengarahkan langsung ke halaman konfirmasi dengan status pending
                             window.location.href = 'pembayaran_konfirmasi.php?order_id=<?php echo htmlspecialchars($kode_pemesanan_unik); ?>&status=pending&method=transfer';
                         }
                     });
                 } else {
-                    // Jika snapToken kosong atau data tidak valid, tombol mungkin tidak berfungsi atau menampilkan pesan lain
+                    // Jika snapToken kosong atau data tidak valid, nonaktifkan tombol pembayaran
                     payButton.disabled = true;
                     payButton.innerHTML = '<i class="fas fa-exclamation-circle"></i> Pembayaran Tidak Tersedia';
                     payButton.style.backgroundColor = '#ccc';
@@ -433,9 +504,10 @@ if ($data_valid_untuk_pembayaran) {
             }
         });
 
+        // Fungsi untuk mengirim respons Midtrans ke backend
         function handleMidtransResponse(result, status_pembayaran) {
             var formData = new FormData();
-            formData.append('midtrans_response', JSON.stringify(result));
+            formData.append('midtrans_response', JSON.stringify(result)); // Kirim seluruh objek respons
             formData.append('payment_status', status_pembayaran);
             formData.append('order_id', result.order_id || '<?php echo htmlspecialchars($kode_pemesanan_unik); ?>');
             formData.append('payment_method', result.payment_type || 'midtrans'); 
@@ -457,6 +529,7 @@ if ($data_valid_untuk_pembayaran) {
                 if (data.redirect_url) { 
                     window.location.href = data.redirect_url;
                 } else { 
+                    // Fallback jika backend tidak memberikan redirect_url
                     let redirectUrl = 'pembayaran_konfirmasi.php?order_id=' + (result.order_id || '<?php echo htmlspecialchars($kode_pemesanan_unik); ?>') + '&status=' + status_pembayaran;
                     if(result.transaction_id) {
                         redirectUrl += '&transaction_id=' + result.transaction_id;
@@ -467,10 +540,12 @@ if ($data_valid_untuk_pembayaran) {
             .catch(error => {
                 console.error('Error sending Midtrans response to server:', error);
                 alert('Terjadi kesalahan saat memproses status pembayaran Anda. Silakan periksa status pesanan Anda atau hubungi dukungan.');
+                // Redirect ke halaman konfirmasi dengan status error komunikasi
                 window.location.href = 'pembayaran_konfirmasi.php?order_id=' + (result.order_id || '<?php echo htmlspecialchars($kode_pemesanan_unik); ?>') + '&status=error_communication';
             });
         }
 
+        // Fungsi copy to clipboard (untuk transfer manual jika diaktifkan)
         function copyToClipboard(text) {
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(text)
@@ -501,8 +576,11 @@ if ($data_valid_untuk_pembayaran) {
             document.body.removeChild(textArea);
         }
 
+        // Fungsi Countdown Timer
         function startCountdown() {
-            let duration = 24 * 60 * 60; 
+            // Waktu kadaluarsa transaksi 24 jam dari sekarang.
+            // Anda bisa mendapatkan waktu mulai dari database jika sudah disimpan saat order dibuat.
+            let duration = 24 * 60 * 60; // 24 jam dalam detik
             const countdownElement = document.getElementById('countdown');
             if (!countdownElement) return;
 
@@ -528,10 +606,12 @@ if ($data_valid_untuk_pembayaran) {
                         payBtn.style.backgroundColor = '#aaa';
                         payBtn.style.cursor = 'not-allowed';
                     }
+                    // Anda mungkin juga ingin mengirim AJAX request ke backend untuk memperbarui status pesanan menjadi expired
                 }
-            }, 1000);
+            }, 1000); // Update setiap 1 detik
         }
-        // Hanya mulai countdown jika tidak ada error kritis
+        
+        // Hanya mulai countdown jika ada token snap (yaitu, pembayaran valid)
         if (<?php echo ($data_valid_untuk_pembayaran && !empty($snapToken)) ? 'true' : 'false'; ?>) {
             startCountdown();
         }

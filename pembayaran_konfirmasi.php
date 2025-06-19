@@ -15,7 +15,7 @@ $pesan_konfirmasi_detail = "Informasi detail mengenai pesanan Anda.";
 $ikon_konfirmasi = "fas fa-info-circle"; 
 $warna_ikon = "#3498db"; // Biru netral
 $nama_paket_display = "Paket Wisata"; // Default
-$link_lanjutan_satu = "<a href='index.php' class='btn btn-secondary'><i class='fas fa-home'></i> Kembali ke Beranda</a>";
+$link_lanjutan_satu = "<a href='beranda.php' class='btn btn-secondary'><i class='fas fa-home'></i> Kembali ke Beranda</a>";
 $link_lanjutan_dua = "";
 
 
@@ -59,7 +59,7 @@ if ($order_id_url) {
                 $pesan_konfirmasi_detail = "Terima kasih! Pembayaran untuk pesanan Anda telah berhasil kami terima. E-voucher dan detail perjalanan akan segera dikirimkan ke email Anda (" . htmlspecialchars($pemesanan_detail['email'] ?? '') . ").";
                 $ikon_konfirmasi = "fas fa-check-circle";
                 $warna_ikon = "#2ecc71"; // Hijau
-                $link_lanjutan_dua = "<a href='akun-saya/riwayat-perjalanan.php' class='btn btn-primary'><i class='fas fa-history'></i> Lihat Riwayat Booking</a>";
+                $link_lanjutan_dua = "<a href='riwayat_pemesanan.php' class='btn btn-primary'><i class='fas fa-history'></i> Lihat Riwayat Booking</a>";
                 break;
             case 'pending':
                 $pesan_konfirmasi_utama = "Pembayaran Pending";

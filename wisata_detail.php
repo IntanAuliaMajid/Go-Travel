@@ -23,10 +23,10 @@ $id_wisata = (int)$_GET['id'];
 // 2. Handle Pengiriman Ulasan Baru
 $ulasan_message = '';
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['kirim_ulasan'])) {
-    if (!isset($_SESSION['user']['id'])) {
+    if (!isset($_SESSION['user']['id_pengunjung'])) {
         $ulasan_message = "<p class='error-message'>Anda harus login untuk mengirim ulasan.</p>";
     } else {
-        $id_pengunjung = (int)$_SESSION['user']['id'];
+        $id_pengunjung = (int)$_SESSION['user']['id_pengunjung'];
         $rating = isset($_POST['rating']) ? (int)$_POST['rating'] : 0;
         $komentar = mysqli_real_escape_string($conn, $_POST['komentar']);
 
@@ -329,7 +329,7 @@ if (empty($wisata['alamat_wisata']) && !empty($wisata['nama_lokasi'])) {
             <h3 class="section-title">Bagikan Pengalaman Anda</h3>
             <?php if (!empty($ulasan_message)) echo "<div class='form-message-container'>".$ulasan_message."</div>"; ?>
 
-            <?php if (isset($_SESSION['user']['id'])): ?>
+            <?php if (isset($_SESSION['user']['id_pengunjung'])): ?>
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?id=<?php echo $id_wisata; ?>#kirim-ulasan" method="post" class="review-form">
                 <div class="form-group">
                     <label for="rating" class="form-label">Rating Anda:</label>
@@ -407,7 +407,7 @@ if (empty($wisata['alamat_wisata']) && !empty($wisata['nama_lokasi'])) {
                 <?php foreach ($wisata_terdekat_list as $terdekat): ?>
                 <li class="related-item">
                     <i class="fas fa-map-pin related-icon"></i>
-                    <a href="detail_destinasi.php?id=<?php echo $terdekat['id_wisata']; ?>"><?php echo htmlspecialchars($terdekat['nama_wisata']); ?></a>
+                    <a href="wisata_detail.php?id=<?php echo $terdekat['id_wisata']; ?>"><?php echo htmlspecialchars($terdekat['nama_wisata']); ?></a>
                 </li>
                 <?php endforeach; ?>
             </ul>

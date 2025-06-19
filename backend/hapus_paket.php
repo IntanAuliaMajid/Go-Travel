@@ -1,79 +1,91 @@
 <?php
-session_start(); // Mulai session
+// Pastikan ini adalah baris pertama di file, tanpa spasi atau karakter di depannya.
+session_start();
 
-// Pastikan pengguna sudah login sebagai admin
-// Sesuaikan dengan logika autentikasi dan otorisasi admin Anda
-// if (!isset($_SESSION['user_admin_id'])) { // Ganti 'user_admin_id' dengan session variable yang sesuai
-//     header("Location: ../newadmin/login_admin.php"); // Redirect ke halaman login admin di newadmin
-//     exit();
-// }
+// --- Konfigurasi Koneksi Database ---
+// SESUAIKAN PATH INI:
+// Jika file koneksi.php berada satu folder di atas folder 'backend', gunakan '../koneksi.php'.
+// Contoh: root/koneksi.php dan root/backend/delete_paket.php
+require_once 'koneksi.php'; 
 
-require_once 'koneksi.php'; // Sesuaikan path jika koneksi.php ada di folder yang sama (backend)
-
+// --- Inisialisasi Pesan Status ---
 $message = '';
-$message_type = '';
+$message_type = ''; // Digunakan untuk kelas CSS Bootstrap alert (misal: 'success', 'danger', 'warning')
 
+// --- Proses Penghapusan Paket Wisata ---
+// Memastikan bahwa 'id' diterima melalui URL (GET) dan nilainya adalah angka
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-    $id_paket_wisata = (int)$_GET['id'];
+    $id_paket_wisata = (int)$_GET['id']; // Casting ke integer untuk keamanan SQL Injection
 
-    // Mulai transaksi untuk memastikan integritas data
+    // Mulai transaksi database. Ini penting untuk menjaga integritas data.
+    // Jika ada langkah yang gagal, semua perubahan akan dibatalkan (rollback).
     $conn->begin_transaction();
 
     try {
-        // Karena ada FOREIGN KEY dengan ON DELETE CASCADE (gambar_paket, termasuk_paket),
-        // cukup hapus dari tabel paket_wisata.
-        // Namun, jika ada ON DELETE RESTRICT (pemesanan, rencana_perjalanan),
-        // penghapusan akan gagal jika ada data terkait.
-
+        // Prepared Statement: Amankan query DELETE dari SQL Injection
         $stmt = $conn->prepare("DELETE FROM paket_wisata WHERE id_paket_wisata = ?");
+
         if ($stmt) {
+            // Mengikat parameter ID ke placeholder (?)
+            // 'i' menunjukkan bahwa parameter adalah integer
             $stmt->bind_param("i", $id_paket_wisata);
+
+            // Eksekusi prepared statement
             if ($stmt->execute()) {
+                // Periksa apakah ada baris yang benar-benar terpengaruh (terhapus)
                 if ($stmt->affected_rows > 0) {
-                    // Jika berhasil menghapus, commit transaksi
-                    $conn->commit();
+                    $conn->commit(); // Jika berhasil, konfirmasi perubahan ke database
                     $message = "Paket wisata berhasil dihapus.";
                     $message_type = "success";
                 } else {
-                    // Tidak ada baris yang terpengaruh, berarti ID tidak ditemukan
-                    $conn->rollback(); // Rollback jika tidak ada yang dihapus
-                    $message = "Paket wisata dengan ID " . $id_paket_wisata . " tidak ditemukan.";
-                    $message_type = "danger";
+                    // Jika 0 baris terpengaruh, ID tidak ditemukan di database
+                    $conn->rollback(); // Batalkan transaksi
+                    $message = "Paket wisata dengan ID **" . $id_paket_wisata . "** tidak ditemukan atau sudah dihapus.";
+                    $message_type = "warning"; // Gunakan 'warning' untuk kondisi ini
                 }
             } else {
-                // Eksekusi gagal (misalnya karena ON DELETE RESTRICT)
-                $conn->rollback();
-                // Cek error untuk pesan yang lebih spesifik
-                if ($conn->errno == 1451) { // Error code for foreign key constraint violation
-                    $message = "Gagal menghapus paket wisata. Terdapat pemesanan atau rencana perjalanan yang masih terkait dengan paket ini. Harap hapus atau ubah data terkait terlebih dahulu.";
+                // Eksekusi statement gagal (misalnya karena foreign key constraint)
+                $conn->rollback(); // Batalkan transaksi
+
+                // Cek kode error MySQL untuk memberikan pesan yang lebih spesifik
+                if ($conn->errno == 1451) { // Error code for foreign key constraint violation (ON DELETE RESTRICT)
+                    $message = "Gagal menghapus paket wisata. Terdapat **pemesanan, gambar, atau data lain** yang masih terkait dengan paket ini. Harap hapus atau ubah data terkait terlebih dahulu.";
                 } else {
+                    // Pesan error umum jika bukan karena foreign key
                     $message = "Error saat menghapus paket wisata: " . $stmt->error;
                 }
-                $message_type = "danger";
+                $message_type = "danger"; // Menunjukkan kesalahan serius
             }
-            $stmt->close();
+            $stmt->close(); // Tutup prepared statement
         } else {
+            // Jika persiapan statement gagal (misal: kesalahan sintaks SQL)
             $conn->rollback();
             $message = "Error mempersiapkan statement: " . $conn->error;
             $message_type = "danger";
         }
     } catch (mysqli_sql_exception $e) {
+        // Tangani pengecualian (exceptions) jika terjadi kesalahan fatal pada level database
         $conn->rollback();
         $message = "Terjadi kesalahan database: " . $e->getMessage();
         $message_type = "danger";
     }
 } else {
-    $message = "ID paket wisata tidak valid.";
+    // Jika ID tidak valid atau tidak diberikan
+    $message = "ID paket wisata tidak valid atau tidak ditemukan dalam permintaan.";
     $message_type = "danger";
 }
 
-$conn->close();
+$conn->close(); // Tutup koneksi database setelah semua operasi selesai
 
-// Redirect kembali ke halaman manajemen paket wisata dengan pesan status
+// --- Simpan Pesan Status dan Redirect ---
+// Simpan pesan dan tipe pesan ke session agar bisa diambil di halaman berikutnya
 $_SESSION['delete_message'] = $message;
 $_SESSION['delete_message_type'] = $message_type;
-// Redirect ke halaman manajemen_paket.php yang ada di newadmin/
-header("Location: ../newadmin/paket_wisata.php");
-exit();
 
+// Redirect pengguna kembali ke halaman manajemen paket wisata.
+// SESUAIKAN PATH INI agar mengarah ke file paket_wisata.php yang benar
+// Contoh: Jika delete_paket.php ada di 'backend/' dan paket_wisata.php ada di 'newadmin/',
+// maka '../newadmin/paket_wisata.php' adalah path yang tepat.
+header("Location: ../newadmin/paket_wisata.php");
+exit(); // Penting: Hentikan eksekusi script setelah redirect
 ?>

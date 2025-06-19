@@ -4,7 +4,8 @@ require_once '../backend/koneksi.php';
 
 // --- Fetch Data Kuliner ---
 $kuliner_list = [];
-$sql = "SELECT id_akomodasi_kuliner, nama_restaurant, gambar_url FROM akomodasi_kuliner ORDER BY nama_restaurant ASC";
+// Modified SQL query to include 'harga'
+$sql = "SELECT id_akomodasi_kuliner, nama_restaurant, gambar_url, harga FROM akomodasi_kuliner ORDER BY nama_restaurant ASC";
 $result = $conn->query($sql);
 if (!$result) {
     die("Error executing query: " . $conn->error);
@@ -51,109 +52,147 @@ $conn->close();
     </style>
 </head>
 <body>
-  <?php include '../komponen/sidebar_admin.php'; ?>
-  <main class="main-content">
-    <div id="notification"></div>
-    <header class="dashboard-header">
-      <h1>Manajemen Kuliner</h1>
-      <a href="../backend/tambah_kuliner.php" class="btn-add"><i class="fas fa-plus"></i> Tambah Kuliner</a>
-    </header>
+    <?php include '../komponen/sidebar_admin.php'; ?>
+    <main class="main-content">
+        <div id="notification"></div>
+        <header class="dashboard-header">
+            <h1>Manajemen Kuliner</h1>
+            <a href="../backend/tambah_kuliner.php" class="btn-add"><i class="fas fa-plus"></i> Tambah Kuliner</a>
+        </header>
 
-    <div class="table-container">
-        <table>
-          <thead>
-            <tr><th>Gambar</th><th>Nama Restaurant/Kuliner</th><th>Aksi</th></tr>
-          </thead>
-          <tbody>
-            <?php if (!empty($kuliner_list)): ?>
-              <?php foreach($kuliner_list as $item): ?>
-              <tr>
-                <td>
-                  <div class="thumbnail">
-                    <?php if (!empty($item['gambar_url']) && file_exists('../' . $item['gambar_url'])): ?>
-                        <img src="../<?php echo htmlspecialchars($item['gambar_url']); ?>" alt="<?php echo htmlspecialchars($item['nama_restaurant']); ?>">
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Gambar</th>
+                        <th>Nama Restaurant/Kuliner</th>
+                        <th>Harga</th> <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if (!empty($kuliner_list)): ?>
+                        <?php foreach($kuliner_list as $item): ?>
+                        <tr>
+                            <td>
+                                <div class="thumbnail">
+                                    <?php if (!empty($item['gambar_url']) && file_exists('../' . $item['gambar_url'])): ?>
+                                        <img src="../<?php echo htmlspecialchars($item['gambar_url']); ?>" alt="<?php echo htmlspecialchars($item['nama_restaurant']); ?>">
+                                    <?php else: ?>
+                                        <i class="fas fa-utensils fa-2x"></i>
+                                    <?php endif; ?>
+                                </div>
+                            </td>
+                            <td><?php echo htmlspecialchars($item['nama_restaurant']); ?></td>
+                            <td>Rp <?php echo number_format($item['harga'], 2, ',', '.'); ?></td> <td>
+                                <div class="action-buttons">
+                                    <button class="btn btn-edit" onclick="openEditModal(<?php echo $item['id_akomodasi_kuliner']; ?>)" title="Edit"><i class="fas fa-edit"></i> Edit</button>
+                                    <a href="../backend/hapus_kuliner.php?id=<?php echo $item['id_akomodasi_kuliner']; ?>" class="btn btn-delete" title="Hapus" onclick="return confirm('Apakah Anda yakin?');"><i class="fas fa-trash"></i> Hapus</a>
+                                </div>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
                     <?php else: ?>
-                        <i class="fas fa-utensils fa-2x"></i>
+                        <tr><td colspan="4" style="text-align: center; padding: 20px;">Tidak ada data kuliner.</td></tr>
                     <?php endif; ?>
-                  </div>
-                </td>
-                <td><?php echo htmlspecialchars($item['nama_restaurant']); ?></td>
-                <td>
-                  <div class="action-buttons">
-                    <button class="btn btn-edit" onclick="openEditModal(<?php echo $item['id_akomodasi_kuliner']; ?>)" title="Edit"><i class="fas fa-edit"></i> Edit</button>
-                    <a href="../backend/hapus_kuliner.php?id=<?php echo $item['id_akomodasi_kuliner']; ?>" class="btn btn-delete" title="Hapus" onclick="return confirm('Apakah Anda yakin?');"><i class="fas fa-trash"></i> Hapus</a>
-                  </div>
-                </td>
-              </tr>
-              <?php endforeach; ?>
-            <?php else: ?>
-              <tr><td colspan="3" style="text-align: center; padding: 20px;">Tidak ada data kuliner.</td></tr>
-            <?php endif; ?>
-          </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit Kuliner</h2>
+                <span class="close-button">&times;</span>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
     </div>
-  </main>
 
-  <div id="editModal" class="modal"><div class="modal-content"><div class="modal-header"><h2>Edit Kuliner</h2><span class="close-button">&times;</span></div><div class="modal-body" id="modalBody"></div></div></div>
+    <script>
+        const modal = document.getElementById('editModal');
+        const modalBody = document.getElementById('modalBody');
+        const closeBtn = document.querySelector('.close-button');
 
-  <script>
-    const modal = document.getElementById('editModal');
-    const modalBody = document.getElementById('modalBody');
-    const closeBtn = document.querySelector('.close-button');
+        closeBtn.onclick = () => modal.style.display = 'none';
+        window.onclick = (event) => { if (event.target == modal) { modal.style.display = 'none'; } };
 
-    closeBtn.onclick = () => modal.style.display = 'none';
-    window.onclick = (event) => { if (event.target == modal) { modal.style.display = 'none'; } };
+        async function openEditModal(id) {
+            // Pengecekan di sisi JavaScript untuk memastikan ID adalah angka
+            if (!id || typeof id !== 'number') {
+                alert("Error: ID yang diterima oleh JavaScript tidak valid atau kosong!");
+                console.error("Invalid ID received:", id);
+                return;
+            }
 
-    async function openEditModal(id) {
-        // Pengecekan di sisi JavaScript untuk memastikan ID adalah angka
-        if (!id || typeof id !== 'number') {
-            alert("Error: ID yang diterima oleh JavaScript tidak valid atau kosong!");
-            console.error("Invalid ID received:", id);
-            return;
-        }
-
-        modal.style.display = 'block';
-        modalBody.innerHTML = '<p style="text-align:center;">Memuat...</p>';
-        try {
-            const response = await fetch(`../backend/get_kuliner_detail.php?id=${id}`);
-            const data = await response.json();
-            if (data.error) throw new Error(data.error);
-            modalBody.innerHTML = data.html;
-        } catch (error) {
-            modalBody.innerHTML = `<p style="color: red;">Gagal memuat data: ${error.message}</p>`;
-        }
-    }
-
-    modalBody.addEventListener('submit', async function(event) {
-        if (event.target.id === 'editKulinerForm') {
-            event.preventDefault();
-            const formData = new FormData(event.target);
-            const submitButton = event.target.querySelector('button[type="submit"]');
-            submitButton.disabled = true;
-            submitButton.innerHTML = 'Menyimpan...';
+            modal.style.display = 'block';
+            modalBody.innerHTML = '<p style="text-align:center;">Memuat...</p>';
             try {
-                const response = await fetch('../backend/update_kuliner.php', { method: 'POST', body: formData });
-                const result = await response.json();
-                if (result.status === 'success') {
-                    modal.style.display = 'none';
-                    showNotification(result.message, 'success');
-                    setTimeout(() => location.reload(), 1500);
-                } else { throw new Error(result.message); }
+                // Fetch kuliner detail including price
+                const response = await fetch(`../backend/get_kuliner_detail.php?id=${id}`);
+                const data = await response.json();
+                if (data.error) throw new Error(data.error);
+                
+                // Construct the form with price input
+                modalBody.innerHTML = `
+                    <form id="editKulinerForm" enctype="multipart/form-data">
+                        <input type="hidden" name="id_akomodasi_kuliner" value="${data.id_akomodasi_kuliner}">
+                        <input type="hidden" name="existing_gambar_url" value="${data.gambar_url || ''}">
+
+                        <div class="form-group">
+                            <label for="nama_restaurant">Nama Restaurant/Kuliner:</label>
+                            <input type="text" id="nama_restaurant" name="nama_restaurant" value="${data.nama_restaurant}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="harga">Harga:</label>
+                            <input type="number" id="harga" name="harga" value="${parseFloat(data.harga).toFixed(2)}" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="gambar_url">Gambar Kuliner:</label>
+                            <input type="file" id="gambar_url" name="gambar_url" accept="image/*">
+                            ${data.gambar_url ? `<p><small>Gambar saat ini: <a href="../${data.gambar_url}" target="_blank">${data.gambar_url.split('/').pop()}</a></small></p>` : ''}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" onclick="modal.style.display='none'">Batal</button>
+                            <button type="submit" class="btn btn-edit">Simpan Perubahan</button>
+                        </div>
+                    </form>
+                `;
             } catch (error) {
-                alert('Error: ' + error.message);
-                submitButton.disabled = false;
-                submitButton.innerHTML = 'Simpan Perubahan';
+                modalBody.innerHTML = `<p style="color: red;">Gagal memuat data: ${error.message}</p>`;
             }
         }
-    });
 
-    function showNotification(message, type) {
-        const notification = document.getElementById('notification');
-        notification.textContent = message;
-        notification.className = type;
-        notification.style.display = 'block';
-        setTimeout(() => { notification.style.display = 'none'; }, 3000);
-    }
-  </script>
+        modalBody.addEventListener('submit', async function(event) {
+            if (event.target.id === 'editKulinerForm') {
+                event.preventDefault();
+                const formData = new FormData(event.target);
+                const submitButton = event.target.querySelector('button[type="submit"]');
+                submitButton.disabled = true;
+                submitButton.innerHTML = 'Menyimpan...';
+                try {
+                    const response = await fetch('../backend/update_kuliner.php', { method: 'POST', body: formData });
+                    const result = await response.json();
+                    if (result.status === 'success') {
+                        modal.style.display = 'none';
+                        showNotification(result.message, 'success');
+                        setTimeout(() => location.reload(), 1500);
+                    } else { throw new Error(result.message); }
+                } catch (error) {
+                    alert('Error: ' + error.message);
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = 'Simpan Perubahan';
+                }
+            }
+        });
+
+        function showNotification(message, type) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = type;
+            notification.style.display = 'block';
+            setTimeout(() => { notification.style.display = 'none'; }, 3000);
+        }
+    </script>
 </body>
 </html>

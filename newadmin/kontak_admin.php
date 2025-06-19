@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Kontak Admin</title>
+  <title>Kontak Darurat</title>
   <style>
     body {
       margin: 0;
@@ -76,8 +76,8 @@
     
     <div class="main-content">
       <header>
-        <h1>Daftar Kontak Admin</h1>
-        <button onclick="tambahAdmin()">+ Tambah Admin</button>
+        <h1>Daftar Kontak Darurat</h1>
+        <button onclick="tambahAdmin()">+ Tambah kontak</button>
       </header>
 
       <table>
@@ -95,31 +95,9 @@
           <tr>
             <td>1</td>
             <td>Andi Saputra</td>
-            <td>andi@admin.com</td>
+            <td>andi@gmail.com</td>
             <td>081234567890</td>
-            <td>Super Admin</td>
-            <td>
-              <button class="edit">Edit</button>
-              <button class="delete" onclick="hapusBaris(this)">Hapus</button>
-            </td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Rizky Maulana</td>
-            <td>Rizky.guide@admin.com</td>
-            <td>085********</td>
-            <td>Pemandu Wisata</td>
-            <td>
-              <button class="edit">Edit</button>
-              <button class="delete" onclick="hapusBaris(this)">Hapus</button>
-            </td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>Sarah Nabila</td>
-            <td>Sarah.guide@admin.com</td>
-            <td>085********</td>
-            <td>Pemandu Wisata</td>
+            <td>call center / hepdesk</td>
             <td>
               <button class="edit">Edit</button>
               <button class="delete" onclick="hapusBaris(this)">Hapus</button>
