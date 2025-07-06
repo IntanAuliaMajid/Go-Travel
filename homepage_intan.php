@@ -136,25 +136,25 @@ li b {
         <h3>Project Akhir - Pariwisata</h3>
         <ul>
             <li>
-    <b>Interface 1:</b> Wisata (USER)<br>
-    Halaman ini menampilkan daftar destinasi wisata yang tersedia di Go Travel. Pengguna dapat melihat berbagai tempat wisata lengkap dengan gambar, lokasi, dan deskripsi singkat sebagai referensi awal sebelum melihat detail lebih lanjut.
-</li>
-<li>
-    <b>Interface 2:</b> Detail Wisata (USER)<br>
-    Halaman ini menampilkan informasi lengkap tentang destinasi wisata yang dipilih, termasuk deskripsi, fasilitas,  jam operasional, lokasi peta, serta galeri foto untuk membantu pengguna mengenal tempat tersebut lebih dalam.
-</li>
-<li>
-    <b>Interface 3:</b> Paket Wisata (USER)<br>
-    Halaman ini menampilkan berbagai pilihan paket wisata yang ditawarkan oleh Go Travel. Setiap paket mencakup rincian layanan seperti destinasi, akomodasi, kendaraan, pemandu, serta durasi dan harga paket.
-</li>
-<li>
-    <b>Interface 4:</b> Detail Paket Wisata (USER)<br>
-    Halaman ini memberikan penjelasan lengkap mengenai paket wisata yang dipilih. Pengguna dapat melihat jadwal perjalanan, tempat yang dikunjungi, fasilitas yang didapat, syarat dan ketentuan, serta ulasan dari pengguna lain (jika tersedia).
-</li>
-<li>
-    <b>Interface 5:</b> Pemesanan/Booking (USER)<br>
-    Halaman ini digunakan oleh pengguna untuk melakukan pemesanan paket wisata. Pengguna mengisi formulir pemesanan yang mencakup data diri, tanggal keberangkatan, jumlah peserta, dan pilihan tambahan lainnya sebelum melanjutkan ke proses pembayaran.
-</li>
+                <b>Interface 1:</b> Wisata (USER)<br>
+                Halaman ini menampilkan daftar destinasi wisata yang tersedia di Go Travel. Pengguna dapat melihat berbagai tempat wisata lengkap dengan gambar, lokasi, dan deskripsi singkat sebagai referensi awal sebelum melihat detail lebih lanjut.
+            </li>
+            <li>
+                <b>Interface 2:</b> Detail Wisata (USER)<br>
+                Halaman ini menampilkan informasi lengkap tentang destinasi wisata yang dipilih, termasuk deskripsi, fasilitas,  jam operasional, lokasi peta, serta galeri foto untuk membantu pengguna mengenal tempat tersebut lebih dalam.
+            </li>
+            <li>
+                <b>Interface 3:</b> Paket Wisata (USER)<br>
+                Halaman ini menampilkan berbagai pilihan paket wisata yang ditawarkan oleh Go Travel. Setiap paket mencakup rincian layanan seperti destinasi, akomodasi, kendaraan, pemandu, serta durasi dan harga paket.
+            </li>
+            <li>
+                <b>Interface 4:</b> Detail Paket Wisata (USER)<br>
+                Halaman ini memberikan penjelasan lengkap mengenai paket wisata yang dipilih. Pengguna dapat melihat jadwal perjalanan, tempat yang dikunjungi, fasilitas yang didapat, syarat dan ketentuan, serta ulasan dari pengguna lain (jika tersedia).
+            </li>
+            <li>
+                <b>Interface 5:</b> Pemesanan/Booking (USER)<br>
+                Halaman ini digunakan oleh pengguna untuk melakukan pemesanan paket wisata. Pengguna mengisi formulir pemesanan yang mencakup data diri, tanggal keberangkatan, jumlah peserta, dan pilihan tambahan lainnya sebelum melanjutkan ke proses pembayaran.
+            </li>
 
         </ul>
     </div>
